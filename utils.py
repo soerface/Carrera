@@ -3,10 +3,10 @@ from sqlalchemy.orm import sessionmaker
 
 from models import Base
 
-def connect_db(filename='dev.db'):
+def connect_db(filename=':memory:'):
     """Cares about database connection and returns a session.
 
-    Takes
+    Takes the filename for the databse, default memory.
 
     """
     engine = create_engine('sqlite:///{0}'.format(filename))
