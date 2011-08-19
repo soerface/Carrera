@@ -6,7 +6,7 @@ class UE9(object):
 
     def __init__(self):
         self.device = ue9.UE9()
-        self.device.feedback(EIOMask=255, EIODir=0b11110000)
+        self.device.feedback(EIOMask=255, EIOState=0, EIODir=0b11110000)
 
     @property
     def player(self, num):
