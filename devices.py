@@ -12,7 +12,7 @@ class UE9(object):
     def player(self, num):
         pass
 
-    def enable_power(self, *tracks):
+    def power_on(self, *tracks):
         """Enables the power for the given tracks.
 
         All other tracks will not be affected.
@@ -29,7 +29,7 @@ class UE9(object):
             mask |= 1 << (track + 4)
         self.device.feedback(EIOMask=mask, EIOState=240, EIODir=0b11110000)
 
-    def disable_power(self, *tracks):
+    def power_off(self, *tracks):
         """Disables the power for the given tracks.
 
         All other tracks will not be affected.
