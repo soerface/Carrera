@@ -62,10 +62,30 @@ class Race(Base):
     __tablename__ = 'races'
 
     id = Column(Integer, primary_key=True)
-    time = Column(DateTime)
+    date = Column(DateTime)
+    rounds = relationship('Round', backref='race')
 
-    def __init__(self, time):
-        self.time = time
+    def __init__(self):
+        pass
 
     def __repr__(self):
         return '<Race {0}>'.format(self.time)
+
+class Round(Base):
+    __tablename__ = 'rounds'
+
+    id = Column(Integer, primary_key=True)
+    num = Column(Integer)
+    player_id = Column(Integer, ForeignKey('players.id'))
+    player = relationship('Player')
+    time = Column(Time)
+    race_id = Column(Integer, ForeignKey('races.id'))
+
+    def __init__(self, num, time, player=None):
+        self.num = num
+        self.time = time
+        self.player = player
+
+    def __repr__(self):
+        name = self.player.name if self.player else 'Unknown'
+        return '<Round {num} by {player}>'.format(num=self.num, player=name)
