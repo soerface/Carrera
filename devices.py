@@ -13,12 +13,34 @@ class UE9(object):
         pass
 
     def enable_power(self, *tracks):
+        """Enables the power for the given tracks.
+
+        All other tracks will not be affected.
+
+        Track | Port
+        0     | EIO4
+        1     | EIO5
+        2     | EIO6
+        3     | EIO7
+
+        """
         mask = 0
         for track in tracks:
             mask |= 1 << (track + 4)
         self.device.feedback(EIOMask=mask, EIOState=240, EIODir=0b11110000)
 
     def disable_power(self, *tracks):
+        """Disables the power for the given tracks.
+
+        All other tracks will not be affected.
+
+        Track | Port
+        0     | EIO4
+        1     | EIO5
+        2     | EIO6
+        3     | EIO7
+
+        """
         mask = 0
         for track in tracks:
             mask |= 1 << (track + 4)
