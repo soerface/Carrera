@@ -18,6 +18,12 @@ class UE9(object):
             mask |= 1 << (track + 4)
         self.device.feedback(EIOMask=mask, EIOState=240, EIODir=0b11110000)
 
+    def disable_power(self, *tracks):
+        mask = 0
+        for track in tracks:
+            mask |= 1 << (track + 4)
+        self.device.feedback(EIOMask=mask, EIOState=0, EIODir=0b11110000)
+
     #def traffic_light(self):
     #    pass
 
