@@ -12,24 +12,7 @@ class UE9(object):
     def player(self, num):
         pass
 
-    def power_on(self, *tracks):
-        """Enables the power for the given tracks.
-
-        All other tracks will not be affected.
-
-        Track | Port
-        0     | EIO4
-        1     | EIO5
-        2     | EIO6
-        3     | EIO7
-
-        """
-        mask = 0
-        for track in tracks:
-            mask |= 1 << (track + 4)
-        self.device.feedback(EIOMask=mask, EIOState=240, EIODir=0b11110000)
-
-    def power_off(self, *tracks):
+    def _power(self, state, tracks):
         """Disables the power for the given tracks.
 
         All other tracks will not be affected.
@@ -42,9 +25,20 @@ class UE9(object):
 
         """
         mask = 0
-        for track in tracks:
-            mask |= 1 << (track + 4)
-        self.device.feedback(EIOMask=mask, EIOState=0, EIODir=0b11110000)
+        if len(tracks) == 1 and tracks[0] == -1:
+            mask = 255
+        else:
+            for track in tracks:
+                mask |= 1 << (track + 4)
+        self.device.feedback(EIOMask=mask, EIOState=state, EIODir=0b11110000)
+
+    def power_on(self, *tracks):
+        """Enables the power for the given tracks. Pass -1 to enable all."""
+        self._power(240, tracks)
+
+    def power_off(self, *tracks):
+        """Disables the power for the given tracks. Pass -1 to disable all."""
+        self._power(0, tracks)
 
     #def traffic_light(self):
     #    pass

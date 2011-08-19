@@ -24,6 +24,7 @@ class Mode(object):
     def countdown(self):
         """Handle the countdown for the start."""
         # TODO: traffic lights
+        self.device.power_on(-1)
         pass
 
     def save(self):
@@ -71,7 +72,7 @@ class Match(Mode):
     def check_conditions(self):
         for i, times in enumerate(self.player_times):
             if len(times) == self.rounds:
-                self.finished = True
+                self.device.power_off(i)
 
 class TimeAttack(Mode):
     pass
