@@ -14,6 +14,7 @@ while True:
         if track:
             if datetime.now() - last_time[i] < timedelta(seconds=3):
                 continue
+            d.enable_power(i)
             times[i].append(datetime.now() - last_time[i])
             last_time[i] = datetime.now()
             print 'Spieler {player}, Runde {round}: {time}'.format(player = i,
