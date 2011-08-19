@@ -1,0 +1,11 @@
+Modi
+====
+
+ * x Runden fahren, wer am schnellsten ist gewinnt
+ * x Minuten fahren, Strom aus, wer die meisten Runden geschafft hat gewinnt
+
+Statistiken / Graphen
+=====================
+
+ * Wer ist wann in welche Runde gekommen
+ * Geschwindigkeit anhand des analogen Signals der "Steuerknöpfe"
