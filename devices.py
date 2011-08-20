@@ -8,12 +8,8 @@ class UE9(object):
         self.device = ue9.UE9()
         self.device.feedback(EIOMask=255, EIOState=0, EIODir=0b11110000)
 
-    @property
-    def player(self, num):
-        pass
-
     def _power(self, state, tracks):
-        """Disables the power for the given tracks.
+        """Set the power for the given tracks accordingly to the passed state.
 
         All other tracks will not be affected.
 
@@ -24,10 +20,10 @@ class UE9(object):
         3     | EIO7
 
         """
-        mask = 0
         if len(tracks) == 1 and tracks[0] == -1:
             mask = 255
         else:
+            mask = 0
             for track in tracks:
                 mask |= 1 << (track + 4)
         self.device.feedback(EIOMask=mask, EIOState=state, EIODir=0b11110000)
@@ -40,8 +36,23 @@ class UE9(object):
         """Disables the power for the given tracks. Pass -1 to disable all."""
         self._power(0, tracks)
 
-    #def traffic_light(self):
-    #    pass
+    def traffic_lights(self, value):
+        """Set the state of the traffic lights.
+
+        0 = 0 red, 0 green
+        1 = 1 red, 0 green
+        2 = 2 red, 0 green
+        3 = 3 red, 0 green
+        4 = 0 red, 1 green
+
+        """
+        if 0 <= value < 4:
+            state = 2 ** value - 1
+        elif value == 4:
+            state = 0b1000
+        else:
+            raise ValueError('Value must be in range 0-4')
+        self.device.feedback(FIOMask=0b1111, FIOState=state, FIODir=0b1111)
 
     def track_state(self, num):
         state = self.device.feedback()['EIOState']
