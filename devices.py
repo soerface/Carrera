@@ -7,6 +7,7 @@ class UE9(object):
     def __init__(self):
         self.device = ue9.UE9()
         self.device.feedback(EIOMask=255, EIOState=0, EIODir=0b11110000)
+        self.traffic_lights = 3
 
     def _power(self, state, tracks):
         """Set the power for the given tracks accordingly to the passed state.
@@ -36,6 +37,11 @@ class UE9(object):
         """Disables the power for the given tracks. Pass -1 to disable all."""
         self._power(0, tracks)
 
+    @property
+    def traffic_lights(self):
+        return self._traffic_lights
+
+    @traffic_lights.setter
     def traffic_lights(self, value):
         """Set the state of the traffic lights.
 
@@ -52,6 +58,7 @@ class UE9(object):
             state = 0b1000
         else:
             raise ValueError('Value must be in range 0-4')
+        self._traffic_lights = value
         self.device.feedback(FIOMask=0b1111, FIOState=state, FIODir=0b1111)
 
     def track_state(self, num):
