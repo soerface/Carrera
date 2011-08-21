@@ -61,7 +61,7 @@ class UE9(object):
         self._traffic_lights = value
         self.device.feedback(FIOMask=0b1111, FIOState=state, FIODir=0b1111)
 
-    def track_state(self, num):
+    def sensor_state(self, num):
         state = self.device.feedback()['EIOState']
         return [not state & 0b1, not state & 0b10,
                 not state & 0b100, not state & 0b1000]

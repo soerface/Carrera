@@ -10,6 +10,7 @@ class Mode(object):
         self.device = UE9()
         self.finished = self.started = False
         self.player_num = player_num
+        self.player_finished = [False] * player_num
 
     def start(self):
         """Start a new match."""
@@ -23,7 +24,6 @@ class Mode(object):
 
         # test led to debug performance
         self.device.device.feedback(FIOMask=0b10000000, FIOState=255, FIODir=255)
-        testtime = datetime.now()
 
         if self.running:
             self.read_sensors()
@@ -40,11 +40,6 @@ class Mode(object):
         # test led to debug performance
         self.device.device.feedback(FIOMask=0b10000000, FIOState=0, FIODir=255)
 
-        endtesttime = datetime.now()
-        delta = endtesttime - testtime
-        print 'Time needed for polling: {0} seconds, {1} microseconds'.format(
-            delta.seconds, delta.microseconds)
-
     def countdown(self):
         """Handle the countdown for the start."""
         delta = datetime.now() - self.start_time
@@ -55,7 +50,7 @@ class Mode(object):
         pass
 
     def read_sensors(self):
-        self.tracks = self.device.track_state(self.player_num)
+        self.sensors= self.device.sensor_state(self.player_num)
 
     def score(self):
         pass
@@ -78,26 +73,28 @@ class Match(Mode):
         self.last_times = [self.start_time] * self.player_num
 
     def score(self):
-        for i, track in enumerate(self.tracks):
-            if track:
-                # tolerance to not count a round twice or more
+        for i, sensor in enumerate(self.sensors):
+            if sensor and not self.player_finished[i]:
                 now = datetime.now()
+                # tolerance to not count a round twice or more
                 if now - self.last_times[i] < timedelta(seconds=2):
                     continue
+
                 self.player_times[i].append(now - self.last_times[i])
                 self.last_times[i] = now
-                print 'Spieler {player}, Runde {round}: {time}'.format(
-                      player = i + 1,
-                      round = len(self.player_times[i]),
-                      time=self.player_times[i][-1]
-                )
 
 
     def check_conditions(self):
+        now = datetime.now()
         for i, times in enumerate(self.player_times):
-            if len(times) == self.rounds:
+            if len(times) == self.rounds and not self.player_finished[i]:
                 self.device.power_off(i)
-                print ' -------- {0} -------- '.format(sum(times, timedelta()))
+                self.player_finished[i] = True
+            if any(self.player_finished) and now - self.last_times[i] < timedelta(seconds=1):
+                self.device.power_off(i)
+                self.player_finished[i] = True
+            if all(self.player_finished):
+                self.finished = True
 
 class TimeAttack(Mode):
     pass
