@@ -19,6 +19,13 @@ class Mode(object):
         self.device.power_off(-1)
         self.start_time = datetime.now()
 
+    def _run(self):
+        """Countdown is over, start the race!"""
+        self.running = True
+        self.start_time = datetime.now()
+        self.device.power_on(-1)
+        self.device.traffic_lights = 4
+
     def poll(self):
         """Do some "game logic". Needs to be called as often as possible."""
 
@@ -32,10 +39,7 @@ class Mode(object):
         else:
             self.countdown()
             if datetime.now() - self.start_time > timedelta(seconds=4):
-                self.running = True
-                self.start_time = datetime.now()
-                self.device.power_on(-1)
-                self.device.traffic_lights = 4
+                self._run()
 
         # test led to debug performance
         self.device.device.feedback(FIOMask=0b10000000, FIOState=0, FIODir=255)
@@ -70,6 +74,9 @@ class Match(Mode):
 
     def start(self):
         super(Match, self).start()
+
+    def _run(self):
+        super(Match, self)._run()
         self.last_times = [self.start_time] * self.player_num
 
     def score(self):
