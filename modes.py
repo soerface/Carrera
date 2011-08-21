@@ -7,6 +7,8 @@ class Mode(object):
     """Baseclass for all modes."""
 
     def __init__(self, player_num=2):
+        if player_num not in [2,3,4]:
+            raise ValueError('player_num needs to be 2, 3 or 4')
         self.device = UE9()
         self.finished = self.started = False
         self.player_num = player_num
@@ -23,7 +25,7 @@ class Mode(object):
         """Countdown is over, start the race!"""
         self.running = True
         self.start_time = datetime.now()
-        self.device.power_on(-1)
+        self.device.power_on(*range(self.player_num))
         self.device.traffic_lights = 4
 
     def poll(self):
