@@ -12,7 +12,7 @@ class Mode(object):
         self.device = UE9()
         self.finished = self.started = False
         self.player_num = player_num
-        self.player_finished = [False] * 4
+        self.player_finished = [False] * player_num
 
     def start(self):
         """Start a new match."""
@@ -71,7 +71,7 @@ class Match(Mode):
         self.rounds = rounds
         self.player_num = player_num
         self.player_times = []
-        for i in range(4):
+        for i in range(player_num):
             self.player_times.append([])
 
     def start(self):
@@ -79,16 +79,19 @@ class Match(Mode):
 
     def _run(self):
         super(Match, self)._run()
-        self.last_times = [self.start_time] * 4
+        self.last_times = [self.start_time] * self.player_num
 
     def score(self):
         for i, sensor in enumerate(self.sensors):
+            if i >= self.player_num:
+                continue
             if sensor and not self.player_finished[i]:
                 now = datetime.now()
                 # tolerance to not count a round twice or more
                 if now - self.last_times[i] < timedelta(seconds=2):
                     continue
 
+                print i, self.last_times[i]
                 self.player_times[i].append(now - self.last_times[i])
                 self.last_times[i] = now
 
