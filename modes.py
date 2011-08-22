@@ -12,7 +12,7 @@ class Mode(object):
         self.device = UE9()
         self.finished = self.started = False
         self.player_num = player_num
-        self.player_finished = [False] * player_num
+        self.player_finished = [False] * 4
 
     def start(self):
         """Start a new match."""
@@ -71,7 +71,7 @@ class Match(Mode):
         self.rounds = rounds
         self.player_num = player_num
         self.player_times = []
-        for i in range(player_num):
+        for i in range(4):
             self.player_times.append([])
 
     def start(self):
@@ -79,7 +79,7 @@ class Match(Mode):
 
     def _run(self):
         super(Match, self)._run()
-        self.last_times = [self.start_time] * self.player_num
+        self.last_times = [self.start_time] * 4
 
     def score(self):
         for i, sensor in enumerate(self.sensors):
