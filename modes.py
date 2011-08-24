@@ -1,7 +1,7 @@
 """Contains different game modes."""
 from datetime import datetime, timedelta
 
-from devices import UE9
+from devices import UE9, Virtual
 
 class Mode(object):
     """Baseclass for all modes."""
@@ -32,7 +32,7 @@ class Mode(object):
         """Do some "game logic". Needs to be called as often as possible."""
 
         # test led to debug performance
-        self.device.device.feedback(FIOMask=0b10000000, FIOState=255, FIODir=255)
+        #self.device.device.feedback(FIOMask=0b10000000, FIOState=255, FIODir=255)
 
         if self.running:
             self.read_sensors()
@@ -44,7 +44,7 @@ class Mode(object):
                 self._run()
 
         # test led to debug performance
-        self.device.device.feedback(FIOMask=0b10000000, FIOState=0, FIODir=255)
+        #self.device.device.feedback(FIOMask=0b10000000, FIOState=0, FIODir=255)
 
     def countdown(self):
         """Handle the countdown for the start."""
@@ -91,7 +91,6 @@ class Match(Mode):
                 if now - self.last_times[i] < timedelta(seconds=2):
                     continue
 
-                print i, self.last_times[i]
                 self.player_times[i].append(now - self.last_times[i])
                 self.last_times[i] = now
 
