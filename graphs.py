@@ -7,6 +7,7 @@ class Rounds(object):
     def __init__(self):
         self.num_graphs = 0
         self.bars = []
+        self.scores = []
         self.width = self.height = 1
         pyplot.xlabel('Runde')
         pyplot.ylabel('Zeit in Sekunden')
@@ -14,9 +15,13 @@ class Rounds(object):
     def add(self, times):
         seconds = [time.total_seconds() for time in times]
         self.bars.append([])
+        self.scores.append([])
         for i, time in enumerate(seconds):
-            bar = pyplot.bar(i + 0.1, time, color=COLORS[len(self.bars) - 1])
+            bar = pyplot.bar(0, time, color=COLORS[len(self.bars) - 1])
+            score = pyplot.text(0, time + 0.05, '{0:.2f}'.format(time),
+                                rotation=90)
             self.bars[-1].append(bar)
+            self.scores[-1].append(score)
         if len(self.bars) == 1:
             width = 0.8
             padding = 0.1
@@ -32,15 +37,13 @@ class Rounds(object):
         for i, bars in enumerate(self.bars):
             for j, bar in enumerate(bars):
                 pyplot.setp(bar, x=(padding + j) + i * width, width=width)
-        #l1 = pyplot.plot(seconds)
-        #pyplot.setp(l1, linestyle='steps')
-        #x = range(1, len(seconds) + 1)
-        #fill = pyplot.fill_between(x, 0, seconds, facecolor=COLORS[self.num_graphs],
-        #                           alpha=0.5)
+        for i, scores in enumerate(self.scores):
+            for j, score in enumerate(scores):
+                pyplot.setp(score, x=(padding + j) + i * width + 0.05)
         self.num_graphs += 1
         self.width = max(self.width, len(seconds))
         self.height = max(self.height, *seconds)
-        pyplot.axis([0, self.width, 0, self.height])
+        pyplot.axis([0, self.width, 0, self.height + 1])
 
     def show(self):
         pyplot.show()
