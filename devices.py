@@ -1,5 +1,7 @@
 """This module contains the devices to communicate with the track."""
 
+from random import random
+
 import ue9
 
 class UE9(object):
@@ -65,3 +67,45 @@ class UE9(object):
         state = self.device.feedback()['EIOState']
         return [not state & 0b1, not state & 0b10,
                 not state & 0b100, not state & 0b1000]
+
+class Virtual(object):
+    """Virtual device for testing purposes."""
+
+    def __init__(self):
+        self.traffic_lights = 3
+
+    def power_on(self, *tracks):
+        """Enables the power for the given tracks. Pass -1 to enable all."""
+        pass
+
+    def power_off(self, *tracks):
+        """Disables the power for the given tracks. Pass -1 to disable all."""
+        pass
+
+    @property
+    def traffic_lights(self):
+        return self._traffic_lights
+
+    @traffic_lights.setter
+    def traffic_lights(self, value):
+        """Set the state of the traffic lights.
+
+        0 = 0 red, 0 green
+        1 = 1 red, 0 green
+        2 = 2 red, 0 green
+        3 = 3 red, 0 green
+        4 = 0 red, 1 green
+
+        """
+        if value not in range(5):
+            raise ValueError('Value must be in range 0-4')
+        self._traffic_lights = value
+
+    def sensor_state(self, num):
+        v = random()
+        return [
+            0 <= v < 0.000025,
+            0.000025 <= v < 0.00005,
+            0.00005 <= v < 0.000075,
+            0.000075 <= v < 0.0001,
+        ]
