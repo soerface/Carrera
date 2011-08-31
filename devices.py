@@ -4,11 +4,11 @@ from random import random
 
 import ue9
 
-class UE9(object):
+class UE9(ue9.UE9):
 
-    def __init__(self):
-        self.device = ue9.UE9()
-        self.device.feedback(EIOMask=255, EIOState=0, EIODir=0b11110000)
+    def __init__(self, *args, **kwargs):
+        super(UE9, self).__init__(*args, **kwargs)
+        self.feedback(EIOMask=255, EIOState=0, EIODir=0b11110000)
         self.traffic_lights = 3
 
     def _power(self, state, tracks):
@@ -29,7 +29,7 @@ class UE9(object):
             mask = 0
             for track in tracks:
                 mask |= 1 << (track + 4)
-        self.device.feedback(EIOMask=mask, EIOState=state, EIODir=0b11110000)
+        self.feedback(EIOMask=mask, EIOState=state, EIODir=0b11110000)
 
     def power_on(self, *tracks):
         """Enables the power for the given tracks. Pass -1 to enable all."""
@@ -61,10 +61,10 @@ class UE9(object):
         else:
             raise ValueError('Value must be in range 0-4')
         self._traffic_lights = value
-        self.device.feedback(FIOMask=0b1111, FIOState=state, FIODir=0b1111)
+        self.feedback(FIOMask=0b1111, FIOState=state, FIODir=0b1111)
 
     def sensor_state(self, num):
-        state = self.device.feedback()['EIOState']
+        state = self.feedback()['EIOState']
         return [not state & 0b1, not state & 0b10,
                 not state & 0b100, not state & 0b1000]
 
