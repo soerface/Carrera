@@ -1,15 +1,13 @@
 """Contains different game modes."""
 from datetime import datetime, timedelta
 
-from devices import UE9, Virtual
-
 class Mode(object):
     """Baseclass for all modes."""
 
-    def __init__(self, player_num=2):
+    def __init__(self, device, player_num=2):
         if player_num not in [2,3,4]:
             raise ValueError('player_num needs to be 2, 3 or 4')
-        self.device = UE9()
+        self.device = device
         self.finished = self.started = False
         self.player_num = player_num
         self.player_finished = [False] * player_num
@@ -66,8 +64,8 @@ class Mode(object):
 
 class Match(Mode):
 
-    def __init__(self, player_num=2, rounds=5):
-        super(Match, self).__init__(player_num)
+    def __init__(self, device, player_num=2, rounds=5):
+        super(Match, self).__init__(device, player_num)
         self.rounds = rounds
         self.player_num = player_num
         self.player_times = []
