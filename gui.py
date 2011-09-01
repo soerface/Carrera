@@ -24,16 +24,29 @@ class Carrera(object):
         except KeyboardInterrupt:
             pass
 
-    def quit(self):
+    def quit(self, *args):
         gtk.main_quit()
 
     def add_player(self, *args):
         if self.num_players == 4:
             return
-        self.num_players += 1
-        box = gtk.combo_box_new_text()
+        box = gtk.HBox()
+        button = gtk.Button()
+        button.connect('clicked', self.remove_player)
+        entry = gtk.Entry()
+        box.add(entry)
+        box.add(button)
         self.builder.get_object('player_box').add(box)
+        button.show()
+        entry.show()
         box.show()
+        self.num_players += 1
+
+    def remove_player(self, obj):
+        row = obj.parent
+        box = row.parent
+        box.remove(row)
+        self.num_players -= 1
 
 if __name__ == '__main__':
     carrera = Carrera()
