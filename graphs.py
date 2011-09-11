@@ -1,10 +1,17 @@
+import matplotlib
+matplotlib.use('GtkAgg')
 from matplotlib import pyplot
+from matplotlib.backends.backend_gtkagg import FigureCanvasGTKAgg as FigureCanvas
+from matplotlib.figure import Figure
 
 COLORS = ['blue', 'red', 'green', 'black']
 
 class Rounds(object):
 
     def __init__(self):
+        self.figure = Figure()
+        self.canvas = FigureCanvas(self.figure)
+        self.ax = self.figure.add_subplot(1, 2, 1)
         self.num_graphs = 0
         self.bars = []
         self.scores = []
@@ -17,8 +24,8 @@ class Rounds(object):
         self.bars.append([])
         self.scores.append([])
         for i, time in enumerate(seconds):
-            bar = pyplot.bar(0, time, color=COLORS[len(self.bars) - 1])
-            score = pyplot.text(0, time + 0.05, '{0:.2f}'.format(time),
+            bar = self.ax.bar(0, time, color=COLORS[len(self.bars) - 1])
+            score = self.ax.text(0, time + 0.05, '{0:.2f}'.format(time),
                                 rotation=90)
             self.bars[-1].append(bar)
             self.scores[-1].append(score)
@@ -43,7 +50,7 @@ class Rounds(object):
         self.num_graphs += 1
         self.width = max(self.width, len(seconds))
         self.height = max(self.height, *seconds)
-        pyplot.axis([0, self.width, 0, self.height + 1])
+        self.ax.axis([0, self.width, 0, self.height + 1])
 
     def show(self):
-        pyplot.show()
+        self.canvas.show()

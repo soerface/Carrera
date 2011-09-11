@@ -9,6 +9,7 @@ class Mode(object):
             raise ValueError('player_num needs to be 2, 3 or 4')
         self.device = device
         self.finished = self.started = False
+        self.canceled = False
         self.player_num = player_num
         self.player_finished = [False] * player_num
 
@@ -18,6 +19,11 @@ class Mode(object):
         self.running = False
         self.device.power_off(-1)
         self.start_time = datetime.now()
+
+    def cancel(self):
+        """Cancel a match."""
+        self.finished = True
+        self.canceled = True
 
     def _run(self):
         """Countdown is over, start the race!"""
@@ -54,7 +60,7 @@ class Mode(object):
         pass
 
     def read_sensors(self):
-        self.sensors= self.device.sensor_state(self.player_num)
+        self.sensors = self.device.sensor_state(self.player_num)
 
     def score(self):
         pass
