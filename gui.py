@@ -34,6 +34,8 @@ class Carrera(object):
             pass
 
     def quit(self, *args, **kwargs):
+        if hasattr(self, 'match'):
+            self.match.cancel()
         gtk.main_quit()
 
     def add_player(self):
@@ -71,12 +73,6 @@ class Carrera(object):
         for player in players:
             vbox = gtk.VBox()
 
-            round_ = gtk.Label()
-            round_.set_use_markup(True)
-            round_.set_markup('<span size="36000">1/{0}</span>'.format(rounds))
-            vbox.add(round_)
-            round_.show()
-
             playername = gtk.Label()
             playername.set_use_markup(True)
             playername.set_markup('<span size="18000">{0}</span>'.format(
@@ -84,36 +80,45 @@ class Carrera(object):
             vbox.add(playername)
             playername.show()
 
+            round_ = gtk.Label()
+            round_.set_use_markup(True)
+            round_.set_markup('<span size="36000">1/{0}</span>'.format(rounds))
+            vbox.add(round_)
+            round_.show()
+
             race_box.add(vbox)
             vbox.show()
 
         self.match = Match(self.device, self.num_players, rounds=rounds)
         self.match.start()
         boxes = self.builder.get_object('race_box').children()
-        last_times = deepcopy(self.match.player_times)
+        last_times = [None] * self.num_players
 
-
+        graph = graphs.Rounds(self.num_players)
+        self.builder.get_object('round_graph').add(graph.canvas)
+        graph.show()
         while not self.match.finished:
             while gtk.events_pending():
                 gtk.main_iteration()
             self.match.poll()
             if last_times != self.match.player_times:
                 for i, box in enumerate(boxes):
-                    if len(self.match.player_times[i]) < rounds:
-                        text = '<span size="36000">{0}/{1}</span>'.format(
-                            len(self.match.player_times[i]) + 1, rounds)
-                    else:
-                        text = '<span size="36000">:)</span>'
-                    box.children()[0].set_markup(text)
-                last_times = deepcopy(self.match.player_times)
+                    try:
+                        if last_times[i] != self.match.player_times[i][-1]:
+                            if len(self.match.player_times[i]) < rounds:
+                                text = '<span size="36000">{0}/{1}</span>'.format(
+                                    len(self.match.player_times[i]) + 1, rounds)
+                            else:
+                                text = '<span size="36000">:)</span>'
+                            box.children()[1].set_markup(text)
+                            graph.add(i, self.match.player_times[i][-1])
+                            last_times[i] = self.match.player_times[i][-1]
+                    except IndexError:
+                        pass
         if not self.match.canceled:
-            graph = graphs.Rounds()
             for i, times in enumerate(self.match.player_times):
-                graph.add(times)
                 for j, time in enumerate(times):
                     pass#print '  Runde {0}: {1}'.format(j+1, time)
-            self.builder.get_object('round_graph').add(graph.canvas)
-            graph.show()
 
     def on_main_delete_event(self, obj, event):
         self.quit()
@@ -180,7 +185,8 @@ class Carrera(object):
 
 
     def clear_racewindow(self):
-        #self.match.cancel()
+        if hasattr(self, 'match'):
+            self.match.cancel()
         for box in self.builder.get_object('race_box').children():
             self.builder.get_object('race_box').remove(box)
         try:
