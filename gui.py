@@ -32,14 +32,16 @@ class Carrera(object):
         except KeyboardInterrupt:
             pass
 
-    def quit(self):
+    def quit(self, *args, **kwargs):
         gtk.main_quit()
 
     def add_player(self):
         if self.num_players == 4:
             return
         box = gtk.HBox()
-        button = gtk.Button('×')
+        button = gtk.Button('', stock=gtk.STOCK_REMOVE)
+        # small "hack" to get rid of the label
+        button.get_children()[0].get_children()[0].get_children()[1].set_label('')
         button.connect('clicked', self.on_remove_player_clicked)
         entry = gtk.Entry()
         entry.set_text('Nameless')

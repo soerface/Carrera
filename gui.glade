@@ -78,9 +78,11 @@
                         <property name="label">gtk-quit</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="events">GDK_BUTTON_MOTION_MASK | GDK_STRUCTURE_MASK</property>
                         <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <signal name="activate" handler="quit" swapped="no"/>
                       </object>
                     </child>
                   </object>
@@ -258,6 +260,7 @@
                                 <property name="left_padding">12</property>
                                 <child>
                                   <object class="GtkVBox" id="player_box">
+                                    <property name="width_request">180</property>
                                     <property name="height_request">120</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
@@ -285,11 +288,12 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="add_player">
-                            <property name="label" translatable="yes">Spieler hinzufügen</property>
+                            <property name="label">gtk-add</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="use_action_appearance">False</property>
+                            <property name="use_stock">True</property>
                             <signal name="clicked" handler="on_add_player_clicked" swapped="no"/>
                           </object>
                           <packing>
@@ -300,8 +304,8 @@
                         </child>
                       </object>
                       <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
@@ -311,6 +315,7 @@
                         <property name="can_focus">False</property>
                         <child>
                           <object class="GtkFrame" id="frame2">
+                            <property name="width_request">180</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="label_xalign">0</property>
@@ -348,15 +353,15 @@
                         </child>
                       </object>
                       <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
                   </object>
                   <packing>
-                    <property name="expand">True</property>
-                    <property name="fill">True</property>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
