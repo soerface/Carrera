@@ -45,7 +45,6 @@ class Rounds(object):
         self.width = max(self.width, len(self.bars[player]))
         self.height = max(self.height, seconds)
         self.ax.axis([0, self.width, 0, self.height + 1])
-        self.draw()
 
     def show(self):
         self.canvas.show()

@@ -101,20 +101,20 @@ class Carrera(object):
             while gtk.events_pending():
                 gtk.main_iteration()
             self.match.poll()
-            if last_times != self.match.player_times:
-                for i, box in enumerate(boxes):
-                    try:
-                        if last_times[i] != self.match.player_times[i][-1]:
-                            if len(self.match.player_times[i]) < rounds:
-                                text = '<span size="36000">{0}/{1}</span>'.format(
-                                    len(self.match.player_times[i]) + 1, rounds)
-                            else:
-                                text = '<span size="36000">:)</span>'
-                            box.children()[1].set_markup(text)
-                            graph.add(i, self.match.player_times[i][-1])
-                            last_times[i] = self.match.player_times[i][-1]
-                    except IndexError:
-                        pass
+            for i, box in enumerate(boxes):
+                try:
+                    if last_times[i] != self.match.player_times[i][-1]:
+                        if len(self.match.player_times[i]) < rounds:
+                            text = '<span size="36000">{0}/{1}</span>'.format(
+                                len(self.match.player_times[i]) + 1, rounds)
+                        else:
+                            text = '<span size="36000">:)</span>'
+                        box.children()[1].set_markup(text)
+                        graph.add(i, self.match.player_times[i][-1])
+                        last_times[i] = self.match.player_times[i][-1]
+                        graph.draw()
+                except IndexError:
+                    pass
         if not self.match.canceled:
             for i, times in enumerate(self.match.player_times):
                 for j, time in enumerate(times):
