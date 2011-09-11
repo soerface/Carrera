@@ -11,12 +11,14 @@ class Graph(object):
     def __init__(self, num_graphs=1, width=1):
         self.figure = Figure()
         self.canvas = FigureCanvas(self.figure)
-        self.ax = self.figure.add_subplot(1, 1, 1, label='blub')
-        self.bars = [[] for i in range(num_graphs)]
-        self.scores = [[] for i in range(num_graphs)]
+        self.barchart = self.figure.add_subplot(2, 1, 1,)
+        self.linechart = self.figure.add_subplot(2, 1, 2,)
+        self.num_bars = [0 for i in range(num_graphs)]
+        self.seconds = [[] for i in range(num_graphs)]
+        self.lines = [self.linechart.plot(0, 0) for i in range(num_graphs)]
         self.width = width
         self.height = 1
-        self.ax.axis([0, self.width, 0, self.height + 1])
+        self.update_axis()
         #self.canvas.xlabel('Runde')
         #self.canvas.ylabel('Zeit in Sekunden')
 
@@ -36,18 +38,29 @@ class Graph(object):
 
     def add(self, player, time):
         seconds = time.total_seconds()
-        x = self.padding + player * self.bar_width + len(self.bars[player])
-        bar = self.ax.bar(x, seconds, color=COLORS[player], width=self.bar_width)
-        #score = self.ax.text(x + 0.1, seconds + 0.05, '{0:.2f}'.format(seconds),
-        #                    rotation=90)
-        self.bars[player].append(bar)
-        #self.scores[player].append(score)
-        self.width = max(self.width, len(self.bars[player]))
+        x = self.padding + player * self.bar_width + self.num_bars[player]
+        bar = self.barchart.bar(x, seconds, color=COLORS[player], width=self.bar_width)
+        self.num_bars[player] += 1
+        self.width = max(self.width, self.num_bars[player])
         self.height = max(self.height, seconds)
-        self.ax.axis([0, self.width, 0, self.height + 1])
+        self.update_axis()
+
+        self.seconds[player].append(seconds)
+        ydata = []
+        for i in range(len(self.seconds[player]) + 1):
+            ydata.append(sum(self.seconds[player][:i]))
+        pyplot.setp(self.lines[player], xdata=range(len(self.seconds[player]) + 1),
+                    ydata=ydata, color=COLORS[player])
 
     def show(self):
         self.canvas.show()
 
     def draw(self):
         self.figure.canvas.draw()
+
+    def update_axis(self):
+        self.barchart.axis([0, self.width, 0, self.height + 1])
+        height = 1
+        for seconds in self.seconds:
+            height = max(height, sum(seconds))
+        self.linechart.axis([0, self.width, 0, height + 1])
