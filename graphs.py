@@ -8,49 +8,47 @@ COLORS = ['blue', 'red', 'green', 'black']
 
 class Rounds(object):
 
-    def __init__(self):
+    def __init__(self, num_graphs=1, width=1):
         self.figure = Figure()
         self.canvas = FigureCanvas(self.figure)
-        self.ax = self.figure.add_subplot(1, 2, 1)
-        self.num_graphs = 0
-        self.bars = []
-        self.scores = []
-        self.width = self.height = 1
-        pyplot.xlabel('Runde')
-        pyplot.ylabel('Zeit in Sekunden')
-
-    def add(self, times):
-        seconds = [time.total_seconds() for time in times]
-        self.bars.append([])
-        self.scores.append([])
-        for i, time in enumerate(seconds):
-            bar = self.ax.bar(0, time, color=COLORS[len(self.bars) - 1])
-            score = self.ax.text(0, time + 0.05, '{0:.2f}'.format(time),
-                                rotation=90)
-            self.bars[-1].append(bar)
-            self.scores[-1].append(score)
-        if len(self.bars) == 1:
-            width = 0.8
-            padding = 0.1
-        elif len(self.bars) == 2:
-            width = 0.4
-            padding = 0.1
-        elif len(self.bars) == 3:
-            width = 0.2
-            padding = 0.2
-        elif len(self.bars) == 4:
-            width = 0.2
-            padding = 0.1
-        for i, bars in enumerate(self.bars):
-            for j, bar in enumerate(bars):
-                pyplot.setp(bar, x=(padding + j) + i * width, width=width)
-        for i, scores in enumerate(self.scores):
-            for j, score in enumerate(scores):
-                pyplot.setp(score, x=(padding + j) + i * width + 0.05)
-        self.num_graphs += 1
-        self.width = max(self.width, len(seconds))
-        self.height = max(self.height, *seconds)
+        self.ax = self.figure.add_subplot(1, 1, 1, label='blub')
+        self.bars = [[] for i in range(num_graphs)]
+        self.scores = [[] for i in range(num_graphs)]
+        self.width = width
+        self.height = 1
         self.ax.axis([0, self.width, 0, self.height + 1])
+        #self.canvas.xlabel('Runde')
+        #self.canvas.ylabel('Zeit in Sekunden')
+
+        if num_graphs == 1:
+            self.bar_width = 0.8
+            self.padding = 0.1
+        elif num_graphs == 2:
+            self.bar_width = 0.4
+            self.padding = 0.1
+        elif num_graphs == 3:
+            self.bar_width = 0.2
+            self.padding = 0.2
+        elif num_graphs == 4:
+            self.bar_width = 0.2
+            self.padding = 0.1
+
+
+    def add(self, player, time):
+        seconds = time.total_seconds()
+        x = self.padding + player * self.bar_width + len(self.bars[player])
+        bar = self.ax.bar(x, seconds, color=COLORS[player], width=self.bar_width)
+        score = self.ax.text(x + 0.1, seconds + 0.05, '{0:.2f}'.format(seconds),
+                            rotation=90)
+        self.bars[player].append(bar)
+        self.scores[player].append(score)
+        self.width = max(self.width, len(self.bars[player]))
+        self.height = max(self.height, seconds)
+        self.ax.axis([0, self.width, 0, self.height + 1])
+        self.draw()
 
     def show(self):
         self.canvas.show()
+
+    def draw(self):
+        self.figure.canvas.draw()

@@ -94,7 +94,7 @@ class Carrera(object):
         boxes = self.builder.get_object('race_box').children()
         last_times = [None] * self.num_players
 
-        graph = graphs.Rounds(self.num_players)
+        graph = graphs.Rounds(self.num_players, width=rounds)
         self.builder.get_object('round_graph').add(graph.canvas)
         graph.show()
         while not self.match.finished:
