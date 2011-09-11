@@ -13,6 +13,7 @@ GAMEMODES = ['Match', 'TimeAttack']
 class Carrera(object):
 
     def __init__(self):
+        self.device = Virtual()
         self.builder = gtk.Builder()
         self.builder.add_from_file('gui.glade')
         self.builder.connect_signals(self)
@@ -86,8 +87,7 @@ class Carrera(object):
             race_box.add(vbox)
             vbox.show()
 
-        device = Virtual()
-        self.match = Match(device, self.num_players, rounds=rounds)
+        self.match = Match(self.device, self.num_players, rounds=rounds)
         self.match.start()
         boxes = self.builder.get_object('race_box').children()
         last_times = deepcopy(self.match.player_times)
@@ -167,6 +167,18 @@ class Carrera(object):
             box.show()
             settings_box.pack_start(box, expand=False)
 
+    on_power_on_0_clicked = lambda self, obj: self.power_on(0)
+    on_power_off_0_clicked = lambda self, obj: self.power_off(0)
+    on_power_on_1_clicked = lambda self, obj: self.power_on(1)
+    on_power_off_1_clicked = lambda self, obj: self.power_off(1)
+    on_power_on_2_clicked = lambda self, obj: self.power_on(2)
+    on_power_off_2_clicked = lambda self, obj: self.power_off(2)
+    on_power_on_3_clicked = lambda self, obj: self.power_on(3)
+    on_power_off_3_clicked = lambda self, obj: self.power_off(3)
+    on_power_on_all_clicked = lambda self, obj: self.power_on(-1)
+    on_power_off_all_clicked = lambda self, obj: self.power_off(-1)
+
+
     def clear_racewindow(self):
         #self.match.cancel()
         for box in self.builder.get_object('race_box').children():
@@ -180,6 +192,12 @@ class Carrera(object):
     @property
     def num_players(self):
         return len(self.builder.get_object('player_box').children())
+
+    def power_on(self, track):
+        self.device.power_on(track)
+
+    def power_off(self, track):
+        self.device.power_off(track)
 
 if __name__ == '__main__':
     carrera = Carrera()
