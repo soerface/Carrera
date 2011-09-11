@@ -94,9 +94,10 @@ class Carrera(object):
         boxes = self.builder.get_object('race_box').children()
         last_times = [None] * self.num_players
 
-        graph = graphs.Rounds(self.num_players, width=rounds)
+        graph = graphs.Graph(self.num_players, width=rounds)
         self.builder.get_object('round_graph').add(graph.canvas)
         graph.show()
+        need_draw = True
         while not self.match.finished:
             while gtk.events_pending():
                 gtk.main_iteration()
@@ -111,10 +112,13 @@ class Carrera(object):
                             text = '<span size="36000">:)</span>'
                         box.children()[1].set_markup(text)
                         graph.add(i, self.match.player_times[i][-1])
+                        need_draw = True
                         last_times[i] = self.match.player_times[i][-1]
-                        graph.draw()
                 except IndexError:
                     pass
+            if need_draw:
+                graph.draw()
+                need_draw = False
         if not self.match.canceled:
             for i, times in enumerate(self.match.player_times):
                 for j, time in enumerate(times):

@@ -6,7 +6,7 @@ from matplotlib.figure import Figure
 
 COLORS = ['blue', 'red', 'green', 'black']
 
-class Rounds(object):
+class Graph(object):
 
     def __init__(self, num_graphs=1, width=1):
         self.figure = Figure()
@@ -38,10 +38,10 @@ class Rounds(object):
         seconds = time.total_seconds()
         x = self.padding + player * self.bar_width + len(self.bars[player])
         bar = self.ax.bar(x, seconds, color=COLORS[player], width=self.bar_width)
-        score = self.ax.text(x + 0.1, seconds + 0.05, '{0:.2f}'.format(seconds),
-                            rotation=90)
+        #score = self.ax.text(x + 0.1, seconds + 0.05, '{0:.2f}'.format(seconds),
+        #                    rotation=90)
         self.bars[player].append(bar)
-        self.scores[player].append(score)
+        #self.scores[player].append(score)
         self.width = max(self.width, len(self.bars[player]))
         self.height = max(self.height, seconds)
         self.ax.axis([0, self.width, 0, self.height + 1])
