@@ -9,7 +9,7 @@ from devices import UE9, Virtual
 import graphs
 from modes import Match
 
-GAMEMODES = ['Match']
+GAMEMODES = ['Match', 'TimeAttack']
 class Carrera(object):
 
     def __init__(self):
@@ -18,7 +18,8 @@ class Carrera(object):
         self.builder.connect_signals(self)
         for i in range(2):
             self.add_player()
-        gamemodes = gtk.combo_box_new_text()
+        gamemodes = gtk.combo_box_entry_new_text()
+        gamemodes.child.connect('changed', self.on_gamemode_changed)
         for text in GAMEMODES:
             gamemodes.append_text(text)
         gamemodes.set_active(0)
@@ -62,7 +63,7 @@ class Carrera(object):
         players = self.builder.get_object('player_box').children()
         if not 1 < self.num_players < 5:
             return
-        rounds = 8
+        rounds = int(self.button_rounds_num.get_value())
         for player in players:
             vbox = gtk.VBox()
 
@@ -128,6 +129,42 @@ class Carrera(object):
         self.builder.get_object('race') .hide()
         self.builder.get_object('main').show()
         return True
+
+    def on_gamemode_changed(self, obj):
+        mode = obj.get_text()
+        settings_box = self.builder.get_object('settings_box')
+        for child in settings_box.children():
+            settings_box.remove(child)
+        if mode == 'Match':
+            box = gtk.HBox()
+
+            label = gtk.Label('Runden:')
+            box.pack_start(label)
+            label.show()
+
+            adjustment = gtk.Adjustment(value=5, lower=0, upper=100, step_incr=1,
+                                        page_incr=5)
+            self.button_rounds_num = gtk.SpinButton(adjustment)
+            box.pack_start(self.button_rounds_num)
+            self.button_rounds_num.show()
+
+            box.show()
+            settings_box.pack_start(box, expand=False)
+        elif mode == 'TimeAttack':
+            box = gtk.HBox()
+
+            label = gtk.Label('Sekunden:')
+            box.pack_start(label)
+            label.show()
+
+            adjustment = gtk.Adjustment(value=180, lower=0, upper=3600, step_incr=30,
+                                        page_incr=120)
+            self.button_seconds = gtk.SpinButton(adjustment)
+            box.pack_start(self.button_seconds)
+            self.button_seconds.show()
+
+            box.show()
+            settings_box.pack_start(box, expand=False)
 
     @property
     def num_players(self):
