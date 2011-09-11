@@ -61,6 +61,7 @@ class Carrera(object):
         box.remove(row)
 
     def on_start_race_clicked(self, obj):
+        self.clear_racewindow()
         race_box = self.builder.get_object('race_box')
         players = self.builder.get_object('player_box').children()
         if not 1 < self.num_players < 5:
@@ -91,8 +92,6 @@ class Carrera(object):
         boxes = self.builder.get_object('race_box').children()
         last_times = deepcopy(self.match.player_times)
 
-        self.builder.get_object('main').hide()
-        self.builder.get_object('race').show()
 
         while not self.match.finished:
             while gtk.events_pending():
@@ -120,16 +119,16 @@ class Carrera(object):
         self.quit()
 
     def on_race_delete_event(self, obj, event):
-        self.match.cancel()
-        for box in self.builder.get_object('race_box').children():
-            self.builder.get_object('race_box').remove(box)
-        try:
-            canvas = self.builder.get_object('round_graph').children()[0]
-            self.builder.get_object('round_graph').remove(canvas)
-        except IndexError:
-            pass
-        self.builder.get_object('race') .hide()
-        self.builder.get_object('main').show()
+        #self.match.cancel()
+        #for box in self.builder.get_object('race_box').children():
+        #    self.builder.get_object('race_box').remove(box)
+        #try:
+        #    canvas = self.builder.get_object('round_graph').children()[0]
+        #    self.builder.get_object('round_graph').remove(canvas)
+        #except IndexError:
+        #    pass
+        #self.builder.get_object('race') .hide()
+        #self.builder.get_object('main').show()
         return True
 
     def on_gamemode_changed(self, obj):
@@ -167,6 +166,16 @@ class Carrera(object):
 
             box.show()
             settings_box.pack_start(box, expand=False)
+
+    def clear_racewindow(self):
+        #self.match.cancel()
+        for box in self.builder.get_object('race_box').children():
+            self.builder.get_object('race_box').remove(box)
+        try:
+            canvas = self.builder.get_object('round_graph').children()[0]
+            self.builder.get_object('round_graph').remove(canvas)
+        except IndexError:
+            pass
 
     @property
     def num_players(self):
