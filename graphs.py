@@ -72,7 +72,7 @@ class Graph(object):
 
     def update_axis(self):
         self.barchart.axis([0, self.width, 0, self.height + 1])
-        self.barhchart.axis([0, max(self.total_times), 0, self.num_players])
+        self.barhchart.axis([0, max(self.total_times) + 1, 0, self.num_players])
         height = 1
         for seconds in self.seconds:
             height = max(height, sum(seconds))
