@@ -53,7 +53,7 @@ class Graph(object):
         if len(self.seconds[player]) == self.rounds:
             pos = self.padding + self.num_players - 1 - self.player_finished,
             barh = self.barhchart.barh(pos, self.total_times[player],
-                                       color=COLORS[player], height=0.5)
+                                       color=COLORS[player], height=1 - self.padding * 2)
             self.player_finished += 1
 
         ydata = []
