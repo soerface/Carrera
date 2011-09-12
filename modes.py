@@ -106,9 +106,6 @@ class Match(Mode):
                 self.device.power_off(i)
                 self.player_finished[i] = True
                 self.device.traffic_lights = 3
-            if any(self.player_finished) and now - self.last_times[i] < timedelta(seconds=1):
-                self.device.power_off(i)
-                self.player_finished[i] = True
             if all(self.player_finished):
                 self.device.traffic_lights = 0
                 self.finished = True
