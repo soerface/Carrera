@@ -6,7 +6,7 @@ from matplotlib.figure import Figure
 
 COLORS = ['blue', 'red', 'green', 'black']
 
-class Graph(object):
+class Match(object):
 
     def __init__(self, num_players=1, rounds=1):
         self.num_players = num_players
