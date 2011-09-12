@@ -8,49 +8,61 @@ COLORS = ['blue', 'red', 'green', 'black']
 
 class Graph(object):
 
-    def __init__(self, num_graphs=1, width=1):
+    def __init__(self, num_players=1, rounds=1):
+        self.num_players = num_players
         self.figure = Figure()
         self.canvas = FigureCanvas(self.figure)
-        self.barchart = self.figure.add_subplot(2, 1, 1,)
+        self.barchart = self.figure.add_subplot(2, 2, 1,)
         self.linechart = self.figure.add_subplot(2, 1, 2,)
-        self.num_bars = [0 for i in range(num_graphs)]
-        self.seconds = [[] for i in range(num_graphs)]
-        self.lines = [self.linechart.plot(0, 0) for i in range(num_graphs)]
-        self.width = width
-        self.height = 1
+        self.barhchart = self.figure.add_subplot(2, 2, 2)
+        self.num_bars = [0 for i in range(num_players)]
+        self.total_times = [0 for i in range(num_players)]
+        self.seconds = [[] for i in range(num_players)]
+        self.lines = [self.linechart.plot(0, 0) for i in range(num_players)]
+        self.rounds = rounds
+        self.height = self.width = 1
         self.update_axis()
+        self.player_finished = 0
         #self.canvas.xlabel('Runde')
         #self.canvas.ylabel('Zeit in Sekunden')
 
-        if num_graphs == 1:
+        if num_players == 1:
             self.bar_width = 0.8
             self.padding = 0.1
-        elif num_graphs == 2:
+        elif num_players == 2:
             self.bar_width = 0.4
             self.padding = 0.1
-        elif num_graphs == 3:
+        elif num_players == 3:
             self.bar_width = 0.2
             self.padding = 0.2
-        elif num_graphs == 4:
+        elif num_players == 4:
             self.bar_width = 0.2
             self.padding = 0.1
 
 
     def add(self, player, time):
         seconds = time.total_seconds()
+        self.total_times[player] += seconds
         x = self.padding + player * self.bar_width + self.num_bars[player]
         bar = self.barchart.bar(x, seconds, color=COLORS[player], width=self.bar_width)
         self.num_bars[player] += 1
-        self.width = max(self.width, self.num_bars[player])
+        self.width = max(self.rounds, self.num_bars[player])
         self.height = max(self.height, seconds)
-        self.update_axis()
 
         self.seconds[player].append(seconds)
+        if len(self.seconds[player]) == self.rounds:
+            pos = self.padding + self.num_players - 1 - self.player_finished,
+            barh = self.barhchart.barh(pos, self.total_times[player],
+                                       color=COLORS[player], height=0.5)
+            self.player_finished += 1
+
         ydata = []
         for i in range(len(self.seconds[player]) + 1):
             ydata.append(sum(self.seconds[player][:i]))
         pyplot.setp(self.lines[player], xdata=range(len(self.seconds[player]) + 1),
                     ydata=ydata, color=COLORS[player])
+
+        self.update_axis()
 
     def show(self):
         self.canvas.show()
@@ -60,6 +72,7 @@ class Graph(object):
 
     def update_axis(self):
         self.barchart.axis([0, self.width, 0, self.height + 1])
+        self.barhchart.axis([0, max(self.total_times), 0, self.num_players])
         height = 1
         for seconds in self.seconds:
             height = max(height, sum(seconds))
