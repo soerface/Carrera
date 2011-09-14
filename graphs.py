@@ -4,7 +4,7 @@ from matplotlib import pyplot
 from matplotlib.backends.backend_gtkagg import FigureCanvasGTKAgg as FigureCanvas
 from matplotlib.figure import Figure
 
-COLORS = ['blue', 'red', 'green', 'black']
+from constants import COLORS
 
 class Match(object):
 
