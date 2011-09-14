@@ -191,6 +191,7 @@ class Carrera(object):
         self.builder.get_object('round_graph').add(graph.canvas)
         graph.show()
         need_draw = True
+        self.rank_counter = 1
         while not self.match.finished:
             while gtk.events_pending():
                 gtk.main_iteration()
@@ -202,7 +203,9 @@ class Carrera(object):
                             text = '<span size="36000">{0}/{1}</span>'.format(
                                 len(self.match.player_times[i]) + 1, rounds)
                         else:
-                            text = '<span size="36000">:)</span>'
+                            text = '<span size="36000">{0}.</span>'.format(
+                                self.rank_counter)
+                            self.rank_counter += 1
                         box.children()[1].set_markup(text)
                         graph.add(i, self.match.player_times[i][-1])
                         need_draw = True
