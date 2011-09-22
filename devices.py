@@ -89,12 +89,10 @@ class Virtual(object):
     def power_on(self, *tracks):
         """Enables the power for the given tracks. Pass -1 to enable all."""
         print 'power on:', tracks
-        pass
 
     def power_off(self, *tracks):
         """Disables the power for the given tracks. Pass -1 to disable all."""
         print 'power off:', tracks
-        pass
 
     @property
     def traffic_lights(self):

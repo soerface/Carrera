@@ -3,9 +3,9 @@
   <requires lib="gtk+" version="2.24"/>
   <!-- interface-naming-policy project-wide -->
   <object class="GtkAdjustment" id="adjustment1">
-    <property name="upper">4095</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="upper">4.7999999999999998</property>
+    <property name="step_increment">0.20000000000000001</property>
+    <property name="page_increment">1</property>
   </object>
   <object class="GtkWindow" id="main">
     <property name="visible">True</property>
@@ -733,8 +733,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="adjustment">adjustment1</property>
-                            <property name="round_digits">1</property>
-                            <property name="digits">0</property>
+                            <property name="digits">2</property>
                             <property name="value_pos">left</property>
                             <signal name="format-value" handler="on_computer_speed_format_value" swapped="no"/>
                           </object>

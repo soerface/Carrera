@@ -114,7 +114,7 @@ class Carrera(object):
             settings_box.pack_start(box, expand=False)
 
     def on_computer_speed_format_value(self, obj, value):
-        self.device.computer_speed = value
+        self.device.computer_speed = min(4095, value * 856.695)
 
     on_power_on_0_clicked = lambda self, obj: self.power_on(0)
     on_power_off_0_clicked = lambda self, obj: self.power_off(0)
