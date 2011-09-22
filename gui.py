@@ -14,7 +14,7 @@ GAMEMODES = ['Match', 'TimeAttack']
 class Carrera(object):
 
     def __init__(self):
-        self.device = Virtual()
+        self.device = UE9()
         self.builder = gtk.Builder()
         self.builder.add_from_file('gui.glade')
         self.builder.connect_signals(self)
@@ -75,16 +75,6 @@ class Carrera(object):
         self.quit()
 
     def on_race_delete_event(self, obj, event):
-        #self.match.cancel()
-        #for box in self.builder.get_object('race_box').children():
-        #    self.builder.get_object('race_box').remove(box)
-        #try:
-        #    canvas = self.builder.get_object('round_graph').children()[0]
-        #    self.builder.get_object('round_graph').remove(canvas)
-        #except IndexError:
-        #    pass
-        #self.builder.get_object('race') .hide()
-        #self.builder.get_object('main').show()
         return True
 
     def on_gamemode_changed(self, obj):
@@ -122,6 +112,9 @@ class Carrera(object):
 
             box.show()
             settings_box.pack_start(box, expand=False)
+
+    def on_computer_speed_format_value(self, obj, value):
+        self.device.computer_speed = value
 
     on_power_on_0_clicked = lambda self, obj: self.power_on(0)
     on_power_off_0_clicked = lambda self, obj: self.power_off(0)

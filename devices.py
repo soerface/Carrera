@@ -10,6 +10,7 @@ class UE9(ue9.UE9):
         super(UE9, self).__init__(*args, **kwargs)
         self.feedback(EIOMask=255, EIOState=0, EIODir=0b11110000)
         self.traffic_lights = 3
+        self.computer_speed = 0
 
     def _power(self, state, tracks):
         """Set the power for the given tracks accordingly to the passed state.
@@ -63,6 +64,17 @@ class UE9(ue9.UE9):
         self._traffic_lights = value
         self.feedback(FIOMask=0b1111, FIOState=state, FIODir=0b1111)
 
+    @property
+    def computer_speed(self):
+        return self._computer_speed
+
+    @computer_speed.setter
+    def computer_speed(self, value):
+        #TODO: enable and disabled DAC0 in a separate function
+        if 0 > value > 4095:
+            raise ValueError('Value must be between 0 and 4095')
+        self.feedback(DAC0Update=True, DAC0=int(value), DAC0Enabled=True)
+
     def sensor_state(self, num):
         state = self.feedback()['EIOState']
         return [not state & 0b1, not state & 0b10,
@@ -76,10 +88,12 @@ class Virtual(object):
 
     def power_on(self, *tracks):
         """Enables the power for the given tracks. Pass -1 to enable all."""
+        print 'power on:', tracks
         pass
 
     def power_off(self, *tracks):
         """Disables the power for the given tracks. Pass -1 to disable all."""
+        print 'power off:', tracks
         pass
 
     @property
