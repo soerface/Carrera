@@ -2,3 +2,4 @@
 *.db
 *.db-journal
 *.py[co]
+*_build
