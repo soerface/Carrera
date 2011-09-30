@@ -1,0 +1,186 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Spielmodi &mdash; Carrera v0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="author" title="Über diese Dokumentation" href="about.html" />
+    <link rel="top" title="Carrera v0.0.1 documentation" href="index.html" />
+    <link rel="prev" title="Über uns" href="about.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Allgemeiner Index"
+             accesskey="I">Index</a></li>
+        <li class="right" >
+          <a href="about.html" title="Über uns"
+             accesskey="P">zurück</a> |</li>
+        <li><a href="index.html">Carrera v0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="spielmodi">
+<h1>Spielmodi<a class="headerlink" href="#spielmodi" title="Permalink zu dieser Überschrift">¶</a></h1>
+<div class="section" id="match">
+<h2>Match<a class="headerlink" href="#match" title="Permalink zu dieser Überschrift">¶</a></h2>
+<p>Bei einem Match fahren 2-4 Spieler eine bestimmte Anzahl an Runden. Nach dem
+absolvieren aller Runden wird der Strom auf der entsprechenden Spur
+abgeschaltet.</p>
+<dl class="class">
+<dt id="modes.Match">
+<em class="property">class </em><tt class="descclassname">modes.</tt><tt class="descname">Match</tt><big>(</big><em>device</em>, <em>player_num=2</em>, <em>rounds=5</em><big>)</big><a class="headerlink" href="#modes.Match" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="modes.Match.cancel">
+<tt class="descname">cancel</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.Match.cancel" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Cancel a match.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="modes.Match.countdown">
+<tt class="descname">countdown</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.Match.countdown" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Handle the countdown for the start.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="modes.Match.poll">
+<tt class="descname">poll</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.Match.poll" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Do some &#8220;game logic&#8221;. Needs to be called as often as possible.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="modes.Match.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.Match.save" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Write the acquired data to the database.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="time-attack">
+<h2>Time Attack<a class="headerlink" href="#time-attack" title="Permalink zu dieser Überschrift">¶</a></h2>
+<p>Im Modus &#8220;Time Attack&#8221; wird eine bestimmte Zeit vorgegeben. Nach Ablauf der
+Zeit wird auf allen Spuren der Strom abgeschaltet. Sieger ist, wer die meisten
+Runden geschafft hat.</p>
+<dl class="class">
+<dt id="modes.TimeAttack">
+<em class="property">class </em><tt class="descclassname">modes.</tt><tt class="descname">TimeAttack</tt><big>(</big><em>device</em>, <em>player_num=2</em><big>)</big><a class="headerlink" href="#modes.TimeAttack" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="modes.TimeAttack.cancel">
+<tt class="descname">cancel</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.TimeAttack.cancel" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Cancel a match.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="modes.TimeAttack.countdown">
+<tt class="descname">countdown</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.TimeAttack.countdown" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Handle the countdown for the start.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="modes.TimeAttack.poll">
+<tt class="descname">poll</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.TimeAttack.poll" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Do some &#8220;game logic&#8221;. Needs to be called as often as possible.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="modes.TimeAttack.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.TimeAttack.save" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Write the acquired data to the database.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="modes.TimeAttack.start">
+<tt class="descname">start</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.TimeAttack.start" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Start a new match.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Inhalt</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Spielmodi</a><ul>
+<li><a class="reference internal" href="#match">Match</a></li>
+<li><a class="reference internal" href="#time-attack">Time Attack</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Vorheriges Thema</h4>
+  <p class="topless"><a href="about.html"
+                        title="vorheriges Kapitel">Über uns</a></p>
+  <h3>Diese Seite</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/modes.txt"
+           rel="nofollow">Quelltext anzeigen</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Schnellsuche</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Los" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Geben Sie Suchbegriffe oder einen Modul-, Klassen- oder Funktionsnamen ein.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Allgemeiner Index"
+             >Index</a></li>
+        <li class="right" >
+          <a href="about.html" title="Über uns"
+             >zurück</a> |</li>
+        <li><a href="index.html">Carrera v0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, BG 13 2011/2012.
+      Mit <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.8 erstellt.
+    </div>
+  </body>
+</html>
