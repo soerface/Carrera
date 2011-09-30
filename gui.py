@@ -12,6 +12,7 @@ from modes import Match
 
 GAMEMODES = ['Match', 'TimeAttack']
 class Carrera(object):
+    """Class which handles the GTK interface."""
 
     def __init__(self):
         self.device = UE9()
@@ -29,17 +30,20 @@ class Carrera(object):
         gamemodes.show()
 
     def run(self):
+        """Display the GUI and start the mainloop."""
         try:
             gtk.main()
         except KeyboardInterrupt:
             pass
 
     def quit(self, *args, **kwargs):
+        """Quit the GUI and cancel any running race."""
         if hasattr(self, 'match'):
             self.match.cancel()
         gtk.main_quit()
 
     def add_player(self):
+        """Add a new player box to the player list."""
         if self.num_players == 4:
             return
         box = gtk.HBox()
@@ -129,6 +133,12 @@ class Carrera(object):
 
 
     def clear_racewindow(self):
+        """Clear the racewindow
+
+        Removes any infromation from the racewindow to provide a clean
+        interface
+
+        """
         if hasattr(self, 'match'):
             self.match.cancel()
         for box in self.builder.get_object('race_box').children():
@@ -141,15 +151,25 @@ class Carrera(object):
 
     @property
     def num_players(self):
+        """Contains the total playernumber."""
         return len(self.builder.get_object('player_box').children())
 
     def power_on(self, track):
+        """Power the given track on. Pass -1 to power all on"""
         self.device.power_on(track)
 
     def power_off(self, track):
+        """Power the given track off. Pass -1 to power all off"""
         self.device.power_off(track)
 
     def start_match(self):
+        """Start a new "match" race.
+
+        Fetches information from the main window to prepare the racewindow.
+        It then goes in an infinite loop to poll the sensors. After all players
+        finished the loop will be interrupted.
+
+        """
         race_box = self.builder.get_object('race_box')
         players = self.builder.get_object('player_box').children()
         if not 1 < self.num_players < 5:
@@ -210,6 +230,11 @@ class Carrera(object):
                 need_draw = False
 
     def start_time_attack(self):
+        """Start a new "time attack" race.
+
+        Works the same like `start_match`, it just uses the gamemode "TimeAttack"
+
+        """
         pass
 
 if __name__ == '__main__':
