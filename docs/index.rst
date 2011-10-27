@@ -1,0 +1,25 @@
+.. Carrera documentation master file, created by
+   sphinx-quickstart on Thu Sep 29 19:54:25 2011.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+******************************************
+Willkommen zur Dokumentation von „Carrera“
+******************************************
+
+Inhalt:
+
+.. toctree::
+   about
+   software/index
+   hardware/index
+   :maxdepth: 2
+
+******************
+Indices and tables
+******************
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
