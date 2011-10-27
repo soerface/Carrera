@@ -8,13 +8,13 @@ import gtk
 from constants import COLORS
 from devices import UE9, Virtual
 import graphs
-from modes import Match
+from modes import Match, TimeAttack
 
 GAMEMODES = ['Match', 'TimeAttack']
 class Carrera(object):
 
     def __init__(self):
-        self.device = UE9()
+        self.device = Virtual()
         self.builder = gtk.Builder()
         self.builder.add_from_file('gui.glade')
         self.builder.connect_signals(self)
@@ -106,6 +106,7 @@ class Carrera(object):
 
             adjustment = gtk.Adjustment(value=180, lower=0, upper=3600, step_incr=30,
                                         page_incr=120)
+
             self.button_seconds = gtk.SpinButton(adjustment)
             box.pack_start(self.button_seconds)
             self.button_seconds.show()
@@ -133,6 +134,8 @@ class Carrera(object):
             self.match.cancel()
         for box in self.builder.get_object('race_box').children():
             self.builder.get_object('race_box').remove(box)
+        if hasattr(self, 'time_label'):
+            self.builder.get_object('race_mainbox').remove(self.time_label)
         try:
             canvas = self.builder.get_object('round_graph').children()[0]
             self.builder.get_object('round_graph').remove(canvas)
@@ -150,6 +153,7 @@ class Carrera(object):
         self.device.power_off(track)
 
     def start_match(self):
+
         race_box = self.builder.get_object('race_box')
         players = self.builder.get_object('player_box').children()
         if not 1 < self.num_players < 5:
@@ -174,7 +178,6 @@ class Carrera(object):
 
             race_box.add(vbox)
             vbox.show()
-
         self.match = Match(self.device, self.num_players, rounds=rounds)
         self.match.start()
         boxes = self.builder.get_object('race_box').children()
@@ -210,7 +213,66 @@ class Carrera(object):
                 need_draw = False
 
     def start_time_attack(self):
-        pass
+        race_box = self.builder.get_object('race_box')
+
+        seconds = int(self.button_seconds.get_value())
+
+        self.match = TimeAttack(self.device, self.num_players, seconds=seconds)
+        self.match.start()
+
+        players = self.builder.get_object('player_box').children()
+        if not 1 < self.num_players < 5:
+            return
+        race_mainbox = self.builder.get_object('race_mainbox')
+        self.time_label = time_label = gtk.Label()
+        time_label.set_use_markup(True)
+        time_label.set_markup('<span size="42000">00:00</span>')
+        time_label.show()
+        race_mainbox.pack_start(time_label, expand=False)
+        race_mainbox.reorder_child(time_label, 0)
+        for i, player in enumerate(players):
+            vbox = gtk.VBox()
+
+            playername = gtk.Label()
+            playername.set_use_markup(True)
+            playername.set_markup('<span size="18000" color="{0}">{1}</span>'.format(
+                COLORS[i],
+                player.children()[0].get_text()))
+            vbox.add(playername)
+            playername.show()
+
+            round_ = gtk.Label()
+            round_.set_use_markup(True)
+            round_.set_markup('<span size="36000">1</span>')
+            vbox.add(round_)
+            round_.show()
+
+            race_box.add(vbox)
+            vbox.show()
+        boxes = self.builder.get_object('race_box').children()
+        last_rounds = [0] * self.num_players
+
+        last_time_left = timedelta()
+        while not self.match.finished:
+            while gtk.events_pending():
+                gtk.main_iteration()
+            self.match.poll()
+            for i, box in enumerate(boxes):
+                try:
+                    if last_rounds[i] != self.match.player_rounds[i]:
+                        text = '<span size="36000">{0}</span>'.format(
+                            self.match.player_rounds[i] + 1)
+                        box.children()[1].set_markup(text)
+                        last_rounds[i] = self.match.player_rounds[i]
+                except IndexError:
+                    pass
+            if last_time_left == timedelta() or \
+               last_time_left - self.match.time_left > timedelta(seconds=1):
+                delta = max(self.match.time_left, timedelta())
+                text = '<span size="42000">{0:02}:{1:02}</span>'.format(
+                    *divmod(delta.seconds, 60))
+                time_label.set_markup(text)
+                last_time_left = delta
 
 if __name__ == '__main__':
     carrera = Carrera()
