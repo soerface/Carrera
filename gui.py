@@ -277,6 +277,10 @@ class Carrera(object):
         last_rounds = [0] * self.num_players
 
         last_time_left = timedelta()
+        graph = graphs.TimeAttack(self.num_players)
+        self.builder.get_object('round_graph').add(graph.canvas)
+        graph.show()
+        need_draw = True
         while not self.match.finished:
             while gtk.events_pending():
                 gtk.main_iteration()
@@ -288,6 +292,8 @@ class Carrera(object):
                             self.match.player_rounds[i] + 1)
                         box.children()[1].set_markup(text)
                         last_rounds[i] = self.match.player_rounds[i]
+                        graph.add(i)
+                        need_draw = True
                 except IndexError:
                     pass
             if last_time_left == timedelta() or \
@@ -297,6 +303,9 @@ class Carrera(object):
                     *divmod(delta.seconds, 60))
                 time_label.set_markup(text)
                 last_time_left = delta
+            if need_draw:
+                graph.draw()
+                need_draw = False
 
 if __name__ == '__main__':
     carrera = Carrera()

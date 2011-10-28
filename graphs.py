@@ -6,12 +6,23 @@ from matplotlib.figure import Figure
 
 from constants import COLORS
 
-class Match(object):
+class Graph(object):
 
-    def __init__(self, num_players=1, rounds=1):
+    def __init__(self, num_players=2):
         self.num_players = num_players
         self.figure = Figure()
         self.canvas = FigureCanvas(self.figure)
+
+    def show(self):
+        self.canvas.show()
+
+    def draw(self):
+        self.figure.canvas.draw()
+
+class Match(Graph):
+
+    def __init__(self, num_players=1, rounds=1):
+        super(Match, self).__init__(num_players)
         self.barchart = self.figure.add_subplot(2, 2, 1,)
         self.linechart = self.figure.add_subplot(2, 1, 2,)
         self.barhchart = self.figure.add_subplot(2, 2, 2)
@@ -64,12 +75,6 @@ class Match(object):
 
         self.update_axis()
 
-    def show(self):
-        self.canvas.show()
-
-    def draw(self):
-        self.figure.canvas.draw()
-
     def update_axis(self):
         self.barchart.axis([0, self.width, 0, self.height + 1])
         self.barhchart.axis([0, max(self.total_times) + 1, 0, self.num_players])
@@ -77,3 +82,22 @@ class Match(object):
         for seconds in self.seconds:
             height = max(height, sum(seconds))
         self.linechart.axis([0, self.width, 0, height + 1])
+
+class TimeAttack(Graph):
+
+    def __init__(self, num_players=2):
+        super(TimeAttack, self).__init__(num_players)
+        self.barchart = self.figure.add_subplot(1, 1, 1)
+        self.scores = [1] * num_players
+        self.update_axis()
+
+    def add(self, player):
+        #x = self.padding + player * self.bar_width + self.num_bars[player]
+        x = player + 0.1
+        self.scores[player] += 1
+        bar = self.barchart.bar(x, self.scores[player], color=COLORS[player], width=0.8)
+
+        self.update_axis()
+
+    def update_axis(self):
+        self.barchart.axis([0, self.num_players, 0, max(self.scores)])
