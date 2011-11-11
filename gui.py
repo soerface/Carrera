@@ -8,9 +8,10 @@ import gtk
 from constants import COLORS
 from devices import UE9, Virtual
 import graphs
-from modes import Match, TimeAttack
+from modes import Match, TimeAttack, KnockOut
 
-GAMEMODES = ['Match', 'TimeAttack']
+GAMEMODES = ['Match', 'TimeAttack', 'KnockOut']
+
 class Carrera(object):
     """Class which handles the GTK interface."""
 
@@ -28,6 +29,7 @@ class Carrera(object):
         gamemodes.set_active(0)
         self.builder.get_object('modes_box').add(gamemodes)
         gamemodes.show()
+        self.builder.get_object('banner').set_from_file('images/banner.png')
 
     def run(self):
         """Display the GUI and start the mainloop."""
@@ -74,6 +76,8 @@ class Carrera(object):
             self.start_match()
         elif self.gamemode == 'TimeAttack':
             self.start_time_attack()
+        elif self.gamemode == 'KnockOut':
+            self.start_knockout()
 
     def on_main_delete_event(self, obj, event):
         self.quit()
@@ -306,6 +310,56 @@ class Carrera(object):
             if need_draw:
                 graph.draw()
                 need_draw = False
+
+    def start_knockout(self):
+        """Start a new "knock out" race.
+
+        Works the same like `start_match`, it just uses the gamemode "KnockOut"
+
+        """
+        race_box = self.builder.get_object('race_box')
+
+        self.match = KnockOut(self.device, self.num_players)
+        self.match.start()
+
+        players = self.builder.get_object('player_box').children()
+        if not 1 < self.num_players < 5:
+            return
+        race_mainbox = self.builder.get_object('race_mainbox')
+        self.time_label = time_label = gtk.Label()
+        time_label.set_use_markup(True)
+        time_label.set_markup('<span size="42000">00:00</span>')
+        time_label.show()
+        race_mainbox.pack_start(time_label, expand=False)
+        race_mainbox.reorder_child(time_label, 0)
+        hbox = gtk.VBox()
+        for i, player in enumerate(players):
+
+            playername = gtk.Label()
+            playername.set_use_markup(True)
+            playername.set_markup('<span size="55000" color="{0}">{1}</span>'.format(
+                COLORS[i],
+                player.children()[0].get_text()))
+            hbox.add(playername)
+            playername.show()
+
+        race_box.add(hbox)
+        hbox.show()
+
+        box = self.builder.get_object('race_box').children()[0].children()
+        playernames = [player.children()[0].get_text() for player in players]
+        player_already_lost = [False] * len(playernames)
+        while not self.match.finished:
+            while gtk.events_pending():
+                gtk.main_iteration()
+            self.match.poll()
+            for i, label in enumerate(box):
+                if self.match.player_lost[i] and not player_already_lost[i]:
+                    text = '<span size="55000" color="grey">{0}</span>'.format(
+                        playernames[i])
+                    label.set_markup(text)
+                    player_already_lost[i] = True
+        print 'fertich'
 
 if __name__ == '__main__':
     carrera = Carrera()

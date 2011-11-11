@@ -136,3 +136,36 @@ class TimeAttack(Mode):
     @property
     def time_left(self):
         return self.finish_time - datetime.now()
+
+class KnockOut(Mode):
+
+    def __init__(self, device, player_num=2):
+        super(KnockOut, self).__init__(device, player_num)
+        self.player_lost = [False] * player_num
+        self.player_rounds = [0] * player_num
+
+    def score(self):
+        now = datetime.now()
+        for i, sensor in enumerate(self.sensors):
+            if i >= self.player_num:
+                continue
+            if sensor:
+                # tolerance to not count a round twice or more
+                if now - self.last_times[i] < timedelta(seconds=2):
+                    continue
+                # do not count rounds of dead players
+                if self.player_lost[i]:
+                    continue
+                self.player_rounds[i] += 1
+                print self.player_rounds
+
+                # kill the n00b
+                minimum = min(self.player_rounds)
+                if self.player_rounds.count(minimum) == 1:
+                    player_id = self.player_rounds.index(minimum)
+                    self.device.power_off(player_id)
+                    self.player_lost[player_id] = True
+                    self.player_rounds[player_id] = 4
+                if self.player_lost.count(False) == 1:
+                    self.finished = True
+                self.last_times[i] = now
