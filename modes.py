@@ -157,7 +157,6 @@ class KnockOut(Mode):
                 if self.player_lost[i]:
                     continue
                 self.player_rounds[i] += 1
-                print self.player_rounds
 
                 # kill the n00b
                 minimum = min(self.player_rounds)

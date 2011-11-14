@@ -359,7 +359,6 @@ class Carrera(object):
                         playernames[i])
                     label.set_markup(text)
                     player_already_lost[i] = True
-        print 'fertich'
 
 if __name__ == '__main__':
     carrera = Carrera()
