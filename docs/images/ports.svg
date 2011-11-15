@@ -14,7 +14,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.1 r9760"
-   sodipodi:docname="ports.svg">
+   sodipodi:docname="ports.svg"
+   inkscape:export-filename="/home/soeren/projects/carrera/Carrera/images/ports.png"
+   inkscape:export-xdpi="119"
+   inkscape:export-ydpi="119">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -45,6 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -829,17 +833,5 @@
          id="tspan4508-2"
          x="405.99609"
          y="909.92273">EIO</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="592.55548"
-       y="410.90454"
-       id="text4625"
-       sodipodi:linespacing="125%"
-       transform="translate(0,552.3622)"><tspan
-         sodipodi:role="line"
-         id="tspan4627"
-         x="592.55548"
-         y="410.90454">Traffic lights = FIO0 - FIO3</tspan></text>
   </g>
 </svg>

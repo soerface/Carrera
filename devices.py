@@ -54,6 +54,8 @@ class UE9(ue9.UE9):
         3 = 3 red, 0 green
         4 = 0 red, 1 green
 
+        Uses ports FIO0 - FIO4
+
         """
         if 0 <= value < 4:
             state = 2 ** value - 1
