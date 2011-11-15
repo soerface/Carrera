@@ -93,6 +93,10 @@ class Match(Mode):
 
 
     def check_conditions(self):
+        """Check if a player made all rounds.
+
+        Turns off the track if a player made all his rounds.
+        """
         now = datetime.now()
         for i, times in enumerate(self.player_times):
             if len(times) == self.rounds and not self.player_finished[i]:
@@ -128,6 +132,10 @@ class TimeAttack(Mode):
                 self.last_times[i] = now
 
     def check_conditions(self):
+        """Check if the time is over
+
+        Used to power off the tracks.
+        """
         if self.finish_time <= datetime.now():
             self.device.power_off(-1)
             self.finished = True
