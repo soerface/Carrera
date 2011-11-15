@@ -2,6 +2,12 @@
 Spielmodi
 *********
 
+Basisklasse aller Spielmodi:
+
+.. autoclass:: modes.Mode
+   :members:
+   :inherited-members:
+
 Match
 =====
 
@@ -11,7 +17,6 @@ abgeschaltet.
 
 .. autoclass:: modes.Match
    :members:
-   :inherited-members:
 
 Time Attack
 ===========
@@ -22,4 +27,13 @@ Runden geschafft hat.
 
 .. autoclass:: modes.TimeAttack
    :members:
-   :inherited-members:
+
+Knock Out
+=========
+
+In einem "Knock Out" Rennen fliegt in jeder Runde der langsamste Spieler raus.
+Dadurch sind maximal drei Runden möglich, bei diesen stehen die Spieler aber
+unter hohem Druck und Nervenkitzel.
+
+.. autoclass:: modes.KnockOut
+   :members:

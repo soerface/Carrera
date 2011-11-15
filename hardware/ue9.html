@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Hardware &mdash; Carrera v0.0.1 documentation</title>
+    <title>UE9 &mdash; Carrera v0.0.1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -25,8 +25,9 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <link rel="author" title="Über diese Dokumentation" href="../about.html" />
     <link rel="top" title="Carrera v0.0.1 documentation" href="../index.html" />
-    <link rel="next" title="UE9" href="ue9.html" />
-    <link rel="prev" title="Grafische Oberfläche" href="../software/interface.html" /> 
+    <link rel="up" title="Hardware" href="index.html" />
+    <link rel="next" title="Stromfreigabe" href="power_release.html" />
+    <link rel="prev" title="Hardware" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -39,12 +40,13 @@
           <a href="../py-modindex.html" title="Python-Modulindex"
              >Module</a> |</li>
         <li class="right" >
-          <a href="ue9.html" title="UE9"
+          <a href="power_release.html" title="Stromfreigabe"
              accesskey="N">weiter</a> |</li>
         <li class="right" >
-          <a href="../software/interface.html" title="Grafische Oberfläche"
+          <a href="index.html" title="Hardware"
              accesskey="P">zurück</a> |</li>
-        <li><a href="../index.html">Carrera v0.0.1 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Carrera v0.0.1 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Hardware</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -53,18 +55,39 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="hardware">
-<h1>Hardware<a class="headerlink" href="#hardware" title="Permalink zu dieser Überschrift">¶</a></h1>
-<p>In diesem Kapitel wird die Hardwareentwicklung genauer dargestellt und
-erläutert.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="ue9.html">UE9</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ue9.html#schnittstellen">Schnittstellen</a></li>
+  <div class="section" id="ue9">
+<h1>UE9<a class="headerlink" href="#ue9" title="Permalink zu dieser Überschrift">¶</a></h1>
+<p>Der UE9 bildet unsere Schnittstelle zwischen Software...</p>
+<div class="section" id="schnittstellen">
+<h2>Schnittstellen<a class="headerlink" href="#schnittstellen" title="Permalink zu dieser Überschrift">¶</a></h2>
+<img alt="../_images/ports.png" src="../_images/ports.png" />
+<p>Ampel:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Rot 1: FIO0</li>
+<li>Rot 2: FIO1</li>
+<li>Rot 3: FIO2</li>
+<li>Grün: FIO3</li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="power_release.html">Stromfreigabe</a></li>
+</div></blockquote>
+<p><a class="reference internal" href="power_release.html"><em>Stromfreigabe</em></a>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Strecke 1: EIO4</li>
+<li>Strecke 2: EIO5</li>
+<li>Strecke 3: EIO6</li>
+<li>Strecke 4: EIO7</li>
 </ul>
+</div></blockquote>
+<p>Sensoren:</p>
+<blockquote>
+<div><ul class="simple">
+<li>1: EIO0</li>
+<li>2: EIO1</li>
+<li>3: EIO2</li>
+<li>4: EIO3</li>
+</ul>
+</div></blockquote>
 </div>
 </div>
 
@@ -74,15 +97,23 @@ erläutert.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Inhalt</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">UE9</a><ul>
+<li><a class="reference internal" href="#schnittstellen">Schnittstellen</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Vorheriges Thema</h4>
-  <p class="topless"><a href="../software/interface.html"
-                        title="vorheriges Kapitel">Grafische Oberfläche</a></p>
+  <p class="topless"><a href="index.html"
+                        title="vorheriges Kapitel">Hardware</a></p>
   <h4>Nächstes Thema</h4>
-  <p class="topless"><a href="ue9.html"
-                        title="nächstes Kapitel">UE9</a></p>
+  <p class="topless"><a href="power_release.html"
+                        title="nächstes Kapitel">Stromfreigabe</a></p>
   <h3>Diese Seite</h3>
   <ul class="this-page-menu">
-    <li><a href="../_sources/hardware/index.txt"
+    <li><a href="../_sources/hardware/ue9.txt"
            rel="nofollow">Quelltext anzeigen</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -112,12 +143,13 @@ erläutert.</p>
           <a href="../py-modindex.html" title="Python-Modulindex"
              >Module</a> |</li>
         <li class="right" >
-          <a href="ue9.html" title="UE9"
+          <a href="power_release.html" title="Stromfreigabe"
              >weiter</a> |</li>
         <li class="right" >
-          <a href="../software/interface.html" title="Grafische Oberfläche"
+          <a href="index.html" title="Hardware"
              >zurück</a> |</li>
-        <li><a href="../index.html">Carrera v0.0.1 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Carrera v0.0.1 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Hardware</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
