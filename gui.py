@@ -326,12 +326,6 @@ class Carrera(object):
         if not 1 < self.num_players < 5:
             return
         race_mainbox = self.builder.get_object('race_mainbox')
-        self.time_label = time_label = gtk.Label()
-        time_label.set_use_markup(True)
-        time_label.set_markup('<span size="42000">00:00</span>')
-        time_label.show()
-        race_mainbox.pack_start(time_label, expand=False)
-        race_mainbox.reorder_child(time_label, 0)
         hbox = gtk.VBox()
         for i, player in enumerate(players):
 
