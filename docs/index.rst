@@ -7,8 +7,6 @@
 Willkommen zur Dokumentation von „Carrera“
 ******************************************
 
-Inhalt:
-
 .. toctree::
    about
    software/index
