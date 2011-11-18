@@ -16,7 +16,7 @@ class Carrera(object):
     """Class which handles the GTK interface."""
 
     def __init__(self):
-        self.device = Virtual()
+        self.device = UE9()
         self.builder = gtk.Builder()
         self.builder.add_from_file('gui.glade')
         self.builder.connect_signals(self)
