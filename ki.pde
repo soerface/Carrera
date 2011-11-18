@@ -22,7 +22,7 @@ int VALUES[14] = {60, 70, 80, 90, 100, 80, 90, 100, 50, 60, 70, 80, 90, 100};
 
 void loop() {
     bool sensor;
-    for(int i=0; i<14; i++) {
+    for(int i=0; i<10; i++) {
         if (i == car_pin) {
             continue;
         }
