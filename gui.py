@@ -5,6 +5,8 @@ from copy import deepcopy
 from datetime import datetime, timedelta
 import gtk
 
+import LabJackPython
+
 from constants import COLORS
 from devices import UE9, Virtual
 import graphs
@@ -16,7 +18,11 @@ class Carrera(object):
     """Class which handles the GTK interface."""
 
     def __init__(self):
-        self.device = UE9()
+        try:
+            self.device = UE9()
+        except LabJackPython.NullHandleException, e:
+            # fallback if no UE9 is connected
+            self.device = Virtual()
         self.builder = gtk.Builder()
         self.builder.add_from_file('gui.glade')
         self.builder.connect_signals(self)
