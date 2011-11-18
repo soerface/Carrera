@@ -3,18 +3,22 @@ int value = 0;
 int last_value = 0;
 
 void setup() {
-    int sensors[14];
     for (int i=0; i<14; i++) {
         if (i == car_pin) {
             pinMode(i, OUTPUT);
         }
+        else if (i == 13) {
+            continue;
+        }
         else {
             pinMode(i, INPUT);
+            // connect pull up resistor
+            digitalWrite(i, HIGH);
         }
     }
 }
 
-int VALUES[14] = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 0, 120, 130, 140};
+int VALUES[14] = {60, 70, 80, 90, 100, 80, 90, 100, 50, 60, 70, 80, 90, 100};
 
 void loop() {
     bool sensor;
