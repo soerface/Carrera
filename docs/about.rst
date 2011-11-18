@@ -13,6 +13,7 @@ Mitwirkende
 ===========
 
  * Steffen Beck
+ * Mario Fidora
  * Maximilian Gisa
  * Jacob Hartmann
  * Manuel Lambach
