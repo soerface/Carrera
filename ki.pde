@@ -1,6 +1,12 @@
 int car_pin = 11;
+int last_sensor = 0;
 int value = 0;
-int last_value = 0;
+unsigned long time = 0;
+
+int VALUES1[10] = { 130,    0,    0,    0,    0,    0,    0,    0,    0,   40};
+int DELAY[10] =   {1000,  350, 1000, 1000, 1000, 1000, 1000, 1000, 1000,  500};
+int VALUES2[10] = { 110,  110,    0,    0,    0,    0,    0,    0,    0,  180};
+
 
 void setup() {
     for (int i=0; i<14; i++) {
@@ -18,8 +24,6 @@ void setup() {
     }
 }
 
-int VALUES[14] = {60, 70, 80, 90, 100, 80, 90, 100, 50, 60, 70, 80, 90, 100};
-
 void loop() {
     bool sensor;
     for(int i=0; i<10; i++) {
@@ -28,7 +32,12 @@ void loop() {
         }
         sensor = digitalRead(i);
         if (sensor == LOW) {
-            value = VALUES[i];
+            value = VALUES1[i];
+            time = millis();
+            last_sensor = i;
+        }
+        if (millis() - time > DELAY[last_sensor]) {
+            value = VALUES2[last_sensor];
         }
     }
     analogWrite(car_pin, value);
