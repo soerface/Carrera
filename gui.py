@@ -56,8 +56,6 @@ class Carrera(object):
             return
         box = gtk.HBox()
         button = gtk.Button('', stock=gtk.STOCK_REMOVE)
-        # small "hack" to get rid of the label
-        button.get_children()[0].get_children()[0].get_children()[1].set_label('')
         button.connect('clicked', self.on_remove_player_clicked)
         entry = gtk.Entry()
         entry.set_text('Nameless')
