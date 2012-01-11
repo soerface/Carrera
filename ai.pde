@@ -10,11 +10,11 @@ int last_value = -1;
 unsigned long time = 0;
 
 // the speed of the car when it enters the light barrier
-int VALUES1[10] = {    0,     0,    0,    0,    0,    0,    0,    0,    0,    0};
+int VALUES1[8] = {    0,     0,    0,    0,    0,    0,    0,    0};
 // time in ms to keep that speed
-int DELAY[10] =   {  500,   500,  500,  500,  500,  500,  500,  500,  500,  500};
+int DELAY[8] =   {  500,   500,  500,  500,  500,  500,  500,  500};
 // new speed for the car when the time from above is over
-int VALUES2[10] = {   97,    97,   97,   97,   97,   97,   97,   97,   97,   97};
+int VALUES2[8] = {  101,   101,  101,  101,  101,  101,  101,  101};
 
 
 void setup() {
@@ -35,15 +35,19 @@ void setup() {
 
 void loop() {
     bool sensor;
-    for(int i=0; i<10; i++) {
+    int j;
+    for(int i=0; i<8; i++) {
         if (i == car_pin) {
             continue;
         }
-        // TODO: Workaround for a defective light barrier / port
+        // Workaround for a defective light barrier / port
         if (i == 5) {
-            continue;
+            j = 8;
         }
-        sensor = digitalRead(i);
+        else {
+            j = i;
+        }
+        sensor = digitalRead(j);
         if (sensor == LOW) {
             value = VALUES1[i];
             time = millis();
