@@ -12,7 +12,7 @@ kommuniziert.
 Mitwirkende
 ===========
 
- * Steffen Beck
+ * Stephen Beck
  * Mario Fidora
  * Maximilian Gisa
  * Jacob Hartmann
