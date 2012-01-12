@@ -14,4 +14,5 @@ Interessierten von `Github <https://github.com/swege/Carrera>`_ bezogen werden.
 .. toctree::
    database
    measuring
+   graphs
    ai
