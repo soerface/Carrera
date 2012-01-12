@@ -11,11 +11,12 @@ unsigned long time = 0;
 bool started = false;
 
 // the speed of the car when it enters the light barrier
-int VALUES1[8] = {   40,     7,  101,  50,  90,  60,  101,  150};
+// Sensor number:     0    1    2    3    4    5    6   7
+int VALUES1[8] = {   40,   7, 101,  50,  90,  50, 101,  80};
 // time in ms to keep that speed
-int DELAY[8] =   {  150,   200,  100,  30,  10,  25,  500,  150};
+int DELAY[8] =   {  150, 200, 100,  30,  10,  40, 500,  75};
 // new speed for the car when the time from above is over
-int VALUES2[8] = {  220,   170,  140, 120,  120, 155,  101,  245};
+int VALUES2[8] = {  220, 170, 135, 120, 120, 160, 140, 245};
 
 
 void setup() {
