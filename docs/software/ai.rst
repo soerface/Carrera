@@ -58,5 +58,5 @@ Dies ist jedoch aus einigen Gründen nur schwerlich umsetzbar:
      bei der aktuellen Lichtschranke stärker vom Gas zu gehen, oder bei der
      vorherigen? Das ist wiederum vom Aufbau der Strecke abhängig - wurden
      zuvor viele Kurven verwendet, war es eine lange Gerade, gab es Steigungen
-     und Gefälle? All dies kann nicht mithilfe der Lichtschranken erfasst
+     oder Gefälle? All dies kann nicht mithilfe der Lichtschranken erfasst
      werden, sondern erfordert manuelle Analysen und Tests oder mehr Daten.

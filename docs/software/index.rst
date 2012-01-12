@@ -12,5 +12,6 @@ Die Software haben wir öffentlich zugänglich gemacht, sie kann von
 Interessierten von `Github <https://github.com/swege/Carrera>`_ bezogen werden.
 
 .. toctree::
+   database
    measuring
    ai
