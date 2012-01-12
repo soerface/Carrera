@@ -12,13 +12,7 @@ Willkommen zur Dokumentation von „Carrera“
    software/index
    hardware/index
    track/index
-   :maxdepth: 3
-
-******************
-Indices and tables
-******************
+   :maxdepth: 2
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
-

@@ -1,3 +1,5 @@
+.. index:: Lichtschranken
+
 **************
 Lichtschranken
 **************

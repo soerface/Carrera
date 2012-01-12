@@ -2,11 +2,12 @@
 Hardware
 ********
 
-In diesem Kapitel wird die Hardwareentwicklung genauer dargestellt und
-erläutert.
-
 .. toctree::
-   ue9
+   sensors
+   traffic_lights
    power_release
    car_controlling
-   wiring_loom
+   wiring
+   soldering
+   ue9
+   arduino

@@ -1,3 +1,5 @@
-*************
-Stromfreigabe
-*************
+.. index:: Streckenfreischaltung
+
+*********************
+Streckenfreischaltung
+*********************
