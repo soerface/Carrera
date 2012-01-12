@@ -42,21 +42,21 @@ class UE9(ue9.UE9):
 
     @property
     def traffic_lights(self):
-        return self._traffic_lights
-
-    @traffic_lights.setter
-    def traffic_lights(self, value):
         """Set the state of the traffic lights.
 
-        0 = 0 red, 0 green
-        1 = 1 red, 0 green
-        2 = 2 red, 0 green
-        3 = 3 red, 0 green
-        4 = 0 red, 1 green
+        * 0 = 0 red, 0 green
+        * 1 = 1 red, 0 green
+        * 2 = 2 red, 0 green
+        * 3 = 3 red, 0 green
+        * 4 = 0 red, 1 green
 
         Uses ports FIO0 - FIO4
 
         """
+        return self._traffic_lights
+
+    @traffic_lights.setter
+    def traffic_lights(self, value):
         if 0 <= value < 4:
             state = 2 ** value - 1
         elif value == 4:
@@ -68,6 +68,7 @@ class UE9(ue9.UE9):
 
     @property
     def computer_speed(self):
+        """Deprecated. Selfdriving car is now controlled via the Arduino."""
         return self._computer_speed
 
     @computer_speed.setter
@@ -78,6 +79,12 @@ class UE9(ue9.UE9):
         self.feedback(DAC0Update=True, DAC0=int(value), DAC0Enabled=True)
 
     def sensor_state(self, num):
+        """Returns the state of the sensors at the finish line.
+
+        The state is returned as a list with four booleans, one for each
+        sensor. It uses the ports EIO0 - EIO3.
+
+        """
         state = self.feedback()['EIOState']
         return [not state & 0b1, not state & 0b10,
                 not state & 0b100, not state & 0b1000]
@@ -98,24 +105,30 @@ class Virtual(object):
 
     @property
     def traffic_lights(self):
+        """Set the state of the traffic lights.
+
+        * 0 = 0 red, 0 green
+        * 1 = 1 red, 0 green
+        * 2 = 2 red, 0 green
+        * 3 = 3 red, 0 green
+        * 4 = 0 red, 1 green
+
+        """
         return self._traffic_lights
 
     @traffic_lights.setter
     def traffic_lights(self, value):
-        """Set the state of the traffic lights.
-
-        0 = 0 red, 0 green
-        1 = 1 red, 0 green
-        2 = 2 red, 0 green
-        3 = 3 red, 0 green
-        4 = 0 red, 1 green
-
-        """
         if value not in range(5):
             raise ValueError('Value must be in range 0-4')
         self._traffic_lights = value
 
     def sensor_state(self, num):
+        """Returns the state of the sensors at the finish line.
+
+        The state is returned as a list with four booleans, one for each
+        sensor. It "activates" the sensors randomly.
+
+        """
         v = random()
         return [
             0 <= v < 0.000015,

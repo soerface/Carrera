@@ -15,14 +15,14 @@ beschleunigt das Auto auf den Wert, welcher im dritten Array gespeichert ist.
 Dieser Ansatz wurde gewählt, da es so mit relativ wenig Lichtschranken möglich
 ist, ein gutes Fahrverhalten zu realisieren.
 
-Der Arduino bietet zwar keinen analogen Ausagen, die Geschwindigkeit kann
-jedoch mittels :doc:`PWM-Signal </hardware/arduino>` gesteuert werden.
+Der Arduino bietet zwar keinen analogen Ausgang, die Geschwindigkeit kann
+jedoch mittels :ref:`PWM-Signal <pwm>` gesteuert werden.
 
 Probleme
 --------
 
-Aktuell ist die :doc:`Streckenfreigabe </hardware/power_release` nur für die
-manuellen Fahrzeuge umgesetzt, der Arduino lässt sich nicht stoppen.
+Aktuell ist die :doc:`Streckenfreigabe </hardware/power_release>` nur für die
+manuell gesteuerten Fahrzeuge umgesetzt, der Arduino lässt sich nicht stoppen.
 Grundsätzlich gibt es zwei Möglichkeiten, dieses Problem zu lösen. Zum einen
 elektrotechnisch, indem abhängig vom Signal des UE9 der Arduino physikalisch
 von der Strecke getrennt wird. Dies würde keine Änderungen der Software
