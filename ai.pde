@@ -12,11 +12,11 @@ bool started = false;
 
 // the speed of the car when it enters the light barrier
 // Sensor number:     0    1    2    3    4    5    6   7
-int VALUES1[8] = {   40,   7, 101,  50,  90,  50, 101,  80};
+int VALUES1[8] = {   35,   1, 101,  50,  90,  50, 101,  80};
 // time in ms to keep that speed
-int DELAY[8] =   {  150, 200, 100,  30,  10,  40, 500,  75};
+int DELAY[8] =   {  150, 450,  75,  30,  10,  50, 500,  75};
 // new speed for the car when the time from above is over
-int VALUES2[8] = {  220, 170, 135, 120, 120, 160, 140, 245};
+int VALUES2[8] = {  200, 160, 125, 120, 120, 150, 140, 230};
 
 
 void setup() {
@@ -68,6 +68,12 @@ void loop() {
     // some load off the arduino
     if (last_value != value) {
         analogWrite(car_pin, value);
+        // break
+        if (value == 0) {
+            analogWrite(10, 255);
+        } else {
+            analogWrite(10, 0);
+        }
         last_value = value;
     }
 }
