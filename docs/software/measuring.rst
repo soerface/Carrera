@@ -11,4 +11,4 @@ Methoden, implementierten Schnittstellen und die Bedienung des Programmes.
 .. toctree::
    modes
    gui
-   ue9
+   devices

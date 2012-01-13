@@ -18,6 +18,9 @@ ist, ein gutes Fahrverhalten zu realisieren.
 Der Arduino bietet zwar keinen analogen Ausgang, die Geschwindigkeit kann
 jedoch mittels :ref:`PWM-Signal <pwm>` gesteuert werden.
 
+Das Programm ist in Form eines :download:`Arduino Sketches </../ai.pde>`
+erhältlich.
+
 Probleme
 --------
 
@@ -49,14 +52,15 @@ Maximalgeschwindigkeit gefunden wurde.
 Dies ist jedoch aus einigen Gründen nur schwerlich umsetzbar:
    * Bei den manuellen Tests wurde auch die Position der Lichtschranken
      optimiert, da erkannt wurde, dass sie zu nah oder zu weit entfernt von
-     Kurven stehen. Diese Optimierung wäre auf diese Weise nicht möglich
+     den Kurven stehen. Diese Optimierung wäre auf diese Weise nicht möglich
    * Da der Wagen mit einer gewissen Geschwindigkeit ankommt, ist diese auch
      für die folgende Kurve von Bedeutung, nicht nur die Geschwindigkeit, die
      der Wagen annehmen soll. Der Wagen kann nicht sofort auf die gewünschte
-     Geschwindigkeit. Somit ist die Frage „fliegt er raus oder nicht?“ auch
-     von der vorherigen Lichtschranke abhängig. Doch ist es nun sinnvoller,
-     bei der aktuellen Lichtschranke stärker vom Gas zu gehen, oder bei der
-     vorherigen? Das ist wiederum vom Aufbau der Strecke abhängig - wurden
-     zuvor viele Kurven verwendet, war es eine lange Gerade, gab es Steigungen
-     oder Gefälle? All dies kann nicht mithilfe der Lichtschranken erfasst
-     werden, sondern erfordert manuelle Analysen und Tests oder mehr Daten.
+     Geschwindigkeit gebracht werden. Somit ist die Frage „fliegt er raus oder
+     nicht?“ auch von der vorherigen Lichtschranke abhängig. Doch ist es nun
+     sinnvoller, bei der aktuellen Lichtschranke stärker vom Gas zu gehen, oder
+     bei der vorherigen? Das ist wiederum vom Aufbau der Strecke abhängig -
+     wurden zuvor viele Kurven verwendet, war es eine lange Gerade, gab es
+     Steigungen oder Gefälle? All dies kann nicht mithilfe der Lichtschranken
+     erfasst werden, sondern erfordert manuelle Analysen und Tests oder mehr
+     Daten.

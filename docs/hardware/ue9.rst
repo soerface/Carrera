@@ -9,7 +9,7 @@ Der UE9 bildet unsere Schnittstelle zwischen Software...
 Schnittstellen
 ==============
 
-.. image:: /images/UE9_Ports.png
+.. image:: /images/sketches/UE9_Ports.png
 
 Ampel:
 

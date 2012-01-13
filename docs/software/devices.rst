@@ -1,8 +1,8 @@
 .. index:: UE9
 
-*************
-UE9 Interface
-*************
+***********************
+Devices / UE9 Interface
+***********************
 
 LabJack bietet nicht nur Linuxtreiber für ihr UE9 an, sondern ebenfalls eine
 `Schnittstelle zu Python <http://labjack.com/support/labjackpython>`_. Damit
@@ -20,9 +20,9 @@ das Programm lesbarer machen.
 
 Weiterhin hat diese Abstraktion den zusätzlichen Vorteil, dass das
 Messprogramm auch mit anderen Geräten verwendet werden kann: Es kann selbst
-unverändert bleiben, lediglich die Abstraktionsschickt muss für andere Geräte
-neu geschrieben werden. Dies wurde auch umgesetzt, neben dem Interface für das
-UE9 ist ein virtuelles Messgerät vorhanden. Das virtuelle Gerät ist sehr
+unverändert bleiben, lediglich die Abstraktionsschicht muss für andere Geräte
+neu geschrieben werden. Neben dem Interface für das UE9 wurde daher auch ein
+virtuelles Messgerät geschrieben. Das virtuelle Gerät ist sehr
 nützlich, wenn man die Software testen möchte, jedoch keinen UE9 zur
 Verfügung hat. Das virtuelle Gerät löst dabei zufällig unterschiedliche
 Aktionen aus, wie etwa das Passieren des Ziels, und zeigt Informationen an,
