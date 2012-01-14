@@ -11,8 +11,11 @@ Willkommen zur Dokumentation von „Carrera“
    intro
    software/index
    hardware/index
-   track/index
+   track
+   plans
    :maxdepth: 2
 
-* :ref:`genindex`
-* :ref:`search`
+.. only:: html
+
+  * :ref:`genindex`
+  * :ref:`search`

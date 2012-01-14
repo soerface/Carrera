@@ -34,6 +34,7 @@ uns der Aufgabe, eine Carrera-Strecke zu entwickeln, welche Fahrtzeiten und
 Rundenanzahlen der Fahrer mit Hilfe eines Computers ermittelt und ausgibt.
 
 Die Mitglieder der Gruppe sind:
+
  * Beck, Örkel
  * Fidora, Mario
  * Gisa, Maximilian
