@@ -1,0 +1,182 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Arduino &mdash; Carrera 0.0.1 Dokumentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="top" title="Carrera 0.0.1 Dokumentation" href="../index.html" />
+    <link rel="up" title="Hardware" href="index.html" />
+    <link rel="next" title="Carrera-Strecke" href="../track.html" />
+    <link rel="prev" title="UE9" href="ue9.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Allgemeiner Index"
+             accesskey="I">Index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python-Modulindex"
+             >Module</a> |</li>
+        <li class="right" >
+          <a href="../track.html" title="Carrera-Strecke"
+             accesskey="N">weiter</a> |</li>
+        <li class="right" >
+          <a href="ue9.html" title="UE9"
+             accesskey="P">zurück</a> |</li>
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Hardware</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="arduino">
+<span id="index-0"></span><h1>Arduino<a class="headerlink" href="#arduino" title="Permalink zu dieser Überschrift">¶</a></h1>
+<p>Das Arduino ist das „Gehirn“ unseres selbstgesteuerten Autos. Es ist mit
+einem 32Kb Flash-Speicher und einem 16MHz Prozessor ausgestattet. Das
+<a class="reference internal" href="../software/ai.html"><em>Programm</em></a> ist vollständig auf dem Chip gespeichert. Es
+benötigt lediglich eine Stromversorgung und ist dann sofort einsatzbereit.
+Sämtliche Lichtschranken, die zum selbständigen Fahren benötigt werden, sind
+an das Arduino angeschlossen. Auf Port 11 liegt ein PWM (Pulsweitenmodulation)
+Signal an, welches je nach Position des Autos auf der Strecke einen
+unterschiedlichen Aussteuerungsgrad hat.</p>
+<p>Der Grund für die Nutzung des PWM-Signal ist die Einfachheit, da das Arduino
+einen eingebauten Modulator besitzt. Wir versuchten anfangs durch
+Verstärkerschaltungen das schwache Signal des Arduino zu verstärken, um die
+Autos anzutreiben. Obwohl eine geeignete Schaltung entworfen wurde, war es
+leider nicht möglich diese umzusetzen. Der Grund dafür waren die Stromquellen,
+die nicht fdafür geeignet waren eine Operationsverstärker-Schaltung zu
+betreiben, da die Carrera Trafos einen starken Spannungsabfall bei einer
+Last hatten.</p>
+<p><a class="reference external" href="http://arduino.cc/en/Main/ArduinoBoardUno">Daten des Arduino Uno</a></p>
+<div class="section" id="pwm">
+<span id="index-1"></span><span id="id1"></span><h2>PWM<a class="headerlink" href="#pwm" title="Permalink zu dieser Überschrift">¶</a></h2>
+<p>Hier zunächst ein Beispiel um zu verdeutlichen wie wir das PWM nutzen:</p>
+<p><tt class="docutils literal"><span class="pre">t1</span> <span class="pre">/</span> <span class="pre">T</span> <span class="pre">=</span> <span class="pre">0.25</span> <span class="pre">=</span> <span class="pre">25%</span></tt></p>
+<div class="figure">
+<img alt="../_images/pwm.png" src="../_images/pwm.png" style="width: 50%;" />
+<p class="caption">Quelle: <a class="reference external" href="http://de.wikipedia.org/w/index.php?title=Datei:Pulse_wide_wave.svg&amp;filetimestamp=20080309132226">http://de.wikipedia.org/w/index.php?title=Datei:Pulse_wide_wave.svg&amp;filetimestamp=20080309132226</a></p>
+</div>
+<div class="figure">
+<a class="reference internal image-reference" href="../_images/amplifier_circuit.png"><img alt="../_images/amplifier_circuit.png" src="../_images/amplifier_circuit.png" style="width: 586.5px; height: 469.5px;" /></a>
+</div>
+<p>Durch den unterschiedlichen Aussteuerungsgrad des PWM-Signals fährt auch das
+Auto schneller. Je größer t1 ist desto stärker beschleunigt es. So ist es
+auch möglich zu bremsen. In den normalen Carrera Fahrtenregeler ist ein
+Bremse eingebaut, die, wenn man den Schieber gehen lässt, den Motor
+kurzschließt. Somit kann Strom fließen, was die Energie des Motors abbaut.
+Da dies durch die Arduino-Steuerung nicht möglich ist, geben wir einfach
+ein PWM-Signal mit einem sehr kleinen t1 an und können somit die
+Geschwindigkeit schwach vermindern. Um stärker abbremsen zu können müssten
+wir den Motor kurzschließen, wozu wir allerdings noch keine passende
+Möglichkeit gefunden haben.</p>
+<p>Unten abgebildet ist die Schaltung, welche das PWM-Signal verstärkt. Wir
+verändern die Spannung die vom Trafo kommt. Somit brauchen wir keinen
+Schieberegler mit dem das Auto normalerweise gesteuert wird, sodass diese
+überbrückt werden müssen (rote Linie).</p>
+<div class="section" id="probleme">
+<h3>Probleme<a class="headerlink" href="#probleme" title="Permalink zu dieser Überschrift">¶</a></h3>
+<p>Das größte Problem bereitet uns noch immer das Bremsen gefolgt von
+Schwierigikeiten bei den Lichtschranken, welche sich durch eine optimierte
+Verkabelung und der Reparatur der Lichtschranken durch Herr Althen lösten.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Inhalt</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Arduino</a><ul>
+<li><a class="reference internal" href="#pwm">PWM</a><ul>
+<li><a class="reference internal" href="#probleme">Probleme</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Vorheriges Thema</h4>
+  <p class="topless"><a href="ue9.html"
+                        title="vorheriges Kapitel">UE9</a></p>
+  <h4>Nächstes Thema</h4>
+  <p class="topless"><a href="../track.html"
+                        title="nächstes Kapitel">Carrera-Strecke</a></p>
+  <h3>Diese Seite</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/hardware/arduino.txt"
+           rel="nofollow">Quelltext anzeigen</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Schnellsuche</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Los" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Geben Sie Suchbegriffe oder einen Modul-, Klassen- oder Funktionsnamen ein.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Allgemeiner Index"
+             >Index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python-Modulindex"
+             >Module</a> |</li>
+        <li class="right" >
+          <a href="../track.html" title="Carrera-Strecke"
+             >weiter</a> |</li>
+        <li class="right" >
+          <a href="ue9.html" title="UE9"
+             >zurück</a> |</li>
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li>
+          <li><a href="index.html" >Hardware</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, BG 13 2011/2012.
+      Mit <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2 erstellt.
+    </div>
+  </body>
+</html>

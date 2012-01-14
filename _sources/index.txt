@@ -8,16 +8,14 @@ Willkommen zur Dokumentation von „Carrera“
 ******************************************
 
 .. toctree::
-   about
+   intro
    software/index
    hardware/index
+   track
+   plans
    :maxdepth: 2
 
-******************
-Indices and tables
-******************
+.. only:: html
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
+  * :ref:`genindex`
+  * :ref:`search`

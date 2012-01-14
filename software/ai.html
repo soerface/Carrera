@@ -1,0 +1,189 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Autopilot / KI &mdash; Carrera 0.0.1 Dokumentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="top" title="Carrera 0.0.1 Dokumentation" href="../index.html" />
+    <link rel="up" title="Software" href="index.html" />
+    <link rel="next" title="Hardware" href="../hardware/index.html" />
+    <link rel="prev" title="Graphen" href="graphs.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Allgemeiner Index"
+             accesskey="I">Index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python-Modulindex"
+             >Module</a> |</li>
+        <li class="right" >
+          <a href="../hardware/index.html" title="Hardware"
+             accesskey="N">weiter</a> |</li>
+        <li class="right" >
+          <a href="graphs.html" title="Graphen"
+             accesskey="P">zurück</a> |</li>
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Software</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="autopilot-ki">
+<span id="index-0"></span><h1>Autopilot / KI<a class="headerlink" href="#autopilot-ki" title="Permalink zu dieser Überschrift">¶</a></h1>
+<p>Als zusätzliche Herausforderung haben wir dem Arduino beigebracht, die Strecke
+möglichst schnell zu fahren. Um die aktuelle Autoposition festzustellen,
+verwendet der Arduino die Daten der <a class="reference internal" href="../hardware/sensors.html"><em>Lichtschranken</em></a>.
+Zu jeder Lichtschranke ordnet der Arduino drei Arrays zu: Das erste Array
+enthält die Geschwindigkeit, mit der das Auto fahren soll, sobald es die
+Lichtschranke passiert. Das zweite Array beinhaltet einen Delay, also eine
+Zeitverzögerung (in Millisekunden). Nach Ablauf der dort angegebenen Zeit
+beschleunigt das Auto auf den Wert, welcher im dritten Array gespeichert ist.
+Dieser Ansatz wurde gewählt, da es so mit relativ wenig Lichtschranken möglich
+ist, ein gutes Fahrverhalten zu realisieren.</p>
+<p>Der Arduino bietet zwar keinen analogen Ausgang, die Geschwindigkeit kann
+jedoch mittels <a class="reference internal" href="../hardware/arduino.html#pwm"><em>PWM-Signal</em></a> gesteuert werden.</p>
+<p>Das Programm ist in Form eines <a class="reference download internal" href="../_downloads/ai.pde"><tt class="xref download docutils literal"><span class="pre">Arduino</span> <span class="pre">Sketches</span></tt></a>
+erhältlich.</p>
+<div class="section" id="probleme">
+<h2>Probleme<a class="headerlink" href="#probleme" title="Permalink zu dieser Überschrift">¶</a></h2>
+<p>Aktuell ist die <a class="reference internal" href="../hardware/power_release.html"><em>Streckenfreigabe</em></a> nur für die
+manuell gesteuerten Fahrzeuge umgesetzt, der Arduino lässt sich nicht stoppen.
+Grundsätzlich gibt es zwei Möglichkeiten, dieses Problem zu lösen. Zum einen
+elektrotechnisch, indem abhängig vom Signal des UE9 der Arduino physikalisch
+von der Strecke getrennt wird. Dies würde keine Änderungen der Software
+erfordern. Der andere Ansatz ist, ein einziges Kabel direkt zwischen Arduino
+und UE9 zu verlegen. Über dieses Kabel ist zwar keine physikalische Trennung
+möglich, wie sie bei den menschlichen Spielern angewandt wird, es kann jedoch
+eine &#8220;Bitte&#8221; in Form eines Signals (HIGH oder LOW) an den Arduino gesendet
+werden. Die Software des Arduinos müsste nun lediglich durch eine einfache
+Abfrage erweitert werden, welche abhängig von diesem Signal fährt oder stehen
+bleibt.</p>
+<p>Ein größeres und für uns derzeit unlösbares Problem stellt die „Lernfähigkeit“
+des Arduinos da. Aktuell müssen die Werte für die einzelnen Lichtschranken
+per Hand ausprobiert und eingegeben werden. Eine zunächst scheinbar
+naheliegende Lösung stellte sich nach den manuellen Tests als ungenügend
+heraus:</p>
+<p>Man könnte doch einfach die gesamte Strecke zunächst langsam abfahren, und nach
+jeder Runde ein wenig beschleunigen. Fällt der Wagen nach einer bestimmten
+Lichtschranke aus der Bahn, kann an dieser Stelle nicht weiter beschleunigt
+werden. Dies wird solange durchgeführt, bis für jede Lichtschranke die
+Maximalgeschwindigkeit gefunden wurde.</p>
+<dl class="docutils">
+<dt>Dies ist jedoch aus einigen Gründen nur schwerlich umsetzbar:</dt>
+<dd><ul class="first last simple">
+<li>Bei den manuellen Tests wurde auch die Position der Lichtschranken
+optimiert, da erkannt wurde, dass sie zu nah oder zu weit entfernt von
+den Kurven stehen. Diese Optimierung wäre auf diese Weise nicht möglich</li>
+<li>Da der Wagen mit einer gewissen Geschwindigkeit ankommt, ist diese auch
+für die folgende Kurve von Bedeutung, nicht nur die Geschwindigkeit, die
+der Wagen annehmen soll. Der Wagen kann nicht sofort auf die gewünschte
+Geschwindigkeit gebracht werden. Somit ist die Frage „fliegt er raus oder
+nicht?“ auch von der vorherigen Lichtschranke abhängig. Doch ist es nun
+sinnvoller, bei der aktuellen Lichtschranke stärker vom Gas zu gehen, oder
+bei der vorherigen? Das ist wiederum vom Aufbau der Strecke abhängig -
+wurden zuvor viele Kurven verwendet, war es eine lange Gerade, gab es
+Steigungen oder Gefälle? All dies kann nicht mithilfe der Lichtschranken
+erfasst werden, sondern erfordert manuelle Analysen und Tests oder mehr
+Daten.</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Inhalt</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Autopilot / KI</a><ul>
+<li><a class="reference internal" href="#probleme">Probleme</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Vorheriges Thema</h4>
+  <p class="topless"><a href="graphs.html"
+                        title="vorheriges Kapitel">Graphen</a></p>
+  <h4>Nächstes Thema</h4>
+  <p class="topless"><a href="../hardware/index.html"
+                        title="nächstes Kapitel">Hardware</a></p>
+  <h3>Diese Seite</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/software/ai.txt"
+           rel="nofollow">Quelltext anzeigen</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Schnellsuche</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Los" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Geben Sie Suchbegriffe oder einen Modul-, Klassen- oder Funktionsnamen ein.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Allgemeiner Index"
+             >Index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python-Modulindex"
+             >Module</a> |</li>
+        <li class="right" >
+          <a href="../hardware/index.html" title="Hardware"
+             >weiter</a> |</li>
+        <li class="right" >
+          <a href="graphs.html" title="Graphen"
+             >zurück</a> |</li>
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li>
+          <li><a href="index.html" >Software</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, BG 13 2011/2012.
+      Mit <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2 erstellt.
+    </div>
+  </body>
+</html>

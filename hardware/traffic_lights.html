@@ -1,0 +1,169 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Ampel &mdash; Carrera 0.0.1 Dokumentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="top" title="Carrera 0.0.1 Dokumentation" href="../index.html" />
+    <link rel="up" title="Hardware" href="index.html" />
+    <link rel="next" title="Streckenfreischaltung" href="power_release.html" />
+    <link rel="prev" title="Lichtschranken" href="sensors.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Allgemeiner Index"
+             accesskey="I">Index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python-Modulindex"
+             >Module</a> |</li>
+        <li class="right" >
+          <a href="power_release.html" title="Streckenfreischaltung"
+             accesskey="N">weiter</a> |</li>
+        <li class="right" >
+          <a href="sensors.html" title="Lichtschranken"
+             accesskey="P">zurück</a> |</li>
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Hardware</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="ampel">
+<span id="index-0"></span><h1>Ampel<a class="headerlink" href="#ampel" title="Permalink zu dieser Überschrift">¶</a></h1>
+<p>Um eine visuelle Anzeige für Rennstart und -stopp zur Verfügung zu stellen,
+entschieden wir uns dafür, eine Ampel im „Formel-1-Stil“ zu bauen. Diese Ampel
+besteht aus 8 großen LEDs, welche an einem rechteckigen Holzbrett
+angebracht sind. Sie befindet sich direkt an der Zeitmessbrücke und ist
+somit besonders gut bei Start- und Zieleinfahrt von den Fahrern einsehbar.</p>
+<p>Die Startreihenfolge ist an jene der Formel-1 angelehnt und verläuft wie
+folgt:</p>
+<blockquote>
+<div><ul class="simple">
+<li><ol class="first arabic">
+<li>Reihe rot</li>
+</ol>
+</li>
+<li><ol class="first arabic" start="2">
+<li>Reihe rot</li>
+</ol>
+</li>
+<li><ol class="first arabic" start="3">
+<li>Reihe rot</li>
+</ol>
+</li>
+<li>Reihe 1,2 und 3 aus, 4. Reihe grün</li>
+</ul>
+</div></blockquote>
+<p>Die LEDs werden dabei vom UE9 angesteuert, wobei die Leistungsverstärkung
+mittels Transistoren gewährleistet wird. Sie werden mit 12V Spannung
+betrieben.</p>
+<div class="figure">
+<img alt="../_images/traffic_lights_circuit.png" src="../_images/traffic_lights_circuit.png" />
+<p class="caption">Schaltbild</p>
+</div>
+<div class="section" id="probleme">
+<h2>Probleme<a class="headerlink" href="#probleme" title="Permalink zu dieser Überschrift">¶</a></h2>
+<p>Unerwarteterweise bereitete uns die Ampel mit am meisten Schwierigkeiten, da
+es wiederholt Probleme mit der Verstärkerschaltung gab und die richtige
+Reihenfolge für das Aufleuchten der LEDs lange von Problemen verfolgt war.
+Dieses Problem konnten wir  mit viel Geduld lösen, sodass die LEDs
+letztendlich in richtiger Reihenfolge aufleuchten.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Inhalt</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Ampel</a><ul>
+<li><a class="reference internal" href="#probleme">Probleme</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Vorheriges Thema</h4>
+  <p class="topless"><a href="sensors.html"
+                        title="vorheriges Kapitel">Lichtschranken</a></p>
+  <h4>Nächstes Thema</h4>
+  <p class="topless"><a href="power_release.html"
+                        title="nächstes Kapitel">Streckenfreischaltung</a></p>
+  <h3>Diese Seite</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/hardware/traffic_lights.txt"
+           rel="nofollow">Quelltext anzeigen</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Schnellsuche</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Los" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Geben Sie Suchbegriffe oder einen Modul-, Klassen- oder Funktionsnamen ein.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Allgemeiner Index"
+             >Index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python-Modulindex"
+             >Module</a> |</li>
+        <li class="right" >
+          <a href="power_release.html" title="Streckenfreischaltung"
+             >weiter</a> |</li>
+        <li class="right" >
+          <a href="sensors.html" title="Lichtschranken"
+             >zurück</a> |</li>
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li>
+          <li><a href="index.html" >Hardware</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, BG 13 2011/2012.
+      Mit <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2 erstellt.
+    </div>
+  </body>
+</html>

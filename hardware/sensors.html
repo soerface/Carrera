@@ -1,0 +1,176 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lichtschranken &mdash; Carrera 0.0.1 Dokumentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="top" title="Carrera 0.0.1 Dokumentation" href="../index.html" />
+    <link rel="up" title="Hardware" href="index.html" />
+    <link rel="next" title="Ampel" href="traffic_lights.html" />
+    <link rel="prev" title="Hardware" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Allgemeiner Index"
+             accesskey="I">Index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python-Modulindex"
+             >Module</a> |</li>
+        <li class="right" >
+          <a href="traffic_lights.html" title="Ampel"
+             accesskey="N">weiter</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Hardware"
+             accesskey="P">zurück</a> |</li>
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Hardware</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="lichtschranken">
+<span id="index-0"></span><h1>Lichtschranken<a class="headerlink" href="#lichtschranken" title="Permalink zu dieser Überschrift">¶</a></h1>
+<p>Die Lichtschranken verwendeten wir zunächst für die
+<a class="reference internal" href="../software/measuring.html"><em>Zeitmessung</em></a> der einzelnen Runden bzw. Rennen.
+Hierfür verwendeten wir ein Gestell an dem für jede der vier Bahnen eine
+Lichtschranke befestigt war. Dieses Gestell war bereits vorhanden, sodass wir
+nur noch die Software anpassen mussten. Um die Daten der Lichtschranken am
+Computer auslesen zu können, verwendeten wir ein UE9, auf das später noch
+genauer eingegangen wird.</p>
+<p>Zu den anfänglich vier Lichtschranken kamen im Laufe der Zeit acht weitere
+hinzu. Diese stellten wir vor jeder wichtigen Kurve entlang der Stecke auf,
+um ein computergesteuertes Fahrzeug mit der nötigen Spannung zu versorgen,
+sodass es die Runde optimal fahren kann.</p>
+<p>Die Lichtschranken bestehen aus einer Platine und einem Reflexsensor; fährt
+ein Auto unter diesem Sensor hindurch, sorgt die Schaltung dafür, dass mittels
+eines Pull-Down Widerstandes der High-Pin des Arduinos auf Masse gezogen
+wird. Dabei machen wir uns die Eigenschaften des Arduinos zu Nutzen, da es
+bereits die Möglichkeit eines <span class="target" id="index-1"></span>Pull-Down Widerstandes besitzt müssen wir
+lediglich die Lichtschranke durch ein Kabel mit dem entsprechndem Port verbinden.</p>
+<p>Als Hilfe diente uns ein <a class="reference external" href="http://arduino.cc/it/Tutorial/Button">Tutorial von arduino.cc</a>, in welchem am Beispiel eines
+einfachen Buttons die Schaltung und dazu nötige Software erläutert wurde.</p>
+<div class="figure">
+<img alt="../_images/sensor_circuit.png" src="../_images/sensor_circuit.png" style="width: 75%;" />
+<p class="caption">Schaltbild einer Reflexlichtschranke mit Anschluss an das Arduino</p>
+</div>
+<div class="figure">
+<img alt="../_images/pull-down.png" src="../_images/pull-down.png" />
+<p class="caption">Prinzip eines Pull-Down</p>
+</div>
+<div class="section" id="probleme">
+<h2>Probleme<a class="headerlink" href="#probleme" title="Permalink zu dieser Überschrift">¶</a></h2>
+<p>Gegen Ende des Projekts, nachdem wir uns lange mit dem selbständigen Fahren
+beschäftigt haben, schlossen wir die Zeitmessung, die bereits lange
+abgeschlossen war. und mussten uns einem neuem Problem stellen ein
+reproduzierbarer Fehler welcher dafür sorgte, dass einige Lichtschranken bei
+Aktivierung andere beeinflusst. Dieser Fehler kam Zustande, weil wir ein
+Verlängerungskabel verwendeten, welches den Ansprüchen nicht genügte,
+sodass wir es noch austauschen mussten. Das Kabel welches durch
+Quetschverbindugen an den Streckern befestigt war muss an diesen
+Quetschverbindungen nich perfekt isoliert haben, sodass es ständig zu
+Fehlsignalen kam.</p>
+<div class="figure">
+<img alt="../_images/sensor_1.jpg" src="../_images/sensor_1.jpg" />
+</div>
+<div class="figure">
+<img alt="../_images/sensor_2.jpg" src="../_images/sensor_2.jpg" />
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Inhalt</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Lichtschranken</a><ul>
+<li><a class="reference internal" href="#probleme">Probleme</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Vorheriges Thema</h4>
+  <p class="topless"><a href="index.html"
+                        title="vorheriges Kapitel">Hardware</a></p>
+  <h4>Nächstes Thema</h4>
+  <p class="topless"><a href="traffic_lights.html"
+                        title="nächstes Kapitel">Ampel</a></p>
+  <h3>Diese Seite</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/hardware/sensors.txt"
+           rel="nofollow">Quelltext anzeigen</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Schnellsuche</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Los" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Geben Sie Suchbegriffe oder einen Modul-, Klassen- oder Funktionsnamen ein.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Allgemeiner Index"
+             >Index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python-Modulindex"
+             >Module</a> |</li>
+        <li class="right" >
+          <a href="traffic_lights.html" title="Ampel"
+             >weiter</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Hardware"
+             >zurück</a> |</li>
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li>
+          <li><a href="index.html" >Hardware</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, BG 13 2011/2012.
+      Mit <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2 erstellt.
+    </div>
+  </body>
+</html>

@@ -3,13 +3,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Software &mdash; Carrera v0.0.1 documentation</title>
+    <title>Software &mdash; Carrera 0.0.1 Dokumentation</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -23,10 +26,9 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
-    <link rel="author" title="Über diese Dokumentation" href="../about.html" />
-    <link rel="top" title="Carrera v0.0.1 documentation" href="../index.html" />
-    <link rel="next" title="Spielmodi" href="modes.html" />
-    <link rel="prev" title="Über uns" href="../about.html" /> 
+    <link rel="top" title="Carrera 0.0.1 Dokumentation" href="../index.html" />
+    <link rel="next" title="Datenbank" href="database.html" />
+    <link rel="prev" title="Einleitung" href="../intro.html" /> 
   </head>
   <body>
     <div class="related">
@@ -39,12 +41,12 @@
           <a href="../py-modindex.html" title="Python-Modulindex"
              >Module</a> |</li>
         <li class="right" >
-          <a href="modes.html" title="Spielmodi"
+          <a href="database.html" title="Datenbank"
              accesskey="N">weiter</a> |</li>
         <li class="right" >
-          <a href="../about.html" title="Über uns"
+          <a href="../intro.html" title="Einleitung"
              accesskey="P">zurück</a> |</li>
-        <li><a href="../index.html">Carrera v0.0.1 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -55,18 +57,33 @@
             
   <div class="section" id="software">
 <h1>Software<a class="headerlink" href="#software" title="Permalink zu dieser Überschrift">¶</a></h1>
-<p>Dieses Kapitel beinhaltet Informationen über die Software, wie etwa die zur
-Verfügung stehenden Funktionen, Schnittstellen, und die Bedienung des
-Programmes.</p>
+<p>Die Software besteht aus zwei Teilen: der in Python implementierten
+Messsoftware, welche mithilfe eines LabJack UE9 die Schnittstelle zur
+<a class="reference internal" href="../hardware/index.html"><em>Hardware</em></a> bietet, und dem später hinzugefügten Autopiloten,
+welcher aus einem Arduino Uno besteht. Das Programm ist als „Arduino Sketch”
+geschrieben, einem vereinfachten C Dialekt, der speziell für Arduino Chips
+entwickelt wurde.</p>
+<p>Die Software haben wir öffentlich zugänglich gemacht, sie kann von
+Interessierten von <a class="reference external" href="https://github.com/swege/Carrera">Github</a> bezogen werden.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="modes.html">Spielmodi</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="modes.html#match">Match</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modes.html#time-attack">Time Attack</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modes.html#knock-out">Knock Out</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Datenbank</a></li>
+<li class="toctree-l1"><a class="reference internal" href="measuring.html">Zeitmessung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modes.html">Spielmodi</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modes.html#match">Match</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modes.html#time-attack">Time Attack</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modes.html#knock-out">Knock Out</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="interface.html">Grafische Oberfläche</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.html">Grafische Oberfläche</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devices.html">Devices / UE9 Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="graphs.html">Graphen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ai.html">Autopilot / KI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ai.html#probleme">Probleme</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -78,11 +95,11 @@ Programmes.</p>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Vorheriges Thema</h4>
-  <p class="topless"><a href="../about.html"
-                        title="vorheriges Kapitel">Über uns</a></p>
+  <p class="topless"><a href="../intro.html"
+                        title="vorheriges Kapitel">Einleitung</a></p>
   <h4>Nächstes Thema</h4>
-  <p class="topless"><a href="modes.html"
-                        title="nächstes Kapitel">Spielmodi</a></p>
+  <p class="topless"><a href="database.html"
+                        title="nächstes Kapitel">Datenbank</a></p>
   <h3>Diese Seite</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/software/index.txt"
@@ -115,17 +132,17 @@ Programmes.</p>
           <a href="../py-modindex.html" title="Python-Modulindex"
              >Module</a> |</li>
         <li class="right" >
-          <a href="modes.html" title="Spielmodi"
+          <a href="database.html" title="Datenbank"
              >weiter</a> |</li>
         <li class="right" >
-          <a href="../about.html" title="Über uns"
+          <a href="../intro.html" title="Einleitung"
              >zurück</a> |</li>
-        <li><a href="../index.html">Carrera v0.0.1 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2011, BG 13 2011/2012.
-      Mit <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.8 erstellt.
+      Mit <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2 erstellt.
     </div>
   </body>
 </html>

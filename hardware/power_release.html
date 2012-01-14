@@ -3,13 +3,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Stromfreigabe &mdash; Carrera v0.0.1 documentation</title>
+    <title>Streckenfreischaltung &mdash; Carrera 0.0.1 Dokumentation</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -23,10 +26,10 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
-    <link rel="author" title="Über diese Dokumentation" href="../about.html" />
-    <link rel="top" title="Carrera v0.0.1 documentation" href="../index.html" />
+    <link rel="top" title="Carrera 0.0.1 Dokumentation" href="../index.html" />
     <link rel="up" title="Hardware" href="index.html" />
-    <link rel="prev" title="UE9" href="ue9.html" /> 
+    <link rel="next" title="Verkabelung" href="wiring.html" />
+    <link rel="prev" title="Ampel" href="traffic_lights.html" /> 
   </head>
   <body>
     <div class="related">
@@ -39,9 +42,12 @@
           <a href="../py-modindex.html" title="Python-Modulindex"
              >Module</a> |</li>
         <li class="right" >
-          <a href="ue9.html" title="UE9"
+          <a href="wiring.html" title="Verkabelung"
+             accesskey="N">weiter</a> |</li>
+        <li class="right" >
+          <a href="traffic_lights.html" title="Ampel"
              accesskey="P">zurück</a> |</li>
-        <li><a href="../index.html">Carrera v0.0.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Hardware</a> &raquo;</li> 
       </ul>
     </div>  
@@ -51,8 +57,25 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="stromfreigabe">
-<h1>Stromfreigabe<a class="headerlink" href="#stromfreigabe" title="Permalink zu dieser Überschrift">¶</a></h1>
+  <div class="section" id="streckenfreischaltung">
+<span id="index-0"></span><h1>Streckenfreischaltung<a class="headerlink" href="#streckenfreischaltung" title="Permalink zu dieser Überschrift">¶</a></h1>
+<p>Wir wollten eine Möglichkeit schaffen den Strom der Strecken zu steuern, um
+in erster Linie Frühstarts ausschließen zu können. Des Weiteren wollten wir
+den Zustand der Fahrzeuge schützen, weil nach Beendigung eines Rennens kein
+weiteres Fahren mehr möglich sein sollte. Dies ermöglichte darüberhinaus
+weitere Rennmodi, wie etwa den <a class="reference internal" href="../software/modes.html#modes.KnockOut" title="modes.KnockOut"><tt class="xref py py-class docutils literal"><span class="pre">Knock-Out</span> <span class="pre">Modus</span></tt></a>,
+bei dem der jeweils langsamste Fahrer einer Runde ausscheidet, indem die
+Stromzufuhr für seine Bahn unterbrochen wird.</p>
+<div class="figure">
+<img alt="../_images/relais.jpg" src="../_images/relais.jpg" />
+<p class="caption">Relais in Betrieb</p>
+</div>
+<div class="figure">
+<img alt="../_images/relais_circuit.png" src="../_images/relais_circuit.png" />
+<p class="caption">Schaltplan der Relais</p>
+</div>
+<p>Um dies zu ermöglichen, nutzen wir eine Platine, auf der Relais vorhanden
+sind, welche den Strom jeder Strecke freigeben, sperren und regulieren können.</p>
 </div>
 
 
@@ -62,8 +85,11 @@
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Vorheriges Thema</h4>
-  <p class="topless"><a href="ue9.html"
-                        title="vorheriges Kapitel">UE9</a></p>
+  <p class="topless"><a href="traffic_lights.html"
+                        title="vorheriges Kapitel">Ampel</a></p>
+  <h4>Nächstes Thema</h4>
+  <p class="topless"><a href="wiring.html"
+                        title="nächstes Kapitel">Verkabelung</a></p>
   <h3>Diese Seite</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/hardware/power_release.txt"
@@ -96,15 +122,18 @@
           <a href="../py-modindex.html" title="Python-Modulindex"
              >Module</a> |</li>
         <li class="right" >
-          <a href="ue9.html" title="UE9"
+          <a href="wiring.html" title="Verkabelung"
+             >weiter</a> |</li>
+        <li class="right" >
+          <a href="traffic_lights.html" title="Ampel"
              >zurück</a> |</li>
-        <li><a href="../index.html">Carrera v0.0.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li>
           <li><a href="index.html" >Hardware</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2011, BG 13 2011/2012.
-      Mit <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.8 erstellt.
+      Mit <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2 erstellt.
     </div>
   </body>
 </html>

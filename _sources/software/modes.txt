@@ -12,7 +12,7 @@ Match
 =====
 
 Bei einem Match fahren 2-4 Spieler eine bestimmte Anzahl an Runden. Nach dem
-absolvieren aller Runden wird der Strom auf der entsprechenden Spur
+Absolvieren aller Runden wird der Strom auf der entsprechenden Spur
 abgeschaltet.
 
 .. autoclass:: modes.Match

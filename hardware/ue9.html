@@ -3,13 +3,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>UE9 &mdash; Carrera v0.0.1 documentation</title>
+    <title>UE9 &mdash; Carrera 0.0.1 Dokumentation</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -23,11 +26,10 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
-    <link rel="author" title="Über diese Dokumentation" href="../about.html" />
-    <link rel="top" title="Carrera v0.0.1 documentation" href="../index.html" />
+    <link rel="top" title="Carrera 0.0.1 Dokumentation" href="../index.html" />
     <link rel="up" title="Hardware" href="index.html" />
-    <link rel="next" title="Stromfreigabe" href="power_release.html" />
-    <link rel="prev" title="Hardware" href="index.html" /> 
+    <link rel="next" title="Arduino" href="arduino.html" />
+    <link rel="prev" title="Lötarbeiten" href="soldering.html" /> 
   </head>
   <body>
     <div class="related">
@@ -40,12 +42,12 @@
           <a href="../py-modindex.html" title="Python-Modulindex"
              >Module</a> |</li>
         <li class="right" >
-          <a href="power_release.html" title="Stromfreigabe"
+          <a href="arduino.html" title="Arduino"
              accesskey="N">weiter</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Hardware"
+          <a href="soldering.html" title="Lötarbeiten"
              accesskey="P">zurück</a> |</li>
-        <li><a href="../index.html">Carrera v0.0.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Hardware</a> &raquo;</li> 
       </ul>
     </div>  
@@ -56,11 +58,22 @@
           <div class="body">
             
   <div class="section" id="ue9">
-<h1>UE9<a class="headerlink" href="#ue9" title="Permalink zu dieser Überschrift">¶</a></h1>
-<p>Der UE9 bildet unsere Schnittstelle zwischen Software...</p>
+<span id="index-0"></span><h1>UE9<a class="headerlink" href="#ue9" title="Permalink zu dieser Überschrift">¶</a></h1>
+<p>Das UE9 ist ein universell einsetzbares Mess-Labor, welches die Schnittstelle
+zur <a class="reference internal" href="../software/devices.html"><em>Software</em></a> darstellt und so ermöglicht, Daten
+auszulesen und verschiedene Vorgänge zu steuern. Wir verwendeten es zunächst
+nur für die Zeitnahme durch die Start/Ziel-Lichtschranken, später kamen
+die Steuerung der Relais für die <a class="reference internal" href="power_release.html"><em>Streckenfreischaltung</em></a> und die <a class="reference internal" href="traffic_lights.html"><em>Ampel-Schaltung</em></a> hinzu.</p>
+<p>Gesteuert werden die einzelnen Elemente durch Low bzw. High Pegel, welche
+verstärkt werden, um das dazugehörige Bauelement anzusteuern. Außerdem wird
+erfasst, ob gerade eine Lichtschranke aktiviert ist, also ein Auto die
+Start- / Ziellinie überquert.</p>
+<p>Auf der Website von Meilhaus ist ein <cite>Datenblatt des UE9
+&lt;http://www.meilhaus.de/index.php?id=26&amp;L=0&amp;user_produkte[PR]=85&amp;cHash=2feb1f687f&gt;</cite>
+erhältlich.</p>
 <div class="section" id="schnittstellen">
 <h2>Schnittstellen<a class="headerlink" href="#schnittstellen" title="Permalink zu dieser Überschrift">¶</a></h2>
-<img alt="../_images/ports.png" src="../_images/ports.png" />
+<img alt="../_images/UE9_Ports.png" src="../_images/UE9_Ports.png" />
 <p>Ampel:</p>
 <blockquote>
 <div><ul class="simple">
@@ -70,7 +83,7 @@
 <li>Grün: FIO3</li>
 </ul>
 </div></blockquote>
-<p><a class="reference internal" href="power_release.html"><em>Stromfreigabe</em></a>:</p>
+<p><a class="reference internal" href="power_release.html"><em>Streckenfreigabe</em></a>:</p>
 <blockquote>
 <div><ul class="simple">
 <li>Strecke 1: EIO4</li>
@@ -89,6 +102,13 @@
 </ul>
 </div></blockquote>
 </div>
+<div class="section" id="probleme">
+<h2>Probleme<a class="headerlink" href="#probleme" title="Permalink zu dieser Überschrift">¶</a></h2>
+<p>Das UE9 selbst bereitete uns wenig Probleme, da es fehlerfrei und genau
+arbeitete, jedoch mussten klare Absprachen mit dem Programmierer getroffen
+werden, damit auch alles so funktioniert wie es soll. Meistens ging es um
+die richtige Pinbelegung.</p>
+</div>
 </div>
 
 
@@ -101,16 +121,17 @@
   <ul>
 <li><a class="reference internal" href="#">UE9</a><ul>
 <li><a class="reference internal" href="#schnittstellen">Schnittstellen</a></li>
+<li><a class="reference internal" href="#probleme">Probleme</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Vorheriges Thema</h4>
-  <p class="topless"><a href="index.html"
-                        title="vorheriges Kapitel">Hardware</a></p>
+  <p class="topless"><a href="soldering.html"
+                        title="vorheriges Kapitel">Lötarbeiten</a></p>
   <h4>Nächstes Thema</h4>
-  <p class="topless"><a href="power_release.html"
-                        title="nächstes Kapitel">Stromfreigabe</a></p>
+  <p class="topless"><a href="arduino.html"
+                        title="nächstes Kapitel">Arduino</a></p>
   <h3>Diese Seite</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/hardware/ue9.txt"
@@ -143,18 +164,18 @@
           <a href="../py-modindex.html" title="Python-Modulindex"
              >Module</a> |</li>
         <li class="right" >
-          <a href="power_release.html" title="Stromfreigabe"
+          <a href="arduino.html" title="Arduino"
              >weiter</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Hardware"
+          <a href="soldering.html" title="Lötarbeiten"
              >zurück</a> |</li>
-        <li><a href="../index.html">Carrera v0.0.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li>
           <li><a href="index.html" >Hardware</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2011, BG 13 2011/2012.
-      Mit <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.8 erstellt.
+      Mit <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2 erstellt.
     </div>
   </body>
 </html>

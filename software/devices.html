@@ -1,0 +1,237 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Devices / UE9 Interface &mdash; Carrera 0.0.1 Dokumentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="top" title="Carrera 0.0.1 Dokumentation" href="../index.html" />
+    <link rel="up" title="Zeitmessung" href="measuring.html" />
+    <link rel="next" title="Graphen" href="graphs.html" />
+    <link rel="prev" title="Grafische Oberfläche" href="gui.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Allgemeiner Index"
+             accesskey="I">Index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python-Modulindex"
+             >Module</a> |</li>
+        <li class="right" >
+          <a href="graphs.html" title="Graphen"
+             accesskey="N">weiter</a> |</li>
+        <li class="right" >
+          <a href="gui.html" title="Grafische Oberfläche"
+             accesskey="P">zurück</a> |</li>
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li>
+          <li><a href="index.html" >Software</a> &raquo;</li>
+          <li><a href="measuring.html" accesskey="U">Zeitmessung</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="devices-ue9-interface">
+<span id="index-0"></span><h1>Devices / UE9 Interface<a class="headerlink" href="#devices-ue9-interface" title="Permalink zu dieser Überschrift">¶</a></h1>
+<p>LabJack bietet nicht nur Linuxtreiber für ihr UE9 an, sondern ebenfalls eine
+<a class="reference external" href="http://labjack.com/support/labjackpython">Schnittstelle zu Python</a>. Damit
+ist es möglich, das gesamte Gerät vergleichsweise einfach zu nutzen.</p>
+<p>Um die Nutzung für unsere Zwecke weiter zu vereinfachen, sind wir noch einen
+Schritt weiter gegangen: Mittels Vererbung haben wir die von LabJack
+bereitgestellte <tt class="docutils literal"><span class="pre">UE9</span></tt> Klasse um Methoden erweitert, welche speziell auf
+unsere Zwecke abgestimmt sind. Dazu gehören etwa Methoden, welche die
+<a class="reference internal" href="../hardware/traffic_lights.html"><em>Ampelsequenz</em></a> abspielen oder die
+<a class="reference internal" href="../hardware/sensors.html"><em>Lichtschranken</em></a> an der Startlinie abfragen. Auf
+diese Weise kann das eigentliche Messprogramm frei von kryptischen Portabfragen
+bleiben und stattdessen Methoden mit aussagekräftigen Namen verwenden, welche
+das Programm lesbarer machen.</p>
+<p>Weiterhin hat diese Abstraktion den zusätzlichen Vorteil, dass das
+Messprogramm auch mit anderen Geräten verwendet werden kann: Es kann selbst
+unverändert bleiben, lediglich die Abstraktionsschicht muss für andere Geräte
+neu geschrieben werden. Neben dem Interface für das UE9 wurde daher auch ein
+virtuelles Messgerät geschrieben. Das virtuelle Gerät ist sehr
+nützlich, wenn man die Software testen möchte, jedoch keinen UE9 zur
+Verfügung hat. Das virtuelle Gerät löst dabei zufällig unterschiedliche
+Aktionen aus, wie etwa das Passieren des Ziels, und zeigt Informationen an,
+die es erhält, etwa das ein- oder ausschalten der
+<a class="reference internal" href="../hardware/power_release.html"><em>Stromfreigabe</em></a>.</p>
+<p>Standardmäßig versucht das Programm zunächst, eine Verbindung zu einem realen
+UE9 aufzubauen, wenn das fehlschlägt, wird auf das virtuelle zurückgegriffen.
+Geplant ist außerdem ein Einstellungsdialog, welcher die Möglichkeit bieten
+soll, während des Betriebes zwischen verschiedenen Geräten zu wechseln.</p>
+<p>Im Folgenden sind die von LabJack bereitgestellten Methoden nicht aufgeführt.</p>
+<dl class="class">
+<dt id="devices.UE9">
+<em class="property">class </em><tt class="descclassname">devices.</tt><tt class="descname">UE9</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#devices.UE9" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="devices.UE9.computer_speed">
+<tt class="descname">computer_speed</tt><a class="headerlink" href="#devices.UE9.computer_speed" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Deprecated. Selfdriving car is now controlled via the Arduino.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="devices.UE9.power_off">
+<tt class="descname">power_off</tt><big>(</big><em>*tracks</em><big>)</big><a class="headerlink" href="#devices.UE9.power_off" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Disables the power for the given tracks. Pass -1 to disable all.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="devices.UE9.power_on">
+<tt class="descname">power_on</tt><big>(</big><em>*tracks</em><big>)</big><a class="headerlink" href="#devices.UE9.power_on" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Enables the power for the given tracks. Pass -1 to enable all.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="devices.UE9.sensor_state">
+<tt class="descname">sensor_state</tt><big>(</big><em>num</em><big>)</big><a class="headerlink" href="#devices.UE9.sensor_state" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Returns the state of the sensors at the finish line.</p>
+<p>The state is returned as a list with four booleans, one for each
+sensor. It uses the ports EIO0 - EIO3.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="devices.UE9.traffic_lights">
+<tt class="descname">traffic_lights</tt><a class="headerlink" href="#devices.UE9.traffic_lights" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Set the state of the traffic lights.</p>
+<ul class="simple">
+<li>0 = 0 red, 0 green</li>
+<li>1 = 1 red, 0 green</li>
+<li>2 = 2 red, 0 green</li>
+<li>3 = 3 red, 0 green</li>
+<li>4 = 0 red, 1 green</li>
+</ul>
+<p>Uses ports FIO0 - FIO4</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="devices.Virtual">
+<em class="property">class </em><tt class="descclassname">devices.</tt><tt class="descname">Virtual</tt><a class="headerlink" href="#devices.Virtual" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Virtual device for testing purposes.</p>
+<dl class="method">
+<dt id="devices.Virtual.power_off">
+<tt class="descname">power_off</tt><big>(</big><em>*tracks</em><big>)</big><a class="headerlink" href="#devices.Virtual.power_off" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Disables the power for the given tracks. Pass -1 to disable all.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="devices.Virtual.power_on">
+<tt class="descname">power_on</tt><big>(</big><em>*tracks</em><big>)</big><a class="headerlink" href="#devices.Virtual.power_on" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Enables the power for the given tracks. Pass -1 to enable all.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="devices.Virtual.sensor_state">
+<tt class="descname">sensor_state</tt><big>(</big><em>num</em><big>)</big><a class="headerlink" href="#devices.Virtual.sensor_state" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Returns the state of the sensors at the finish line.</p>
+<p>The state is returned as a list with four booleans, one for each
+sensor. It &#8220;activates&#8221; the sensors randomly.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="devices.Virtual.traffic_lights">
+<tt class="descname">traffic_lights</tt><a class="headerlink" href="#devices.Virtual.traffic_lights" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Set the state of the traffic lights.</p>
+<ul class="simple">
+<li>0 = 0 red, 0 green</li>
+<li>1 = 1 red, 0 green</li>
+<li>2 = 2 red, 0 green</li>
+<li>3 = 3 red, 0 green</li>
+<li>4 = 0 red, 1 green</li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+<p>Die Dokumentation der Pinbelegung befindet sich im
+<a class="reference internal" href="../hardware/ue9.html"><em>Hardware Teil</em></a>.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Vorheriges Thema</h4>
+  <p class="topless"><a href="gui.html"
+                        title="vorheriges Kapitel">Grafische Oberfläche</a></p>
+  <h4>Nächstes Thema</h4>
+  <p class="topless"><a href="graphs.html"
+                        title="nächstes Kapitel">Graphen</a></p>
+  <h3>Diese Seite</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/software/devices.txt"
+           rel="nofollow">Quelltext anzeigen</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Schnellsuche</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Los" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Geben Sie Suchbegriffe oder einen Modul-, Klassen- oder Funktionsnamen ein.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Allgemeiner Index"
+             >Index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python-Modulindex"
+             >Module</a> |</li>
+        <li class="right" >
+          <a href="graphs.html" title="Graphen"
+             >weiter</a> |</li>
+        <li class="right" >
+          <a href="gui.html" title="Grafische Oberfläche"
+             >zurück</a> |</li>
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li>
+          <li><a href="index.html" >Software</a> &raquo;</li>
+          <li><a href="measuring.html" >Zeitmessung</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, BG 13 2011/2012.
+      Mit <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2 erstellt.
+    </div>
+  </body>
+</html>

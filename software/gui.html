@@ -1,0 +1,212 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Grafische Oberfläche &mdash; Carrera 0.0.1 Dokumentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="top" title="Carrera 0.0.1 Dokumentation" href="../index.html" />
+    <link rel="up" title="Zeitmessung" href="measuring.html" />
+    <link rel="next" title="Devices / UE9 Interface" href="devices.html" />
+    <link rel="prev" title="Spielmodi" href="modes.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Allgemeiner Index"
+             accesskey="I">Index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python-Modulindex"
+             >Module</a> |</li>
+        <li class="right" >
+          <a href="devices.html" title="Devices / UE9 Interface"
+             accesskey="N">weiter</a> |</li>
+        <li class="right" >
+          <a href="modes.html" title="Spielmodi"
+             accesskey="P">zurück</a> |</li>
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li>
+          <li><a href="index.html" >Software</a> &raquo;</li>
+          <li><a href="measuring.html" accesskey="U">Zeitmessung</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-gui">
+<span id="grafische-oberflache"></span><h1>Grafische Oberfläche<a class="headerlink" href="#module-gui" title="Permalink zu dieser Überschrift">¶</a></h1>
+<dl class="class">
+<dt id="gui.Carrera">
+<em class="property">class </em><tt class="descclassname">gui.</tt><tt class="descname">Carrera</tt><a class="headerlink" href="#gui.Carrera" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Class which handles the GTK interface.</p>
+<dl class="method">
+<dt id="gui.Carrera.add_player">
+<tt class="descname">add_player</tt><big>(</big><big>)</big><a class="headerlink" href="#gui.Carrera.add_player" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Add a new player box to the player list.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gui.Carrera.clear_racewindow">
+<tt class="descname">clear_racewindow</tt><big>(</big><big>)</big><a class="headerlink" href="#gui.Carrera.clear_racewindow" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Clear the racewindow</p>
+<p>Removes any infromation from the racewindow to provide a clean
+interface</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gui.Carrera.num_players">
+<tt class="descname">num_players</tt><a class="headerlink" href="#gui.Carrera.num_players" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Contains the total playernumber.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gui.Carrera.power_off">
+<tt class="descname">power_off</tt><big>(</big><em>track</em><big>)</big><a class="headerlink" href="#gui.Carrera.power_off" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Power the given track off. Pass -1 to power all off</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gui.Carrera.power_on">
+<tt class="descname">power_on</tt><big>(</big><em>track</em><big>)</big><a class="headerlink" href="#gui.Carrera.power_on" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Power the given track on. Pass -1 to power all on</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gui.Carrera.quit">
+<tt class="descname">quit</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#gui.Carrera.quit" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Quit the GUI and cancel any running race.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gui.Carrera.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#gui.Carrera.run" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Display the GUI and start the mainloop.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gui.Carrera.start_knockout">
+<tt class="descname">start_knockout</tt><big>(</big><big>)</big><a class="headerlink" href="#gui.Carrera.start_knockout" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Start a new &#8220;knock out&#8221; race.</p>
+<p>Works the same like <cite>start_match</cite>, it just uses the gamemode &#8220;KnockOut&#8221;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gui.Carrera.start_match">
+<tt class="descname">start_match</tt><big>(</big><big>)</big><a class="headerlink" href="#gui.Carrera.start_match" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Start a new &#8220;match&#8221; race.</p>
+<p>Fetches information from the main window to prepare the racewindow.
+It then goes in an infinite loop to poll the sensors. After all players
+finished the loop will be interrupted.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gui.Carrera.start_time_attack">
+<tt class="descname">start_time_attack</tt><big>(</big><big>)</big><a class="headerlink" href="#gui.Carrera.start_time_attack" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Start a new &#8220;time attack&#8221; race.</p>
+<p>Works the same like <cite>start_match</cite>, it just uses the gamemode &#8220;TimeAttack&#8221;</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>Die verschiedenen Spielmodi können über das Hauptfenster angewählt werden.
+Der Einstellungsbereich ändert sich dabei passend zum Spielmodus.</p>
+<img alt="../_images/Modes.png" src="../_images/Modes.png" />
+<p>Ist der „Match” Modus gewählt, lässt sich die Rundenanzahl einstellen. Während
+des Rennens werden die Rundenzeiten und am Ende die Gesamtzeit angezeigt. In
+Planung ist außerdem eine Zusammenfassung mit konkreten Zeitangaben, welche am
+Ende eines Rennens ausgegeben und gedruckt werden kann.</p>
+<img alt="../_images/Match.png" src="../_images/Match.png" />
+<p>Im TimeAttack Modus lässt sich die Zeit für ein Rennen einstellen. Nach Ablauf
+der Zeit wird der Strom von allen Strecken genommen. Während des Spiels lässt
+sich die Rundenanzahl jedes Spielers vom Bildschirm ablesen.</p>
+<img alt="../_images/TimeAttack.png" src="../_images/TimeAttack.png" />
+<p>Der KnockOut Modus erlaubt keine weiteren Einstellungen. Die Oberfäche zeigt
+während des Rennens alle Spielernamen an, und graut die Namen derjenigen aus,
+die aus dem Rennen ausscheiden.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Vorheriges Thema</h4>
+  <p class="topless"><a href="modes.html"
+                        title="vorheriges Kapitel">Spielmodi</a></p>
+  <h4>Nächstes Thema</h4>
+  <p class="topless"><a href="devices.html"
+                        title="nächstes Kapitel">Devices / UE9 Interface</a></p>
+  <h3>Diese Seite</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/software/gui.txt"
+           rel="nofollow">Quelltext anzeigen</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Schnellsuche</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Los" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Geben Sie Suchbegriffe oder einen Modul-, Klassen- oder Funktionsnamen ein.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Allgemeiner Index"
+             >Index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python-Modulindex"
+             >Module</a> |</li>
+        <li class="right" >
+          <a href="devices.html" title="Devices / UE9 Interface"
+             >weiter</a> |</li>
+        <li class="right" >
+          <a href="modes.html" title="Spielmodi"
+             >zurück</a> |</li>
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li>
+          <li><a href="index.html" >Software</a> &raquo;</li>
+          <li><a href="measuring.html" >Zeitmessung</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, BG 13 2011/2012.
+      Mit <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2 erstellt.
+    </div>
+  </body>
+</html>
