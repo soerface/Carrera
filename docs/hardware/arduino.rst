@@ -34,13 +34,12 @@ Hier zunächst ein Beispiel um zu verdeutlichen wie wir das PWM nutzen:
 
 ``t1 / T = 0.25 = 25%``
 
-.. figure:: /images/sketches/pwm.png
+.. image:: /images/sketches/pwm.png
    :width: 50%
+   :align: center
 
-   Quelle: http://de.wikipedia.org/w/index.php?title=Datei:Pulse_wide_wave.svg&filetimestamp=20080309132226
-
-.. figure:: /images/sketches/amplifier_circuit.png
-   :scale: 75%
+.. image:: /images/sketches/amplifier_circuit.png
+   :align: center
 
 Durch den unterschiedlichen Aussteuerungsgrad des PWM-Signals fährt auch das
 Auto schneller. Je größer t1 ist desto stärker beschleunigt es. So ist es

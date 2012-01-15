@@ -18,15 +18,16 @@ erfasst, ob gerade eine Lichtschranke aktiviert ist, also ein Auto die
 Start- / Ziellinie überquert.
 
 Auf der Website von Meilhaus ist ein `Datenblatt des UE9
-<http://www.meilhaus.de/index.php?id=26&L=0&user_produkte[PR]=85&cHash=2feb1f687f>`
+<http://www.meilhaus.de/index.php?id=26&L=0&user_produkte[PR]=85&cHash=2feb1f687f>`_
 erhältlich.
 
 Schnittstellen
 ==============
 
 .. image:: /images/sketches/UE9_Ports.png
+   :align: center
 
-Ampel:
+:doc:`Ampel </hardware/traffic_lights>`:
 
    * Rot 1: FIO0
    * Rot 2: FIO1
@@ -40,7 +41,7 @@ Ampel:
    * Strecke 3: EIO6
    * Strecke 4: EIO7
 
-Sensoren:
+:doc:`Lichtschranken </hardware/sensors>`:
 
    * 1: EIO0
    * 2: EIO1

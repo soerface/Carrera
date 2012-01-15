@@ -13,18 +13,16 @@ somit besonders gut bei Start- und Zieleinfahrt von den Fahrern einsehbar.
 Die Startreihenfolge ist an jene der Formel-1 angelehnt und verläuft wie
 folgt:
 
- * 1. Reihe rot
- * 2. Reihe rot
- * 3. Reihe rot
- * Reihe 1,2 und 3 aus, 4. Reihe grün
+ * erste Reihe rot
+ * zweite Reihe rot
+ * dritte Reihe rot
+ * Reihe eins, zwei und drei aus, vierte Reihe grün
 
 Die LEDs werden dabei vom UE9 angesteuert, wobei die Leistungsverstärkung
 mittels Transistoren gewährleistet wird. Sie werden mit 12V Spannung
 betrieben.
 
-.. figure:: /images/sketches/traffic_lights_circuit.png
-
-   Schaltbild
+.. image:: /images/sketches/traffic_lights_circuit.png
 
 Probleme
 --------

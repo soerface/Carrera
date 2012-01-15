@@ -12,7 +12,7 @@ Willkommen zur Dokumentation von „Carrera“
    software/index
    hardware/index
    track
-   plans
+   miscellaneous
    :maxdepth: 2
 
 .. only:: html

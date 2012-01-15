@@ -12,13 +12,11 @@ weitere Rennmodi, wie etwa den :class:`Knock-Out Modus <modes.KnockOut>`,
 bei dem der jeweils langsamste Fahrer einer Runde ausscheidet, indem die
 Stromzufuhr für seine Bahn unterbrochen wird.
 
-.. figure:: /images/photos/relais.jpg
-
-   Relais in Betrieb
-
-.. figure:: /images/sketches/relais_circuit.png
-
-   Schaltplan der Relais
+.. image:: /images/sketches/relais_circuit.png
+   :align: center
 
 Um dies zu ermöglichen, nutzen wir eine Platine, auf der Relais vorhanden
 sind, welche den Strom jeder Strecke freigeben, sperren und regulieren können.
+
+.. image:: /images/photos/relais.jpg
+   :align: center
