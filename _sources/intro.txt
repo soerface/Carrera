@@ -10,8 +10,8 @@ wie wir den weiteren Technik-Unterricht angehen wollten. Es gab zum einen die
 Möglichkeit des herkömmlichen Unterrichts und alternativ dazu die Arbeit an
 einem eigenständigen und kreativen Projekt. Letztendlich entschieden wir uns
 dafür, das Projekt des vorherigen Abiturjahrgangs zu übernehmen, welcher eine
-Carrera-Strecke mit computergestützter Zeitmessung und Rundenzählung ausstatten
-wollte.
+Carrera-Strecke mit computergestützter :doc:`Zeitmessung </software/measuring>`
+und Rundenzählung ausstatten wollte.
 
 Unter der Betreuung unseres Lehrers Herr Dipl.-Ing. Althen stellten wir uns
 dieser Herausforderung. Außerdem erhielten wir die Möglichkeit, das Ergebnis
@@ -121,8 +121,8 @@ Nachdem wir damit begannen, das selbstständige Fahren in Angriff zu nehmen,
 verbrachte ich sehr viel Zeit damit, eine geeignete Verstärkerschaltung zu
 entwickeln, was mir mit Hilfe von Herrn Althen auch gelang.
 
-Außerdem half ich gemeinsam mit Steffen bei der Kommunikation zwischen den
-einzelnen Teams, um eine gute Abstimmung der Hardware auf die Software und
+Außerdem half ich bei der Kommunikation zwischen den einzelnen Teams, um,
+gemeinsam mit Steffen, eine gute Abstimmung der Hardware auf die Software und
 umgekehrt zu erreichen.
 
 Ich bemühte mich, alle aufkommenden Fragen zufriedenstellend zu beantworten
@@ -131,7 +131,8 @@ und konnte mich ebenso gut auf meine Team-Kollegen verlassen.
 Auch habe ich oft an der :doc:`Verkabelung </hardware/wiring>` gearbeitet und
 hier und da ein wenig :doc:`gelötet </hardware/soldering>`.
 
-Ich beschäftigte mich somit hauptsächlich mit den Gebieten:
+Ich beschäftigte mich somit hauptsächlich mit den folgenden Gebieten und
+ihrer Dokumentation:
  * :doc:`Lichtschranken </hardware/sensors>`
  * :doc:`Ampel </hardware/traffic_lights>`
  * :doc:`Streckenfreischaltung </hardware/power_release>`
@@ -145,13 +146,6 @@ behaupten, dass ich viel erreicht und gelernt habe, und dass sich die
 freiwilligen Zusatzstunden wirklich gelohnt haben. Da ich von allen Bereichen
 einen mehr oder weniger intensiven Eindruck erhalten habe, kann ich zweifellos
 sagen, dass wir eine sehr eindrucksvolle Arbeit geleistet haben.
-
-Vorschlag: Den folgenden Satz weglassen, da du bereits oben ne ausführliche
-Liste
-inklusive Seitenverweisen hast.
-
-Ich habe in der Dokumentation an den Kapiteln Hardware (ausführlich),
-Einleitung, Carrera-Stecke gearbeitet.
 
 Jakob Hartmann
 --------------
@@ -215,14 +209,12 @@ geklärt war, welche Aufgaben der Einzelne nun übernimmt. So begannen wir mit
 der ersten Aufgabe eine :doc:`Ampel </hardware/traffic_lights>` und
 :doc:`Startfreigabe </hardware/power_release>` zu bauen, bei der
 Lichtschranken zum Einsatz kamen, welche ich teils zusammengelötet habe.
-
 Des Weiteren mussten :doc:`Lötarbeiten </hardware/soldering>` für die
 Zeitmessung und :doc:`Verkabelung </hardware/wiring>` gemacht werden.
 
 Später kümmerte ich mich dann um die Streckenplanung und die Umsetzung dieser
 in die Realität, was den Zusammenbau des Fundaments und die Befestigung der
 neuen Strecke mit einbezog.
-
 Hierbei mussten die einzelnen Streckenteile mit Hilfe des Senkbohrers und
 Akkuschraubers befestigt werden.
 
@@ -345,20 +337,54 @@ cooler aus, wenn wir sagen können, dass „der Chip da” fährt, und ich musst
 mich nicht damit beschäftigen, wie man mehrere angeschlossene UE9 voneinander
 unterscheidet. :)
 
-Gegen Ende übernahm ich die Zusammenstellung und Strukturierung der
-Dokumentation. Das Grundgerüst für diese war bereits geschaffen, zum Einsatz
-kommt `Sphinx <http://sphinx.pocoo.org>`_, welches die Dokumentation
-der Software unterstützt und auch den restlichen Abschnitten ein
-professionelles Erscheinungsbild in verschiedensten Formaten wie etwa PDF oder
-HTML verleiht.
+Gegen Ende übernahm ich die Zusammenstellung, Strukturierung und Organisation
+der Dokumentation. Das Grundgerüst für diese war bereits geschaffen, zum
+Einsatz kommt `Sphinx <http://sphinx.pocoo.org>`_, welches die
+:doc:`Dokumentation der Software </software/index>` unterstützt und auch den
+restlichen Abschnitten ein professionelles Erscheinungsbild in verschiedensten
+Formaten wie etwa PDF oder HTML verleiht und „stupide” Arbeiten wie die
+Erstellung des Inhaltsverzeichnisses oder alphabetisch sortiertes
+Stichwortverzeichnis übernimmt. Auch das Verweisen auf andere Kapitel und
+Abschnitte wird erheblich angenehmer gestaltet, indem man einfach auf „das
+Kapitel selbst” in seinem Text verweist, und Sphinx automatisch Links bzw.
+die Seitenzahl der verlinkten Seite einfügt.
 
-Durch die Kombination von Hardware und Software habe ich auch einiges über
-die Elektrotechnik gelernt.
+Diese Arbeit hat gegen Ende viel Zeit gekostet, da zunächst alle Texte
+gesammelt werden mussten und diese dann mit dem entsprechendem
+`Markup <http://sphinx.pocoo.org/markup/index.html>`_ ausgezeichnet werden
+mussten, um die Struktur der Dokumentation zu erstellen (Einteilung in
+verschiedene Dateien, Auszeichnung von Kapiteln und Überschriften, korrekte
+Schreibweise für Links, Verweise auf andere Kapitel, Markierung von Worten
+für das Stichwortverzeichnis, um nur eine kleine Auswahl zu nennen).
+Insbesondere das Hinzufügen von Verweisen auf andere Abschnitte und das
+Markieren von Worten für das Stichwortverzeichnis war sehr zeitintensiv.
 
-Die Entwicklung der Software ist chronologisch auf
-`Github <https://github.com/swege/Carrera/commits/master>`_ festgehalten.
-Das Repository ist Teil der Dokumentation und wurde lediglich aus
-Übersichtlichkeitsgründen nicht abgedruckt.
+Während dieser Formatierung und Auszeichnung führte ich bei den meisten Texten
+außerdem eine sprachliche Überarbeitung durch.
+
+Die Entwicklung der Software ist chronologisch auf `Github
+<https://github.com/swege/Carrera>`_ festgehalten. Das Repository ist Teil
+der Dokumentation und wurde lediglich aus Übersichtlichkeitsgründen nicht
+abgedruckt.
+
+Durch die Kombination von Hard- und Software und der dadurch erforderlichen
+Kommunikation habe ich zusätzlich einiges über die Elektrotechnik gelernt.
+Außerdem habe ich relativ früh bemerkt, dass eine gute Dokumentation für
+ein Projekt, insbesondere ein Projekt dieses Umfangs mit verteilten
+Aufgabenfeldern, sehr wichtig ist, denn ständig kam die Frage auf, welcher
+Port von welchem Gerät nun für welche Funktion verwendet wird. Daher fertigte
+ich sehr früh eine entsprechende :doc:`Zeichnung </hardware/ue9>` und
+Beschreibung der Ports an.
+Leider musste ich dabei gleichzeitig lernen, dass es besser gewesen wäre, von
+vornherein von jedem eine saubere Dokumentation seiner Arbeit zu verlangen,
+um diese zeitnah in dieses Gesamtwerk einzubinden zu können. So entstand ein
+unnötiger Zeitdruck in der letzten Woche und eine Verzögerung der Abgabe,
+für welche ich mich an dieser Stelle im Namen des Teams entschuldigen möchte.
+
+Auch wenn es nicht immer einfach war hat das Projekt jeden von uns
+weitergebracht und jede Stunde, egal ob Unterricht, Freistunde oder
+der :doc:`Tag der offenen Tür </miscellaneous>`, hat sich auf jeden
+Fall gelohnt.
 
 Sebastian Wendorf
 -----------------
@@ -378,7 +404,6 @@ Tower zusammengeführt, damit nur noch jeweils eine Leitung übrig blieb, mit
 dieser ersten Verkabelung begann auch dann das Programm zum Selbstfahren.
 Durch Messungen mit dem Messgerät konnten aber auch die defekten
 Lichtschranken lokaliesiert werden.
-
 Nachdem das Relais das erstemal verlötet war, funktionierte dies nicht wie
 beabsichtigt. Ich machte mich daran, den Fehler zu suchen und fand ihn mit
 Hilfe des Schaltbildes. Es war die Masse war verkehrt angeschlossen.
@@ -390,7 +415,6 @@ richtig und isolierte die Kontakte damit es zu keinen Überbrückungen kommt.
 Da ich in der anderen Technikgruppe bin, war es problematisch an dem Projekt
 zu arbeiten, ich nutze daher die Freistunde am Donnerstag, um dies
 Auszugleichen.
-
 Auch war ich bei „Unterricht Live“ da gewesen.
 
 Steffen Zindel

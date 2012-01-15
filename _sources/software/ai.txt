@@ -57,10 +57,11 @@ Dies ist jedoch aus einigen Gründen nur schwerlich umsetzbar:
      für die folgende Kurve von Bedeutung, nicht nur die Geschwindigkeit, die
      der Wagen annehmen soll. Der Wagen kann nicht sofort auf die gewünschte
      Geschwindigkeit gebracht werden. Somit ist die Frage „fliegt er raus oder
-     nicht?“ auch von der vorherigen Lichtschranke abhängig. Doch ist es nun
-     sinnvoller, bei der aktuellen Lichtschranke stärker vom Gas zu gehen, oder
-     bei der vorherigen? Das ist wiederum vom Aufbau der Strecke abhängig -
-     wurden zuvor viele Kurven verwendet, war es eine lange Gerade, gab es
-     Steigungen oder Gefälle? All dies kann nicht mithilfe der Lichtschranken
-     erfasst werden, sondern erfordert manuelle Analysen und Tests oder mehr
-     Daten.
+     nicht?“ auch massiv von der vorherigen Lichtschranke abhängig. Doch ist
+     es nun sinnvoller, bei der aktuellen Lichtschranke stärker vom Gas zu
+     gehen, oder bei der vorherigen? Das ist wiederum vom Aufbau der Strecke
+     abhängig - wurden zuvor viele Kurven verwendet, war es eine lange Gerade,
+     gab es Steigungen oder Gefälle?
+
+All dies kann nicht mithilfe der Lichtschranken erfasst werden, sondern
+erfordert manuelle Analysen und Tests oder mehr Daten.

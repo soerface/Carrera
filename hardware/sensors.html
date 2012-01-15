@@ -59,33 +59,31 @@
             
   <div class="section" id="lichtschranken">
 <span id="index-0"></span><h1>Lichtschranken<a class="headerlink" href="#lichtschranken" title="Permalink zu dieser Überschrift">¶</a></h1>
-<p>Die Lichtschranken verwendeten wir zunächst für die
-<a class="reference internal" href="../software/measuring.html"><em>Zeitmessung</em></a> der einzelnen Runden bzw. Rennen.
-Hierfür verwendeten wir ein Gestell an dem für jede der vier Bahnen eine
-Lichtschranke befestigt war. Dieses Gestell war bereits vorhanden, sodass wir
-nur noch die Software anpassen mussten. Um die Daten der Lichtschranken am
-Computer auslesen zu können, verwendeten wir ein UE9, auf das später noch
-genauer eingegangen wird.</p>
-<p>Zu den anfänglich vier Lichtschranken kamen im Laufe der Zeit acht weitere
-hinzu. Diese stellten wir vor jeder wichtigen Kurve entlang der Stecke auf,
-um ein computergesteuertes Fahrzeug mit der nötigen Spannung zu versorgen,
-sodass es die Runde optimal fahren kann.</p>
+<p>Die Lichtschranken verwendeten wir zunächst nur für die
+<a class="reference internal" href="../software/measuring.html"><em>Zeitmessung</em></a> der einzelnen Runden bzw. Rennen,
+später kamen sie auch für das <a class="reference internal" href="../software/ai.html"><em>selbstständige Fahren</em></a>
+zum Einsatz.</p>
+<p>Für die Lichtschranken der Zeitmessung nutzten wir ein Gestell, an dem für
+jede der vier Bahnen eine Lichtschranke befestigt war. Um die Daten der
+Lichtschranken an den Computer übermitteln zu können, benutzten wir ein
+<a class="reference internal" href="ue9.html"><em>UE9</em></a> als Schnittstelle.</p>
+<p>Die im Laufe der Zeit acht weiteren Lichtschranken verbanden wir direkt
+mit unserem <a class="reference internal" href="arduino.html"><em>Arduino</em></a>, welcher mit Hilfe der von
+den Schranken gelieferten Daten auf die Position des zu steuernden Autos
+schließen kann. Die Lichtschranken sind hierbei vor den Kurven platziert,
+sodass vor diesen rechtzeitig abgebremst werden kann.</p>
+<img alt="../_images/sensor_circuit.png" class="align-center" src="../_images/sensor_circuit.png" />
 <p>Die Lichtschranken bestehen aus einer Platine und einem Reflexsensor; fährt
 ein Auto unter diesem Sensor hindurch, sorgt die Schaltung dafür, dass mittels
-eines Pull-Down Widerstandes der High-Pin des Arduinos auf Masse gezogen
-wird. Dabei machen wir uns die Eigenschaften des Arduinos zu Nutzen, da es
-bereits die Möglichkeit eines <span class="target" id="index-1"></span>Pull-Down Widerstandes besitzt müssen wir
-lediglich die Lichtschranke durch ein Kabel mit dem entsprechndem Port verbinden.</p>
+eines <span class="target" id="index-1"></span>Pull-Down Widerstandes der High-Pin des Arduinos auf Masse
+gezogen wird. Diesen Widerstand bauten wir zunächst in unsere Schaltung ein,
+später fiel er weg, da wir entdeckten, dass der Arduino Uno über eingebaute
+Pull-Down Widerstände verfügt (Port 13 ausgenommen) und diese lediglich
+softwareseitig aktiviert werden mussten</p>
+<img alt="../_images/pull-down.png" class="align-center" src="../_images/pull-down.png" />
 <p>Als Hilfe diente uns ein <a class="reference external" href="http://arduino.cc/it/Tutorial/Button">Tutorial von arduino.cc</a>, in welchem am Beispiel eines
 einfachen Buttons die Schaltung und dazu nötige Software erläutert wurde.</p>
-<div class="figure">
-<img alt="../_images/sensor_circuit.png" src="../_images/sensor_circuit.png" style="width: 75%;" />
-<p class="caption">Schaltbild einer Reflexlichtschranke mit Anschluss an das Arduino</p>
-</div>
-<div class="figure">
-<img alt="../_images/pull-down.png" src="../_images/pull-down.png" />
-<p class="caption">Prinzip eines Pull-Down</p>
-</div>
+<img alt="../_images/sensor_1.jpg" class="align-center" src="../_images/sensor_1.jpg" />
 <div class="section" id="probleme">
 <h2>Probleme<a class="headerlink" href="#probleme" title="Permalink zu dieser Überschrift">¶</a></h2>
 <p>Gegen Ende des Projekts, nachdem wir uns lange mit dem selbständigen Fahren
@@ -98,12 +96,7 @@ sodass wir es noch austauschen mussten. Das Kabel welches durch
 Quetschverbindugen an den Streckern befestigt war muss an diesen
 Quetschverbindungen nich perfekt isoliert haben, sodass es ständig zu
 Fehlsignalen kam.</p>
-<div class="figure">
-<img alt="../_images/sensor_1.jpg" src="../_images/sensor_1.jpg" />
-</div>
-<div class="figure">
-<img alt="../_images/sensor_2.jpg" src="../_images/sensor_2.jpg" />
-</div>
+<img alt="../_images/sensor_2.jpg" class="align-center" src="../_images/sensor_2.jpg" />
 </div>
 </div>
 

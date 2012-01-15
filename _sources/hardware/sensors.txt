@@ -4,39 +4,42 @@
 Lichtschranken
 **************
 
-Die Lichtschranken verwendeten wir zunächst für die
-:doc:`Zeitmessung </software/measuring>` der einzelnen Runden bzw. Rennen.
-Hierfür verwendeten wir ein Gestell an dem für jede der vier Bahnen eine
-Lichtschranke befestigt war. Dieses Gestell war bereits vorhanden, sodass wir
-nur noch die Software anpassen mussten. Um die Daten der Lichtschranken am
-Computer auslesen zu können, verwendeten wir ein UE9, auf das später noch
-genauer eingegangen wird.
+Die Lichtschranken verwendeten wir zunächst nur für die
+:doc:`Zeitmessung </software/measuring>` der einzelnen Runden bzw. Rennen,
+später kamen sie auch für das :doc:`selbstständige Fahren </software/ai>`
+zum Einsatz.
 
-Zu den anfänglich vier Lichtschranken kamen im Laufe der Zeit acht weitere
-hinzu. Diese stellten wir vor jeder wichtigen Kurve entlang der Stecke auf,
-um ein computergesteuertes Fahrzeug mit der nötigen Spannung zu versorgen,
-sodass es die Runde optimal fahren kann.
+Für die Lichtschranken der Zeitmessung nutzten wir ein Gestell, an dem für
+jede der vier Bahnen eine Lichtschranke befestigt war. Um die Daten der
+Lichtschranken an den Computer übermitteln zu können, benutzten wir ein
+:doc:`UE9 </hardware/ue9>` als Schnittstelle.
+
+Die im Laufe der Zeit acht weiteren Lichtschranken verbanden wir direkt
+mit unserem :doc:`Arduino </hardware/arduino>`, welcher mit Hilfe der von
+den Schranken gelieferten Daten auf die Position des zu steuernden Autos
+schließen kann. Die Lichtschranken sind hierbei vor den Kurven platziert,
+sodass vor diesen rechtzeitig abgebremst werden kann.
+
+.. image:: /images/sketches/sensor_circuit.png
+   :align: center
 
 Die Lichtschranken bestehen aus einer Platine und einem Reflexsensor; fährt
 ein Auto unter diesem Sensor hindurch, sorgt die Schaltung dafür, dass mittels
-eines Pull-Down Widerstandes der High-Pin des Arduinos auf Masse gezogen
-wird. Dabei machen wir uns die Eigenschaften des Arduinos zu Nutzen, da es
-bereits die Möglichkeit eines :index:`Pull-Down` Widerstandes besitzt müssen wir
-lediglich die Lichtschranke durch ein Kabel mit dem entsprechndem Port verbinden.
+eines :index:`Pull-Down` Widerstandes der High-Pin des Arduinos auf Masse
+gezogen wird. Diesen Widerstand bauten wir zunächst in unsere Schaltung ein,
+später fiel er weg, da wir entdeckten, dass der Arduino Uno über eingebaute
+Pull-Down Widerstände verfügt (Port 13 ausgenommen) und diese lediglich
+softwareseitig aktiviert werden mussten
+
+.. image:: /images/sketches/pull-down.png
+   :align: center
 
 Als Hilfe diente uns ein `Tutorial von arduino.cc
 <http://arduino.cc/it/Tutorial/Button>`_, in welchem am Beispiel eines
 einfachen Buttons die Schaltung und dazu nötige Software erläutert wurde.
 
-.. figure:: /images/sketches/sensor_circuit.png
-   :width: 75%
-
-   Schaltbild einer Reflexlichtschranke mit Anschluss an das Arduino
-
-
-.. figure:: /images/sketches/pull-down.png
-
-   Prinzip eines Pull-Down
+.. image:: /images/photos/sensor_1.jpg
+   :align: center
 
 Probleme
 ========
@@ -52,6 +55,5 @@ Quetschverbindugen an den Streckern befestigt war muss an diesen
 Quetschverbindungen nich perfekt isoliert haben, sodass es ständig zu
 Fehlsignalen kam.
 
-.. figure:: /images/photos/sensor_1.jpg
-
-.. figure:: /images/photos/sensor_2.jpg
+.. image:: /images/photos/sensor_2.jpg
+   :align: center
