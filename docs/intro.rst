@@ -133,6 +133,7 @@ hier und da ein wenig :doc:`gelötet </hardware/soldering>`.
 
 Ich beschäftigte mich somit hauptsächlich mit den folgenden Gebieten und
 ihrer Dokumentation:
+
  * :doc:`Lichtschranken </hardware/sensors>`
  * :doc:`Ampel </hardware/traffic_lights>`
  * :doc:`Streckenfreischaltung </hardware/power_release>`
