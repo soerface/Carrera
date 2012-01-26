@@ -80,8 +80,7 @@ Last hatten.</p>
 <span id="index-1"></span><span id="id1"></span><h2>PWM<a class="headerlink" href="#pwm" title="Permalink zu dieser Überschrift">¶</a></h2>
 <p>Hier zunächst ein Beispiel um zu verdeutlichen wie wir das PWM nutzen:</p>
 <p><tt class="docutils literal"><span class="pre">t1</span> <span class="pre">/</span> <span class="pre">T</span> <span class="pre">=</span> <span class="pre">0.25</span> <span class="pre">=</span> <span class="pre">25%</span></tt></p>
-<img alt="../_images/pwm.png" class="align-center" src="../_images/pwm.png" style="width: 50%;" />
-<img alt="../_images/amplifier_circuit.png" class="align-center" src="../_images/amplifier_circuit.png" />
+<img alt="../_images/pwm.png" class="align-center" src="../_images/pwm.png" />
 <p>Durch den unterschiedlichen Aussteuerungsgrad des PWM-Signals fährt auch das
 Auto schneller. Je größer t1 ist desto stärker beschleunigt es. So ist es
 auch möglich zu bremsen. In den normalen Carrera Fahrtenregeler ist ein
@@ -96,6 +95,19 @@ Möglichkeit gefunden haben.</p>
 verändern die Spannung die vom Trafo kommt. Somit brauchen wir keinen
 Schieberegler mit dem das Auto normalerweise gesteuert wird, sodass diese
 überbrückt werden müssen (rote Linie).</p>
+<p>Da die erste <span class="target" id="index-2"></span>Verstärkerschaltung nur recht simpel aufgebaut war,
+erhitze der ATmega328 des Arduino sehr stark. Dies lag daran, dass der
+Transistor mit sehr hohen Strömen angesteuert wurde. Durch die neue
+Schaltung wird wesentlich weniger Leistung benötigt, um das Fahrzeug mit
+Strom zu versorgen, da wir einen Steuertransistor haben, welcher den
+eigentlichen Leistungstransistor ansteuert.</p>
+<p>Somit bleib der ATmega auch bei langer Laufzeit kühl. Wir haben die Schaltung
+bereits aufgebaut und getestet, anhand des Oszilloskops sahen wir, dass die
+Spannung des Arduino nicht mehr absank oder flakerte, wenn wir eine Last,
+also das Auto, anlegten. Jedoch haben wir bis jetzt nur einen kurzen Test
+gemacht und müssen erst überprüfen, wie sich der ATmega nach langer Fahrzeit
+verhält.</p>
+<img alt="../_images/amplifier_circuit.png" class="align-center" src="../_images/amplifier_circuit.png" />
 <div class="section" id="probleme">
 <h3>Probleme<a class="headerlink" href="#probleme" title="Permalink zu dieser Überschrift">¶</a></h3>
 <p>Das größte Problem bereitet uns noch immer das Bremsen gefolgt von

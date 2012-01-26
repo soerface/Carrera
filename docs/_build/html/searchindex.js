@@ -1,1 +1,0 @@
-Search.setIndex({objects:{},terms:{zur:0,"\u00fcber":[0,1],goe:1,von:0,stichwortverzeichni:0,descript:1,here:1,willkommen:0,inhalt:0,dokument:0,carrera:0,indic:0,tabl:0,modulindex:0},objtypes:{},titles:["Willkommen zur Dokumentation von \u201eCarrera\u201c","\u00dcber uns"],objnames:{},filenames:["index","about"]})

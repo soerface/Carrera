@@ -35,10 +35,6 @@ Hier zunächst ein Beispiel um zu verdeutlichen wie wir das PWM nutzen:
 ``t1 / T = 0.25 = 25%``
 
 .. image:: /images/sketches/pwm.png
-   :width: 50%
-   :align: center
-
-.. image:: /images/sketches/amplifier_circuit.png
    :align: center
 
 Durch den unterschiedlichen Aussteuerungsgrad des PWM-Signals fährt auch das
@@ -57,6 +53,22 @@ verändern die Spannung die vom Trafo kommt. Somit brauchen wir keinen
 Schieberegler mit dem das Auto normalerweise gesteuert wird, sodass diese
 überbrückt werden müssen (rote Linie).
 
+Da die erste :index:`Verstärkerschaltung` nur recht simpel aufgebaut war,
+erhitze der ATmega328 des Arduino sehr stark. Dies lag daran, dass der
+Transistor mit sehr hohen Strömen angesteuert wurde. Durch die neue
+Schaltung wird wesentlich weniger Leistung benötigt, um das Fahrzeug mit
+Strom zu versorgen, da wir einen Steuertransistor haben, welcher den
+eigentlichen Leistungstransistor ansteuert.
+
+Somit bleib der ATmega auch bei langer Laufzeit kühl. Wir haben die Schaltung
+bereits aufgebaut und getestet, anhand des Oszilloskops sahen wir, dass die
+Spannung des Arduino nicht mehr absank oder flakerte, wenn wir eine Last,
+also das Auto, anlegten. Jedoch haben wir bis jetzt nur einen kurzen Test
+gemacht und müssen erst überprüfen, wie sich der ATmega nach langer Fahrzeit
+verhält.
+
+.. image:: /images/sketches/amplifier_circuit.png
+   :align: center
 
 Probleme
 --------
