@@ -12,11 +12,13 @@ bool started = false;
 
 // the speed of the car when it enters the light barrier
 // Sensor number:     0    1    2    3    4    5    6   7
-int VALUES1[8] = {   35,   1, 101,  50,  90,  50, 101,  80};
+//int VALUES1[8] = {   35,   1, 101,  50,  90,  50, 101,  80};
+int START_VALUE = 165;
+int VALUES1[8] = { 2, 2, 2, 2, 2, 2, 2, 2};
 // time in ms to keep that speed
-int DELAY[8] =   {  150, 450,  75,  30,  10,  50, 500,  75};
+int DELAY[8] =   {  150,  75,   3,   5,   4,  20,  15,  50};
 // new speed for the car when the time from above is over
-int VALUES2[8] = {  200, 160, 125, 120, 120, 150, 140, 230};
+int VALUES2[8] = {  200, 160, 175, 175, 175, 155, 140, 230};
 
 
 void setup() {
@@ -39,9 +41,10 @@ void loop() {
     bool sensor;
     int j;
     if (started == false) {
-        last_value = value = 0;
+        last_value = value = START_VALUE;
         analogWrite(car_pin, value);
         started = true;
+        last_sensor = -1;
     }
     for(int i=0; i<8; i++) {
         if (i == car_pin) {
@@ -60,7 +63,7 @@ void loop() {
             time = millis();
             last_sensor = i;
         }
-        if (millis() - time > DELAY[last_sensor]) {
+        if (last_sensor != -1 && millis() - time > DELAY[last_sensor]) {
             value = 255 - VALUES2[last_sensor];
         }
     }
