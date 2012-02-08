@@ -56,12 +56,12 @@ void loop() {
         }
         sensor = digitalRead(j);
         if (sensor == LOW) {
-            value = VALUES1[i];
+            value = 255 - VALUES1[i];
             time = millis();
             last_sensor = i;
         }
         if (millis() - time > DELAY[last_sensor]) {
-            value = VALUES2[last_sensor];
+            value = 255 - VALUES2[last_sensor];
         }
     }
     // only update the pwm signal if the value actually changed, should take
