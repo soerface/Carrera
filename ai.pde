@@ -9,12 +9,12 @@ unsigned long time = 0;
 // the speed of the car when it enters the light barrier
 // Sensor number:     0    1    2    3    4    5    6   7
 //int VALUES1[8] = {   35,   1, 101,  50,  90,  50, 101,  80};
-int START_VALUE = 255;
-int VALUES1[8] = { 2, 2, 2, 2, 2, 2, 2, 2};
+int START_VALUE = 210;
+int VALUES1[8] = { 140,  20, 100,  80,  80,  80,  90,  80};
 // time in ms to keep that speed
-int DELAY[8] =   {  150,  75,   3,   5,   4,  20,  15,  50};
+int DELAY[8] =   { 350, 400,  50, 100,   4, 200, 150,  50};
 // new speed for the car when the time from above is over
-int VALUES2[8] = {  200, 160, 175, 175, 175, 155, 140, 230};
+int VALUES2[8] = { 180, 160, 125, 145, 145, 160, 150, 230};
 
 
 void setup() {
@@ -67,12 +67,12 @@ void loop() {
             }
             sensor = digitalRead(j);
             if (sensor == LOW) {
-                value = 255 - VALUES1[i];
+                value = VALUES1[i];
                 time = millis();
                 last_sensor = i;
             }
             if (last_sensor != -1 && millis() - time > DELAY[last_sensor]) {
-                value = 255 - VALUES2[last_sensor];
+                value = VALUES2[last_sensor];
             }
         }
     }
