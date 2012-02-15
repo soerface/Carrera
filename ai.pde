@@ -4,16 +4,12 @@
     need to be adjusted manually for each track.
 */
 int car_pin = 11;
-int last_sensor = 0;
-int value = 0;
-int last_value = -1;
 unsigned long time = 0;
-bool started = false;
 
 // the speed of the car when it enters the light barrier
 // Sensor number:     0    1    2    3    4    5    6   7
 //int VALUES1[8] = {   35,   1, 101,  50,  90,  50, 101,  80};
-int START_VALUE = 165;
+int START_VALUE = 255;
 int VALUES1[8] = { 2, 2, 2, 2, 2, 2, 2, 2};
 // time in ms to keep that speed
 int DELAY[8] =   {  150,  75,   3,   5,   4,  20,  15,  50};
@@ -38,45 +34,46 @@ void setup() {
 }
 
 void loop() {
+    int last_sensor = -1;
+    int value = START_VALUE;
+    int last_value = -1;
     bool sensor;
     int j;
-    if (started == false) {
-        last_value = value = START_VALUE;
-        analogWrite(car_pin, value);
-        started = true;
-        last_sensor = -1;
-    }
-    for(int i=0; i<8; i++) {
-        if (i == car_pin) {
-            continue;
+    analogWrite(car_pin, 255);
+    // check the start signal of the UE9
+    while (digitalRead(12)) {
+        // only update the pwm signal if the value actually changed, should take
+        // some load off the arduino
+        if (last_value != value) {
+            analogWrite(car_pin, 255 - value);
+            // break
+            /*if (value == 0) {
+                analogWrite(10, 255);
+            } else {
+                analogWrite(10, 0);
+            }*/
+            last_value = value;
         }
-        // Workaround for a defective light barrier / port
-        if (i == 5) {
-            j = 8;
+        for(int i=0; i<8; i++) {
+            if (i == car_pin) {
+                continue;
+            }
+            // Workaround for a defective light barrier / port
+            if (i == 5) {
+                j = 8;
+            }
+            else {
+                j = i;
+            }
+            sensor = digitalRead(j);
+            if (sensor == LOW) {
+                value = 255 - VALUES1[i];
+                time = millis();
+                last_sensor = i;
+            }
+            if (last_sensor != -1 && millis() - time > DELAY[last_sensor]) {
+                value = 255 - VALUES2[last_sensor];
+            }
         }
-        else {
-            j = i;
-        }
-        sensor = digitalRead(j);
-        if (sensor == LOW) {
-            value = 255 - VALUES1[i];
-            time = millis();
-            last_sensor = i;
-        }
-        if (last_sensor != -1 && millis() - time > DELAY[last_sensor]) {
-            value = 255 - VALUES2[last_sensor];
-        }
-    }
-    // only update the pwm signal if the value actually changed, should take
-    // some load off the arduino
-    if (last_value != value) {
-        analogWrite(car_pin, value);
-        // break
-        if (value == 0) {
-            analogWrite(10, 255);
-        } else {
-            analogWrite(10, 0);
-        }
-        last_value = value;
     }
 }
