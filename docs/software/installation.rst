@@ -47,6 +47,7 @@ virtualenv zu tun, um sie nicht systemweit zu installieren - dies ist aber
 nicht erforderlich. Gestartet wird die Messsoftware mit
 
 .. code-block:: bash
+
    python gui.py
 
 Die für das eigenständige Fahren konzipierte Software besteht aus einem
