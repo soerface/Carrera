@@ -8,13 +8,13 @@ unsigned long time = 0;
 
 // the speed of the car when it enters the light barrier
 // Sensor number:     0    1    2    3    4    5    6   7
-//int VALUES1[8] = {   35,   1, 101,  50,  90,  50, 101,  80};
-int START_VALUE = 210;
-int VALUES1[8] = { 140,  20, 100,  80,  80,  80,  90,  80};
+int START_VALUE = 255;
+//int VALUES1[8] = {  50,  20, 100,  80,  80,  80,  90,  80};
+int VALUES1[8] = {  50,   0,   0,   0,   0,   0,   0,   0};
 // time in ms to keep that speed
-int DELAY[8] =   { 350, 400,  50, 100,   4, 200, 150,  50};
+int DELAY[8] =   { 400, 400,  50, 50,   4, 200, 150,  50};
 // new speed for the car when the time from above is over
-int VALUES2[8] = { 180, 160, 125, 145, 145, 160, 150, 230};
+int VALUES2[8] = { 180, 160, 125, 165, 165, 160, 150, 255};
 
 
 void setup() {
@@ -45,13 +45,16 @@ void loop() {
         // only update the pwm signal if the value actually changed, should take
         // some load off the arduino
         if (last_value != value) {
-            analogWrite(car_pin, 255 - value);
             // break
-            /*if (value == 0) {
-                analogWrite(10, 255);
+            if (value == 0) {
+                analogWrite(car_pin, 255 - value);
+                delay(1);
+                //analogWrite(10, 255);
             } else {
                 analogWrite(10, 0);
-            }*/
+                delay(1);
+                analogWrite(car_pin, 255 - value);
+            }
             last_value = value;
         }
         for(int i=0; i<8; i++) {
