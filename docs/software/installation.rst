@@ -51,6 +51,6 @@ nicht erforderlich. Gestartet wird die Messsoftware mit
    python gui.py
 
 Die für das eigenständige Fahren konzipierte Software besteht aus einem
-einzigen Arduinosketch, zu finden in der Datei ``ai.pde``, und kann mithilfe
+einzigen Arduinosketch, zu finden in der Datei ``ai/ai.pde``, und kann mithilfe
 der `Arduino IDE <http://arduino.cc/hu/Main/Software>`_ auf den Arduino
 übertragen werden.
