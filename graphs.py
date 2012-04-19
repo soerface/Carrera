@@ -10,7 +10,7 @@ class Graph(object):
 
     def __init__(self, num_players=2):
         self.num_players = num_players
-        self.figure = Figure()
+        self.figure = Figure(facecolor='#f2f1f0')
         self.canvas = FigureCanvas(self.figure)
 
     def show(self):
