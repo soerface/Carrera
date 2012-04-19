@@ -14,6 +14,8 @@ int DELAY[8] =   { 400, 400,  50, 50,   4, 200, 150,  50};
 // new speed for the car when the time from above is over
 int VALUES2[8] = {55, 95, 130, 135, 135, 105, 115, 25};
 
+int START_VALUE = 180;
+
 
 void setup() {
     for (int i=0; i<14; i++) {
