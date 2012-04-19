@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Software &mdash; Carrera 0.0.1 Dokumentation</title>
+    <title>Installation &mdash; Carrera 0.0.1 Dokumentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -27,8 +27,9 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
     <link rel="top" title="Carrera 0.0.1 Dokumentation" href="../index.html" />
-    <link rel="next" title="Installation" href="installation.html" />
-    <link rel="prev" title="Einleitung" href="../intro.html" /> 
+    <link rel="up" title="Software" href="index.html" />
+    <link rel="next" title="Datenbank" href="database.html" />
+    <link rel="prev" title="Software" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -41,12 +42,13 @@
           <a href="../py-modindex.html" title="Python-Modulindex"
              >Module</a> |</li>
         <li class="right" >
-          <a href="installation.html" title="Installation"
+          <a href="database.html" title="Datenbank"
              accesskey="N">weiter</a> |</li>
         <li class="right" >
-          <a href="../intro.html" title="Einleitung"
+          <a href="index.html" title="Software"
              accesskey="P">zurück</a> |</li>
-        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li> 
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Software</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -55,38 +57,44 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="software">
-<h1>Software<a class="headerlink" href="#software" title="Permalink zu dieser Überschrift">¶</a></h1>
-<p>Die Software besteht aus zwei Teilen: der in Python implementierten
-Messsoftware, welche mithilfe eines LabJack UE9 die Schnittstelle zur
-<a class="reference internal" href="../hardware/index.html"><em>Hardware</em></a> bietet, und dem später hinzugefügten Autopiloten,
-welcher aus einem Arduino Uno besteht. Das Programm ist als „Arduino Sketch”
-geschrieben, einem vereinfachten C Dialekt, der speziell für Arduino Chips
-entwickelt wurde.</p>
-<p>Die Software haben wir öffentlich zugänglich gemacht, sie kann von
-Interessierten von <a class="reference external" href="https://github.com/swege/Carrera">Github</a> bezogen werden.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="database.html">Datenbank</a></li>
-<li class="toctree-l1"><a class="reference internal" href="measuring.html">Zeitmessung</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="modes.html">Spielmodi</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="modes.html#match">Match</a></li>
-<li class="toctree-l3"><a class="reference internal" href="modes.html#time-attack">Time Attack</a></li>
-<li class="toctree-l3"><a class="reference internal" href="modes.html#knock-out">Knock Out</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="gui.html">Grafische Oberfläche</a></li>
-<li class="toctree-l2"><a class="reference internal" href="devices.html">Devices / UE9 Interface</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="graphs.html">Graphen</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ai.html">Autopilot / KI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ai.html#probleme">Probleme</a></li>
-</ul>
-</li>
-</ul>
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink zu dieser Überschrift">¶</a></h1>
+<p>Neben einer funktionierenden Pythoninstallation (empfohlen: 2.7) sollte
+zunächst das Versionskontrollsystem git installiert werden, um den
+Quellcode dieser Software und den Code der UE9 Treiber komfortabel
+beziehen zu können.</p>
+<div class="highlight-bash"><div class="highlight"><pre>apt-get install git
+</pre></div>
 </div>
+<p>Um die Kommunikation mit dem UE9 zu ermöglichen, sind die Treiber und
+Pythonmodule von LabJack erforderlich, diese können mithilfe der von LabJack
+angebotenen
+<a class="reference external" href="http://labjack.com/support/linux-and-mac-osx-drivers">Anleitung</a>.</p>
+<p>Zur grafischen Darstellung wird matplotlib und das zugehörige Pythonmodul
+benötigt:</p>
+<div class="highlight-bash"><div class="highlight"><pre>apt-get install python-matplotlib
+</pre></div>
+</div>
+<p>Der Quellcode Software kann direkt von unserem Repository bezogen werden:</p>
+<div class="highlight-bash"><div class="highlight"><pre>git clone https://github.com/swege/Carrera
+</pre></div>
+</div>
+<p>Die restlichen benötigten Pythonmodule sind in der mitgelieferten
+requirements.txt aufgelistet. Nachdem pip installiert wurde:</p>
+<div class="highlight-bash"><div class="highlight"><pre>apt-get install pip
+</pre></div>
+</div>
+<p>Können sie leicht per</p>
+<div class="highlight-bash"><div class="highlight"><pre>pip install -r requirements.txt
+</pre></div>
+</div>
+<p>heruntergeladen und installiert werden. Es ist empfehlenswert, dies in einem
+virtualenv zu tun, um sie nicht systemweit zu installieren - dies ist aber
+nicht erforderlich. Gestartet wird die Messsoftware mit</p>
+<p>Die für das eigenständige Fahren konzipierte Software besteht aus einem
+einzigen Arduinosketch, zu finden in der Datei <tt class="docutils literal"><span class="pre">ai.pde</span></tt>, und kann mithilfe
+der <a class="reference external" href="http://arduino.cc/hu/Main/Software">Arduino IDE</a> auf den Arduino
+übertragen werden.</p>
 </div>
 
 
@@ -96,14 +104,14 @@ Interessierten von <a class="reference external" href="https://github.com/swege/
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Vorheriges Thema</h4>
-  <p class="topless"><a href="../intro.html"
-                        title="vorheriges Kapitel">Einleitung</a></p>
+  <p class="topless"><a href="index.html"
+                        title="vorheriges Kapitel">Software</a></p>
   <h4>Nächstes Thema</h4>
-  <p class="topless"><a href="installation.html"
-                        title="nächstes Kapitel">Installation</a></p>
+  <p class="topless"><a href="database.html"
+                        title="nächstes Kapitel">Datenbank</a></p>
   <h3>Diese Seite</h3>
   <ul class="this-page-menu">
-    <li><a href="../_sources/software/index.txt"
+    <li><a href="../_sources/software/installation.txt"
            rel="nofollow">Quelltext anzeigen</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -133,12 +141,13 @@ Interessierten von <a class="reference external" href="https://github.com/swege/
           <a href="../py-modindex.html" title="Python-Modulindex"
              >Module</a> |</li>
         <li class="right" >
-          <a href="installation.html" title="Installation"
+          <a href="database.html" title="Datenbank"
              >weiter</a> |</li>
         <li class="right" >
-          <a href="../intro.html" title="Einleitung"
+          <a href="index.html" title="Software"
              >zurück</a> |</li>
-        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li> 
+        <li><a href="../index.html">Carrera 0.0.1 Dokumentation</a> &raquo;</li>
+          <li><a href="index.html" >Software</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
