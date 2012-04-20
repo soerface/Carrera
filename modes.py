@@ -91,6 +91,13 @@ class Match(Mode):
                 self.player_times[i].append(now - self.last_times[i])
                 self.last_times[i] = now
 
+    @property
+    def total_times(self):
+        """Returns the total time in seconds as float."""
+        times = []
+        for time in self.player_times:
+            times.append(sum([d.seconds + d.microseconds / 1000000.0 for d in time]))
+        return times
 
     def check_conditions(self):
         """Check if a player made all rounds.

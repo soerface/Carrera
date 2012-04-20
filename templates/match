@@ -1,21 +1,25 @@
-<big><b>BG 13 Racingteam</b></big>{% for i in range(75) %} {% endfor %}{{ current_time }}
-<small>Projekt der Jahrgangsstufe 13 des beruflichen Gymnasiums Eschwege 2012</small>
 
-Spiel vom {{ date }}
-Spielmodus: Match
+    <span size="xx-large"><b>BG 13 Racingteam</b></span>{% for i in range(60) %} {% endfor %}{{ current_time }}
+    <small>ein Projekt des Abiturjahrgangs 2012 des beruflichen Gymnasiums Eschwege</small>
 
-{% for name in names -%}
-    {{ loop.index }}. {{ name }}
-{% endfor %}
+    <u>Auswertung des Rennens</u>
 
-<span font_family="monospace">
-    {% for time in times %}
-    {{ loop.index }}. {#
-    #}{% for i in range(((time * 51) / worst_time)|int) %}#{% endfor %}{#
-    #}{% for i in range((((worst_time - time) * 52) / worst_time)|int) %} {% endfor %}{#
-    #} {{ time|round(3) }} Sekunden
+    Spielmodus: Match
+
+    {% for player in players -%}
+        {{ loop.index }}. {{ player }}
     {% endfor %}
-</span>
+    <span font_family="monospace">
+        {% for time in times %}
+        {{ loop.index }}. {#
+        #}{% for i in range(((time * 49) / worst_time)|int) %}={% endfor %}{#
+        #}{% for i in range(49 - ((time * 49) / worst_time)|int) %} {% endfor %}{#
+        #} {{ time|round(3) }} Sekunden
+        {% endfor %}
+    </span>
 
-Vielen Dank für Ihre Teilnahme, wir hoffen, dass es Ihnen Spaß gemacht hat!
-Dokumentation, Quellcode, Fotos und mehr zum Projekt finden Sie unter <u><i>TODO: LINK</i></u>.
+    Die beste Runde wurde von <i>Justin</i> gefahren und dauerte 0 Sekunden.
+
+    {% for i in range(134) %}-{% endfor %}
+    Vielen Dank für Ihre Teilnahme, wir hoffen, dass es Ihnen Spaß gemacht hat! Fotos,
+    Dokumentation, Quellcode und vieles mehr zum Projekt finden Sie unter <u><i>TODO: LINK</i></u>.

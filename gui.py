@@ -78,9 +78,9 @@ class Carrera(object):
             with open('templates/match') as f:
                 template = Template(f.read())
                 layout.set_markup(template.render(
-                    names = ['Giebenrath', 'Justin Enrico Ludwig', 'Aul!', 'swegenerd'],
-                    times = [4.284123, 6.234325, 2.323, 1.10110010110110101011],
-                    worst_time = 6.234325,
+                    players = self.players,
+                    times = self.match.total_times,
+                    worst_time = max(self.match.total_times),
                     current_time = datetime.now().strftime('%d.%m.%Y %H:%M'),
                     )
                 )
