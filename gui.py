@@ -77,11 +77,16 @@ class Carrera(object):
         if self.gamemode == 'Match':
             with open('templates/match') as f:
                 template = Template(f.read())
+                best_round = {
+                    'time': self.match.best_round['time'],
+                    'player': self.players[self.match.best_round['player_id']],
+                }
                 layout.set_markup(template.render(
                     players = self.players,
                     times = self.match.total_times,
                     worst_time = max(self.match.total_times),
                     current_time = datetime.now().strftime('%d.%m.%Y %H:%M'),
+                    best_round = best_round,
                     )
                 )
         cairo_context = context.get_cairo_context()

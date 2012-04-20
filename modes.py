@@ -96,8 +96,19 @@ class Match(Mode):
         """Returns the total time in seconds as float."""
         times = []
         for time in self.player_times:
-            times.append(sum([d.seconds + d.microseconds / 1000000.0 for d in time]))
+            times.append(sum([d.total_seconds() for d in time]))
         return times
+
+    @property
+    def best_round(self):
+        """Returns a dictionary with the id of the player who made the best round
+        and the time"""
+        times = []
+        for time in self.player_times:
+            times.append(min([d.total_seconds() for d in time]))
+        best_time = min(times)
+        player_id = times.index(best_time)
+        return {'time': best_time, 'player_id': player_id}
 
     def check_conditions(self):
         """Check if a player made all rounds.

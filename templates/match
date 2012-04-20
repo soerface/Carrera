@@ -18,7 +18,7 @@
         {% endfor %}
     </span>
 
-    Die beste Runde wurde von <i>Justin</i> gefahren und dauerte 0 Sekunden.
+    Die beste Runde wurde von <i>{{ best_round.player }}</i> gefahren und dauerte {{ best_round.time|round(3) }} Sekunden.
 
     {% for i in range(134) %}-{% endfor %}
     Vielen Dank für Ihre Teilnahme, wir hoffen, dass es Ihnen Spaß gemacht hat! Fotos,
