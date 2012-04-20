@@ -1,0 +1,21 @@
+<big><b>BG 13 Racingteam</b></big>{% for i in range(75) %} {% endfor %}{{ current_time }}
+<small>Projekt der Jahrgangsstufe 13 des beruflichen Gymnasiums Eschwege 2012</small>
+
+Spiel vom {{ date }}
+Spielmodus: Match
+
+{% for name in names -%}
+    {{ loop.index }}. {{ name }}
+{% endfor %}
+
+<span font_family="monospace">
+    {% for time in times %}
+    {{ loop.index }}. {#
+    #}{% for i in range(((time * 51) / worst_time)|int) %}#{% endfor %}{#
+    #}{% for i in range((((worst_time - time) * 52) / worst_time)|int) %} {% endfor %}{#
+    #} {{ time|round(3) }} Sekunden
+    {% endfor %}
+</span>
+
+Vielen Dank für Ihre Teilnahme, wir hoffen, dass es Ihnen Spaß gemacht hat!
+Dokumentation, Quellcode, Fotos und mehr zum Projekt finden Sie unter <u><i>TODO: LINK</i></u>.

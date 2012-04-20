@@ -5,6 +5,7 @@ from copy import deepcopy
 from datetime import datetime, timedelta
 import gtk
 
+from jinja2 import Template
 import LabJackPython
 
 from constants import COLORS
@@ -69,13 +70,31 @@ class Carrera(object):
         entry.show()
         box.show()
 
+    def draw_page(self, operation, context, page_nr):
+        layout = context.create_pango_layout()
+        if self.gamemode == 'Match':
+            with open('templates/match') as f:
+                template = Template(f.read())
+                layout.set_markup(template.render(
+                    names = ['Giebenrath', 'Justin Enrico Ludwig', 'Aul!', 'swegenerd'],
+                    times = [4.284123, 6.234325, 2.323, 1.10110010110110101011],
+                    worst_time = 6.234325,
+                    current_time = datetime.now().strftime('%d.%m.%Y %H:%M'),
+                    )
+                )
+        cairo_context = context.get_cairo_context()
+        cairo_context.show_layout(layout)
+
     def on_simulation_warning_ok_clicked(self, obj):
         self.builder.get_object('simulation_warning').hide()
         self.builder.get_object('race').show()
         self.builder.get_object('main').present()
 
-    def on_simulation_warning_quit_clicked(self, obj):
-        self.quit()
+    def on_print_item_clicked(self, obj):
+        print_op = gtk.PrintOperation()
+        print_op.set_n_pages(1)
+        print_op.connect('draw_page', self.draw_page)
+        print_op.run(gtk.PRINT_OPERATION_ACTION_PRINT_DIALOG, None)
 
     def on_add_player_clicked(self, obj):
         self.add_player()
