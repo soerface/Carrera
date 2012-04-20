@@ -56,7 +56,7 @@ class Carrera(object):
 
     def add_player(self):
         """Add a new player box to the player list."""
-        if self.num_players == 4:
+        if len(self.players) == 4:
             return
         box = gtk.HBox()
         button = gtk.Button('', stock=gtk.STOCK_REMOVE)
@@ -71,6 +71,8 @@ class Carrera(object):
         box.show()
 
     def draw_page(self, operation, context, page_nr):
+        """Formats the page for printing."""
+
         layout = context.create_pango_layout()
         if self.gamemode == 'Match':
             with open('templates/match') as f:
@@ -191,9 +193,10 @@ class Carrera(object):
             pass
 
     @property
-    def num_players(self):
-        """Contains the total playernumber."""
-        return len(self.builder.get_object('player_box').children())
+    def players(self):
+        """Returns a list of playernames."""
+        children = self.builder.get_object('player_box').children()
+        return [child.children()[0].get_text() for child in children]
 
     def power_on(self, track):
         """Power the given track on. Pass -1 to power all on"""
@@ -212,18 +215,17 @@ class Carrera(object):
 
         """
         race_box = self.builder.get_object('race_box')
-        players = self.builder.get_object('player_box').children()
-        if not 1 < self.num_players < 5:
+        if not 1 < len(self.players) < 5:
             return
         rounds = int(self.button_rounds_num.get_value())
-        for i, player in enumerate(players):
+        for color, player in zip(COLORS, self.players):
             vbox = gtk.VBox()
 
             playername = gtk.Label()
             playername.set_use_markup(True)
             playername.set_markup('<span size="18000" color="{0}">{1}</span>'.format(
-                COLORS[i],
-                player.children()[0].get_text()))
+                color, player
+            ))
             vbox.add(playername)
             playername.show()
 
@@ -235,12 +237,12 @@ class Carrera(object):
 
             race_box.add(vbox)
             vbox.show()
-        self.match = Match(self.device, self.num_players, rounds=rounds)
+        self.match = Match(self.device, len(self.players), rounds=rounds)
         self.match.start()
         boxes = self.builder.get_object('race_box').children()
-        last_times = [None] * self.num_players
+        last_times = [None] * len(self.players)
 
-        graph = graphs.Match(self.num_players, rounds=rounds)
+        graph = graphs.Match(len(self.players), rounds=rounds)
         self.builder.get_object('round_graph').add(graph.canvas)
         graph.show()
         need_draw = True
@@ -279,11 +281,10 @@ class Carrera(object):
 
         seconds = int(self.button_seconds.get_value())
 
-        self.match = TimeAttack(self.device, self.num_players, seconds=seconds)
+        self.match = TimeAttack(self.device, len(self.players), seconds=seconds)
         self.match.start()
 
-        players = self.builder.get_object('player_box').children()
-        if not 1 < self.num_players < 5:
+        if not 1 < len(self.players) < 5:
             return
         race_mainbox = self.builder.get_object('race_mainbox')
         self.time_label = time_label = gtk.Label()
@@ -292,14 +293,14 @@ class Carrera(object):
         time_label.show()
         race_mainbox.pack_start(time_label, expand=False)
         race_mainbox.reorder_child(time_label, 0)
-        for i, player in enumerate(players):
+        for color, player in zip(COLORS, self.players):
             vbox = gtk.VBox()
 
             playername = gtk.Label()
             playername.set_use_markup(True)
             playername.set_markup('<span size="18000" color="{0}">{1}</span>'.format(
-                COLORS[i],
-                player.children()[0].get_text()))
+                color, player
+            ))
             vbox.add(playername)
             playername.show()
 
@@ -312,10 +313,10 @@ class Carrera(object):
             race_box.add(vbox)
             vbox.show()
         boxes = self.builder.get_object('race_box').children()
-        last_rounds = [0] * self.num_players
+        last_rounds = [0] * len(self.players)
 
         last_time_left = timedelta()
-        graph = graphs.TimeAttack(self.num_players)
+        graph = graphs.TimeAttack(len(self.players))
         self.builder.get_object('round_graph').add(graph.canvas)
         graph.show()
         need_draw = True
@@ -353,21 +354,20 @@ class Carrera(object):
         """
         race_box = self.builder.get_object('race_box')
 
-        self.match = KnockOut(self.device, self.num_players)
+        self.match = KnockOut(self.device, len(self.players))
         self.match.start()
 
-        players = self.builder.get_object('player_box').children()
-        if not 1 < self.num_players < 5:
+        if not 1 < len(self.players) < 5:
             return
         race_mainbox = self.builder.get_object('race_mainbox')
         hbox = gtk.VBox()
-        for i, player in enumerate(players):
+        for color, player in zip(COLORS, self.players):
 
             playername = gtk.Label()
             playername.set_use_markup(True)
             playername.set_markup('<span size="55000" color="{0}">{1}</span>'.format(
-                COLORS[i],
-                player.children()[0].get_text()))
+                color, player
+            ))
             hbox.add(playername)
             playername.show()
 
@@ -375,8 +375,7 @@ class Carrera(object):
         hbox.show()
 
         box = self.builder.get_object('race_box').children()[0].children()
-        playernames = [player.children()[0].get_text() for player in players]
-        player_already_lost = [False] * len(playernames)
+        player_already_lost = [False] * len(self.players)
         while not self.match.finished:
             while gtk.events_pending():
                 gtk.main_iteration()
@@ -384,7 +383,7 @@ class Carrera(object):
             for i, label in enumerate(box):
                 if self.match.player_lost[i] and not player_already_lost[i]:
                     text = '<span size="55000" color="grey">{0}</span>'.format(
-                        playernames[i])
+                        self.players[i])
                     label.set_markup(text)
                     player_already_lost[i] = True
 
