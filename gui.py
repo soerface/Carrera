@@ -18,14 +18,15 @@ class Carrera(object):
     """Class which handles the GTK interface."""
 
     def __init__(self):
+        self.builder = gtk.Builder()
+        self.builder.add_from_file('gui.glade')
+        self.builder.connect_signals(self)
         try:
             self.device = UE9()
         except LabJackPython.NullHandleException, e:
             # fallback if no UE9 is connected
             self.device = Virtual()
-        self.builder = gtk.Builder()
-        self.builder.add_from_file('gui.glade')
-        self.builder.connect_signals(self)
+            self.builder.get_object('simulation_warning').show()
         for i in range(2):
             self.add_player()
         gamemodes = gtk.combo_box_entry_new_text()
@@ -65,6 +66,12 @@ class Carrera(object):
         button.show()
         entry.show()
         box.show()
+
+    def on_simulation_warning_ok_clicked(self, obj):
+        self.builder.get_object('simulation_warning').hide()
+
+    def on_simulation_warning_quit_clicked(self, obj):
+        self.quit()
 
     def on_add_player_clicked(self, obj):
         self.add_player()
