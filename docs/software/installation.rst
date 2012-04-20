@@ -14,7 +14,7 @@ beziehen zu können.
 Um die Kommunikation mit dem UE9 zu ermöglichen, sind die Treiber und
 Pythonmodule von LabJack erforderlich, diese können mithilfe der von LabJack
 angebotenen
-`Anleitung <http://labjack.com/support/linux-and-mac-osx-drivers>`_.
+`Anleitung <http://labjack.com/support/linux-and-mac-os-x-drivers>`_.
 
 Zur grafischen Darstellung wird matplotlib und das zugehörige Pythonmodul
 benötigt:
