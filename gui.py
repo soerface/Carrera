@@ -79,10 +79,10 @@ class Carrera(object):
                 template = Template(f.read())
                 best_round = {
                     'time': self.match.best_round['time'],
-                    'player': self.players[self.match.best_round['player_id']],
+                    'player': self.last_players[self.match.best_round['player_id']],
                 }
                 layout.set_markup(template.render(
-                    players = self.players,
+                    players = self.last_players,
                     times = self.match.total_times,
                     worst_time = max(self.match.total_times),
                     current_time = datetime.now().strftime('%d.%m.%Y %H:%M'),
@@ -91,6 +91,18 @@ class Carrera(object):
                 )
         cairo_context = context.get_cairo_context()
         cairo_context.show_layout(layout)
+
+    def lock_settings(self, state):
+        """(De)activates interface elements like player names"""
+        state = False if state else True
+        for element in ['add_player', 'start_race']:
+            self.builder.get_object(element).set_sensitive(state)
+        for element in ['settings_box', 'player_box']:
+            for child in self.builder.get_object(element).children():
+                for subchild in child.children():
+                    subchild.set_sensitive(state)
+        for child in self.builder.get_object('modes_box').children():
+            child.set_sensitive(state)
 
     def on_simulation_warning_ok_clicked(self, obj):
         self.builder.get_object('simulation_warning').hide()
@@ -114,6 +126,7 @@ class Carrera(object):
     def on_start_race_clicked(self, obj):
         self.clear_racewindow()
         self.builder.get_object('print_item').set_sensitive(False)
+        self.lock_settings(True)
         if self.gamemode == 'Match':
             self.start_match()
         elif self.gamemode == 'TimeAttack':
@@ -139,7 +152,7 @@ class Carrera(object):
             box.pack_start(label)
             label.show()
 
-            adjustment = gtk.Adjustment(value=5, lower=0, upper=100, step_incr=1,
+            adjustment = gtk.Adjustment(value=5, lower=1, upper=100, step_incr=1,
                                         page_incr=5)
             self.button_rounds_num = gtk.SpinButton(adjustment)
             box.pack_start(self.button_rounds_num)
@@ -212,6 +225,13 @@ class Carrera(object):
         """Power the given track off. Pass -1 to power all off"""
         self.device.power_off(track)
 
+    def finish_race(self):
+        """Sets some final settings after a race and unlocks interface."""
+        self.last_gamemode = self.gamemode
+        self.last_players = self.players
+        self.builder.get_object('print_item').set_sensitive(True)
+        self.lock_settings(False)
+
     def start_match(self):
         """Start a new "match" race.
 
@@ -276,8 +296,7 @@ class Carrera(object):
             if need_draw:
                 graph.draw()
                 need_draw = False
-        self.last_gamemode = 'Match'
-        self.builder.get_object('print_item').set_sensitive(True)
+        self.finish_race()
 
     def start_time_attack(self):
         """Start a new "time attack" race.
@@ -353,6 +372,7 @@ class Carrera(object):
             if need_draw:
                 graph.draw()
                 need_draw = False
+        self.finish_race()
 
     def start_knockout(self):
         """Start a new "knock out" race.
@@ -394,6 +414,7 @@ class Carrera(object):
                         self.players[i])
                     label.set_markup(text)
                     player_already_lost[i] = True
+        self.finish_race()
 
 if __name__ == '__main__':
     carrera = Carrera()
