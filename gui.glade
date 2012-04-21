@@ -33,6 +33,7 @@
                       <object class="GtkImageMenuItem" id="print_item">
                         <property name="label">gtk-print</property>
                         <property name="visible">True</property>
+                        <property name="sensitive">False</property>
                         <property name="can_focus">False</property>
                         <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>

@@ -74,7 +74,7 @@ class Carrera(object):
         """Formats the page for printing."""
 
         layout = context.create_pango_layout()
-        if self.gamemode == 'Match':
+        if self.last_gamemode == 'Match':
             with open('templates/match') as f:
                 template = Template(f.read())
                 best_round = {
@@ -113,6 +113,7 @@ class Carrera(object):
 
     def on_start_race_clicked(self, obj):
         self.clear_racewindow()
+        self.builder.get_object('print_item').set_sensitive(False)
         if self.gamemode == 'Match':
             self.start_match()
         elif self.gamemode == 'TimeAttack':
@@ -275,6 +276,8 @@ class Carrera(object):
             if need_draw:
                 graph.draw()
                 need_draw = False
+        self.last_gamemode = 'Match'
+        self.builder.get_object('print_item').set_sensitive(True)
 
     def start_time_attack(self):
         """Start a new "time attack" race.
