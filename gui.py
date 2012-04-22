@@ -5,7 +5,7 @@ from copy import deepcopy
 from datetime import datetime, timedelta
 import gtk
 
-from jinja2 import Template
+from jinja2 import Environment, FileSystemLoader
 import LabJackPython
 
 from constants import COLORS
@@ -19,17 +19,10 @@ class Carrera(object):
     """Class which handles the GTK interface."""
 
     def __init__(self):
+        self.jinja_env = Environment(loader=FileSystemLoader('templates'))
         self.builder = gtk.Builder()
         self.builder.add_from_file('gui.glade')
         self.builder.connect_signals(self)
-        try:
-            self.device = UE9()
-            self.builder.get_object('race').show()
-            self.builder.get_object('main').present()
-        except LabJackPython.NullHandleException, e:
-            # fallback if no UE9 is connected
-            self.device = Virtual()
-            self.builder.get_object('simulation_warning').show()
         for i in range(2):
             self.add_player()
         gamemodes = gtk.combo_box_entry_new_text()
@@ -40,6 +33,14 @@ class Carrera(object):
         self.builder.get_object('modes_box').add(gamemodes)
         gamemodes.show()
         self.builder.get_object('banner').set_from_file('images/banner.png')
+        try:
+            self.device = UE9()
+            self.builder.get_object('race').show()
+            self.builder.get_object('main').present()
+        except LabJackPython.NullHandleException, e:
+            # fallback if no UE9 is connected
+            self.device = Virtual()
+            self.builder.get_object('simulation_warning').show()
 
     def run(self):
         """Display the GUI and start the mainloop."""
@@ -75,20 +76,19 @@ class Carrera(object):
 
         layout = context.create_pango_layout()
         if self.last_gamemode == 'Match':
-            with open('templates/match') as f:
-                template = Template(f.read())
-                best_round = {
-                    'time': self.match.best_round['time'],
-                    'player': self.last_players[self.match.best_round['player_id']],
-                }
-                layout.set_markup(template.render(
-                    players = self.last_players,
-                    times = self.match.total_times,
-                    worst_time = max(self.match.total_times),
-                    current_time = datetime.now().strftime('%d.%m.%Y %H:%M'),
-                    best_round = best_round,
-                    )
+            template = self.jinja_env.get_template('match')
+            best_round = {
+                'time': self.match.best_round['time'],
+                'player': self.last_players[self.match.best_round['player_id']],
+            }
+            layout.set_markup(template.render(
+                players = self.last_players,
+                times = self.match.total_times,
+                worst_time = max(self.match.total_times),
+                current_time = datetime.now().strftime('%d.%m.%Y %H:%M'),
+                best_round = best_round,
                 )
+            )
         cairo_context = context.get_cairo_context()
         cairo_context.show_layout(layout)
 

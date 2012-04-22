@@ -1,8 +1,6 @@
+{% extends "base" %}
 
-    <span size="xx-large"><b>BG 13 Racingteam</b></span>{% for i in range(60) %} {% endfor %}{{ current_time }}
-    <small>ein Projekt des Abiturjahrgangs 2012 des beruflichen Gymnasiums Eschwege</small>
-
-    <u>Auswertung des Rennens</u>
+{% block content %}
 
     Spielmodus: Match
 
@@ -20,6 +18,4 @@
 
     Die beste Runde wurde von <i>{{ best_round.player }}</i> gefahren und dauerte {{ best_round.time|round(3) }} Sekunden.
 
-    {% for i in range(134) %}-{% endfor %}
-    Vielen Dank für Ihre Teilnahme, wir hoffen, dass es Ihnen Spaß gemacht hat! Fotos,
-    Dokumentation, Quellcode und vieles mehr zum Projekt finden Sie unter <u><i>TODO: LINK</i></u>.
+{% endblock %}
