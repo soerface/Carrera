@@ -1,18 +1,20 @@
 {% extends "base" %}
 
 {% block content %}
-
     Spielmodus: Match
+    Rundenanzahl: {{ round_num }}
 
     {% for player in players -%}
         {{ loop.index }}. {{ player }}
     {% endfor %}
     <span font_family="monospace">
-        {% for time in times %}
+        {% for total_time in total_times %}
         {{ loop.index }}. {#
-        #}{% for i in range(((time * 49) / worst_time)|int) %}={% endfor %}{#
-        #}{% for i in range(49 - ((time * 49) / worst_time)|int) %} {% endfor %}{#
-        #} {{ time|round(3) }} Sekunden
+        #}{% for round_time in round_times[loop.index0] %}{#
+        #}{% for i in range(((round_time * 49) / worst_time)|int - 1) %}={% endfor %}{#
+        #}|{% endfor %}{#
+        #}{% for i in range(49 - ((total_time * 49) / worst_time)|int) %} {% endfor %}{#
+        #} {{ total_time|round(3) }} Sekunden
         {% endfor %}
     </span>
 

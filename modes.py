@@ -95,8 +95,16 @@ class Match(Mode):
     def total_times(self):
         """Returns the total time in seconds as float."""
         times = []
-        for time in self.player_times:
-            times.append(sum([d.total_seconds() for d in time]))
+        for player in self.player_times:
+            times.append(sum([d.total_seconds() for d in player]))
+        return times
+
+    @property
+    def round_times(self):
+        """Same as self.player_times but values replaced by floats."""
+        times = []
+        for player in self.player_times:
+            times.append([d.total_seconds() for d in player])
         return times
 
     @property

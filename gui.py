@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from copy import deepcopy
 from datetime import datetime, timedelta
-import gtk
 
+import gtk
 from jinja2 import Environment, FileSystemLoader
 import LabJackPython
 
@@ -83,10 +82,12 @@ class Carrera(object):
             }
             layout.set_markup(template.render(
                 players = self.last_players,
-                times = self.match.total_times,
+                total_times = self.match.total_times,
                 worst_time = max(self.match.total_times),
                 current_time = datetime.now().strftime('%d.%m.%Y %H:%M'),
                 best_round = best_round,
+                round_num = self.match.rounds,
+                round_times = self.match.round_times,
                 )
             )
         cairo_context = context.get_cairo_context()
