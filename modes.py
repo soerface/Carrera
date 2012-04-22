@@ -93,18 +93,25 @@ class Match(Mode):
 
     @property
     def total_times(self):
-        """Returns the total time in seconds as float."""
+        """Returns the total time in seconds as string."""
         times = []
         for player in self.player_times:
-            times.append(sum([d.total_seconds() for d in player]))
+            seconds = str(sum([d.total_seconds() for d in player]))
+            delimiter = seconds.rfind('.')
+            times.append(seconds[:delimiter + 4])
         return times
 
     @property
     def round_times(self):
-        """Same as self.player_times but values replaced by floats."""
+        """Returns round times as strings ordered by players"""
         times = []
-        for player in self.player_times:
-            times.append([d.total_seconds() for d in player])
+        for i in range(self.rounds):
+            round_ = []
+            for player in self.player_times:
+                seconds = str(player[i].total_seconds())
+                delimiter = seconds.rfind('.')
+                round_.append(seconds[:delimiter + 4])
+            times.append(round_)
         return times
 
     @property

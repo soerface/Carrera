@@ -153,7 +153,7 @@ class Carrera(object):
             box.pack_start(label)
             label.show()
 
-            adjustment = gtk.Adjustment(value=5, lower=1, upper=100, step_incr=1,
+            adjustment = gtk.Adjustment(value=5, lower=1, upper=30, step_incr=1,
                                         page_incr=5)
             self.button_rounds_num = gtk.SpinButton(adjustment)
             box.pack_start(self.button_rounds_num)

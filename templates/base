@@ -1,9 +1,9 @@
 {% block header %}
     <span size="xx-large"><b>BG 13 Racingteam</b></span>{% for i in range(55) %} {% endfor %}{{ current_time }}
-    <small>ein Projekt des Abiturjahrgangs 2012 des beruflichen Gymnasiums Eschwege</small>
+    <small>ein Projekt des Abiturjahrgangs 2012 des Beruflichen Gymnasiums Eschwege</small>
 
     <u>Auswertung des Rennens</u>
-{% endblock %}
+{%- endblock %}
 {% block content %}{% endblock %}
 {% block footer %}
     {% for i in range(134) %}-{% endfor %}
