@@ -1,6 +1,8 @@
 """Contains different game modes."""
 from datetime import datetime, timedelta
 
+from utils import trim_time
+
 class Mode(object):
     """Baseclass for all modes."""
 
@@ -97,8 +99,7 @@ class Match(Mode):
         times = []
         for player in self.player_times:
             seconds = str(sum([d.total_seconds() for d in player]))
-            delimiter = seconds.rfind('.')
-            times.append(seconds[:delimiter + 4])
+            times.append(trim_time(seconds))
         return times
 
     @property

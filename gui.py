@@ -11,6 +11,7 @@ from constants import COLORS
 from devices import UE9, Virtual
 import graphs
 from modes import Match, TimeAttack, KnockOut
+from utils import trim_time
 
 GAMEMODES = ['Match', 'TimeAttack', 'KnockOut']
 
@@ -73,21 +74,30 @@ class Carrera(object):
     def draw_page(self, operation, context, page_nr):
         """Formats the page for printing."""
 
+        current_time = datetime.now().strftime('%d.%m.%Y %H:%M'),
         layout = context.create_pango_layout()
         if self.last_gamemode == 'Match':
             template = self.jinja_env.get_template('match')
             best_round = {
-                'time': self.match.best_round['time'],
+                'time': trim_time(self.match.best_round['time']),
                 'player': self.last_players[self.match.best_round['player_id']],
             }
             layout.set_markup(template.render(
+                current_time = current_time,
                 players = self.last_players,
                 total_times = self.match.total_times,
                 worst_time = max(self.match.total_times),
-                current_time = datetime.now().strftime('%d.%m.%Y %H:%M'),
                 best_round = best_round,
                 round_num = self.match.rounds,
                 round_times = self.match.round_times,
+                )
+            )
+        elif self.last_gamemode == 'TimeAttack':
+            template = self.jinja_env.get_template('timeattack')
+            layout.set_markup(template.render(
+                current_time = current_time,
+                players = self.last_players,
+                total_time = self.match.seconds,
                 )
             )
         cairo_context = context.get_cairo_context()

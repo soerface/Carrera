@@ -16,5 +16,5 @@
         {% endfor -%}
         <span background="#000000" foreground="#FFFFFF">   <b>Gesamt</b>   |{% for time in total_times %}{% for i in range(8 - time|length) %} {% endfor %}{{ time }}   {% if not loop.last %}|{% endif %}{% endfor %}</span>
     </span>
-    Die beste Runde wurde von <i>{{ best_round.player }}</i> gefahren und dauerte {{ best_round.time|round(3) }} Sekunden.
+    Die beste Runde wurde von <i>{{ best_round.player }}</i> gefahren und dauerte {{ best_round.time }} Sekunden.
 {%- endblock %}

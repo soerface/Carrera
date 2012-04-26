@@ -14,3 +14,9 @@ def connect_db(filename=':memory:'):
     Session = sessionmaker(bind=engine)
     session = Session()
     return session
+
+def trim_time(time):
+    """Trims the time to 3 digits after the comma and returns it as a string"""
+    time = str(time)
+    delimiter = time.rfind('.')
+    return time[:delimiter + 4]
