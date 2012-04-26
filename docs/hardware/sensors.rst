@@ -52,7 +52,7 @@ Aktivierung andere beeinflusst. Dieser Fehler kam Zustande, weil wir ein
 Verlängerungskabel verwendeten, welches den Ansprüchen nicht genügte,
 sodass wir es noch austauschen mussten. Das Kabel welches durch
 Quetschverbindugen an den Streckern befestigt war muss an diesen
-Quetschverbindungen nich perfekt isoliert haben, sodass es ständig zu
+Quetschverbindungen nicht perfekt isoliert haben, sodass es ständig zu
 Fehlsignalen kam.
 
 .. image:: /images/photos/sensor_2.jpg

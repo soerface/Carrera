@@ -11,7 +11,7 @@
           <b>Strecke</b>   |{% for player in players %}     <b>{{ loop.index }}</b>     {% if not loop.last %}|{% endif %}{% endfor %}
         ------------+{% for player in players %}-----------{% if not loop.last %}+{% endif %}{% endfor %}
         {% for times in round_times -%}
-        <span background="#{{ loop.cycle('FFFFFF', 'EEEEEE') }}"><b>  Runde {% if loop.index < 10 %} {% endif %}{{ loop.index }}</b>  {#
+        <span background="#{{ loop.cycle('FFFFFF', 'CCCCCC') }}"><b>  Runde {% if loop.index < 10 %} {% endif %}{{ loop.index }}</b>  {#
         #}|{% for time in times %}{% for i in range(8 - time|length) %} {% endfor %}{{ time }}   {% if not loop.last %}|{% endif %}{% endfor %}</span>
         {% endfor -%}
         <span background="#000000" foreground="#FFFFFF">   <b>Gesamt</b>   |{% for time in total_times %}{% for i in range(8 - time|length) %} {% endfor %}{{ time }}   {% if not loop.last %}|{% endif %}{% endfor %}</span>
