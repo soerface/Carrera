@@ -10,10 +10,10 @@ import LabJackPython
 from constants import COLORS
 from devices import UE9, Virtual
 import graphs
-from modes import Match, TimeAttack, KnockOut
+from modes import Match, TimeAttack, KnockOut, Training
 from utils import trim_time
 
-GAMEMODES = ['Match', 'TimeAttack', 'KnockOut']
+GAMEMODES = ['Match', 'TimeAttack', 'KnockOut', 'Training']
 
 class Carrera(object):
     """Class which handles the GTK interface."""
@@ -106,14 +106,21 @@ class Carrera(object):
     def lock_settings(self, state):
         """(De)activates interface elements like player names"""
         state = False if state else True
-        for element in ['add_player', 'start_race']:
+        elements = ['add_player'] + ['start_race'] if self.gamemode != 'Training' else []
+        for element in elements:
             self.builder.get_object(element).set_sensitive(state)
-        for element in ['settings_box', 'player_box']:
+        elements = ['settings_box'] + ['player_box'] if self.gamemode != 'Training' else []
+        for element in elements:
             for child in self.builder.get_object(element).children():
                 for subchild in child.children():
                     subchild.set_sensitive(state)
         for child in self.builder.get_object('modes_box').children():
             child.set_sensitive(state)
+        self.builder.get_object('cancel_race').set_sensitive(not state)
+
+    def on_cancel_race_clicked(self, obj):
+        self.match.finished = True
+        self.clear_racewindow()
 
     def on_simulation_warning_ok_clicked(self, obj):
         self.builder.get_object('simulation_warning').hide()
@@ -144,6 +151,8 @@ class Carrera(object):
             self.start_time_attack()
         elif self.gamemode == 'KnockOut':
             self.start_knockout()
+        elif self.gamemode == 'Training':
+            self.start_training()
 
     def on_main_delete_event(self, obj, event):
         self.quit()
@@ -156,7 +165,7 @@ class Carrera(object):
         settings_box = self.builder.get_object('settings_box')
         for child in settings_box.children():
             settings_box.remove(child)
-        if self.gamemode == 'Match':
+        if self.gamemode in ['Match', 'Training']:
             box = gtk.HBox()
 
             label = gtk.Label('Runden:')
@@ -187,6 +196,11 @@ class Carrera(object):
 
             box.show()
             settings_box.pack_start(box, expand=False)
+
+        self.builder.get_object('add_player').set_sensitive(self.gamemode != 'Training')
+        for child in self.builder.get_object('player_box').children():
+            for subchild in child.children():
+                subchild.set_sensitive(self.gamemode != 'Training')
 
     on_power_on_0_clicked = lambda self, obj: self.power_on(0)
     on_power_off_0_clicked = lambda self, obj: self.power_off(0)
@@ -423,6 +437,22 @@ class Carrera(object):
                     label.set_markup(text)
                     player_already_lost[i] = True
         self.finish_race()
+
+    def start_training(self):
+        """Start a "training".
+
+        Makes it possible to use every track independently, driving
+        n rounds and then shuts down the track.
+
+        """
+        rounds = int(self.button_rounds_num.get_value())
+        self.match = Training(self.device, 4, rounds)
+        self.match.start()
+        while not self.match.finished:
+            while gtk.events_pending():
+                gtk.main_iteration()
+            self.match.poll()
+        self.lock_settings(False)
 
 if __name__ == '__main__':
     carrera = Carrera()

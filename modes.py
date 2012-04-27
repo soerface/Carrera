@@ -210,3 +210,30 @@ class KnockOut(Mode):
                 if self.player_lost.count(False) == 1:
                     self.finished = True
                 self.last_times[i] = now
+
+class Training(Mode):
+
+    def __init__(self, device, player_num, rounds=10):
+        super(Training, self).__init__(device, player_num)
+        self.rounds = rounds
+        self.player_rounds = [0] * player_num
+        self.player_finished = [False] * player_num
+
+    def score(self):
+        now = datetime.now()
+        for i, sensor in enumerate(self.sensors):
+            if i >= self.player_num or self.player_finished[i]:
+                continue
+            if sensor:
+                if now - self.last_times[i] < timedelta(seconds=2):
+                    continue
+                self.player_rounds[i] += 1
+                self.last_times[i] = now
+                print i, self.player_rounds[i]
+
+    def check_conditions(self):
+        for i, rounds in enumerate(self.player_rounds):
+            if rounds >= self.rounds and not self.player_finished[i]:
+                self.device.power_off(i)
+                self.player_finished[i] = True
+                #self.player_rounds[i] = 0
