@@ -11,6 +11,7 @@ from constants import COLORS
 from devices import UE9, Virtual
 import graphs
 from modes import Match, TimeAttack, KnockOut, Training
+from misc import Player
 from utils import trim_time
 
 GAMEMODES = ['Match', 'TimeAttack', 'KnockOut', 'Training']
@@ -51,13 +52,15 @@ class Carrera(object):
 
     def quit(self, *args, **kwargs):
         """Quit the GUI and cancel any running race."""
-        if hasattr(self, 'match'):
-            self.match.cancel()
+        if hasattr(self, 'mode'):
+            self.mode.cancel()
         gtk.main_quit()
 
     def add_player(self):
         """Add a new player box to the player list."""
-        if len(self.players) == 4:
+        if len(self.player_names) == 3:
+            self.builder.get_object('add_player').set_sensitive(False)
+        elif len(self.player_names) == 4:
             return
         box = gtk.HBox()
         button = gtk.Button('', stock=gtk.STOCK_REMOVE)
@@ -79,17 +82,17 @@ class Carrera(object):
         if self.last_gamemode == 'Match':
             template = self.jinja_env.get_template('match')
             best_round = {
-                'time': trim_time(self.match.best_round['time']),
-                'player': self.last_players[self.match.best_round['player_id']],
+                'time': trim_time(self.mode.best_round['time']),
+                'player': self.last_players[self.mode.best_round['player_id']],
             }
             layout.set_markup(template.render(
                 current_time = current_time,
                 players = self.last_players,
-                total_times = self.match.total_times,
-                worst_time = max(self.match.total_times),
+                total_times = self.mode.total_times,
+                worst_time = max(self.mode.total_times),
                 best_round = best_round,
-                round_num = self.match.rounds,
-                round_times = self.match.round_times,
+                round_num = self.mode.rounds,
+                round_times = self.mode.round_times,
                 )
             )
         elif self.last_gamemode == 'TimeAttack':
@@ -97,7 +100,7 @@ class Carrera(object):
             layout.set_markup(template.render(
                 current_time = current_time,
                 players = self.last_players,
-                total_time = self.match.seconds,
+                total_time = self.mode.seconds,
                 )
             )
         cairo_context = context.get_cairo_context()
@@ -119,7 +122,7 @@ class Carrera(object):
         self.builder.get_object('cancel_race').set_sensitive(not state)
 
     def on_cancel_race_clicked(self, obj):
-        self.match.finished = True
+        self.mode.cancel()
         self.clear_racewindow()
 
     def on_simulation_warning_ok_clicked(self, obj):
@@ -140,6 +143,7 @@ class Carrera(object):
         row = obj.parent
         box = row.parent
         box.remove(row)
+        self.builder.get_object('add_player').set_sensitive(True)
 
     def on_start_race_clicked(self, obj):
         self.clear_racewindow()
@@ -197,7 +201,8 @@ class Carrera(object):
             box.show()
             settings_box.pack_start(box, expand=False)
 
-        self.builder.get_object('add_player').set_sensitive(self.gamemode != 'Training')
+        self.builder.get_object('add_player').set_sensitive(
+            self.gamemode != 'Training' and len(self.player_names) < 4)
         for child in self.builder.get_object('player_box').children():
             for subchild in child.children():
                 subchild.set_sensitive(self.gamemode != 'Training')
@@ -222,7 +227,7 @@ class Carrera(object):
 
         """
         if hasattr(self, 'match'):
-            self.match.cancel()
+            self.mode.cancel()
         for box in self.builder.get_object('race_box').children():
             self.builder.get_object('race_box').remove(box)
         if hasattr(self, 'time_label'):
@@ -234,7 +239,7 @@ class Carrera(object):
             pass
 
     @property
-    def players(self):
+    def player_names(self):
         """Returns a list of playernames."""
         children = self.builder.get_object('player_box').children()
         return [child.children()[0].get_text() for child in children]
@@ -250,9 +255,14 @@ class Carrera(object):
     def finish_race(self):
         """Sets some final settings after a race and unlocks interface."""
         self.last_gamemode = self.gamemode
-        self.last_players = self.players
+        self.last_players = self.player_names
         self.builder.get_object('print_item').set_sensitive(True)
         self.lock_settings(False)
+
+    def update(self):
+        """Called by gamemode to update interface"""
+        while gtk.events_pending():
+            gtk.main_iteration()
 
     def start_match(self):
         """Start a new "match" race.
@@ -263,10 +273,10 @@ class Carrera(object):
 
         """
         race_box = self.builder.get_object('race_box')
-        if not 1 < len(self.players) < 5:
+        if not 1 < len(self.player_names) < 5:
             return
         rounds = int(self.button_rounds_num.get_value())
-        for color, player in zip(COLORS, self.players):
+        for color, player in zip(COLORS, self.player_names):
             vbox = gtk.VBox()
 
             playername = gtk.Label()
@@ -285,39 +295,37 @@ class Carrera(object):
 
             race_box.add(vbox)
             vbox.show()
-        self.match = Match(self.device, len(self.players), rounds=rounds)
-        self.match.start()
-        boxes = self.builder.get_object('race_box').children()
-        last_times = [None] * len(self.players)
+        self.players = [Player(i, name) for i, name in enumerate(self.player_names)]
+        self.mode = Match(self.device, self, self.players, rounds=rounds)
+        self.mode.run()
+        #boxes = self.builder.get_object('race_box').children()
+        #last_times = [None] * len(self.players)
 
-        graph = graphs.Match(len(self.players), rounds=rounds)
-        self.builder.get_object('round_graph').add(graph.canvas)
-        graph.show()
-        need_draw = True
-        self.rank_counter = 1
-        while not self.match.finished:
-            while gtk.events_pending():
-                gtk.main_iteration()
-            self.match.poll()
-            for i, box in enumerate(boxes):
-                try:
-                    if last_times[i] != self.match.player_times[i][-1]:
-                        if len(self.match.player_times[i]) < rounds:
-                            text = '<span size="36000">{0}/{1}</span>'.format(
-                                len(self.match.player_times[i]) + 1, rounds)
-                        else:
-                            text = '<span size="36000">{0}.</span>'.format(
-                                self.rank_counter)
-                            self.rank_counter += 1
-                        box.children()[1].set_markup(text)
-                        graph.add(i, self.match.player_times[i][-1])
-                        need_draw = True
-                        last_times[i] = self.match.player_times[i][-1]
-                except IndexError:
-                    pass
-            if need_draw:
-                graph.draw()
-                need_draw = False
+        #graph = graphs.Match(len(self.players), rounds=rounds)
+        #self.builder.get_object('round_graph').add(graph.canvas)
+        #graph.show()
+        #need_draw = True
+        #self.rank_counter = 1
+        #while not self.mode.finished:
+        #    for i, box in enumerate(boxes):
+        #        try:
+        #            if last_times[i] != self.mode.player_times[i][-1]:
+        #                if len(self.mode.player_times[i]) < rounds:
+        #                    text = '<span size="36000">{0}/{1}</span>'.format(
+        #                        len(self.mode.player_times[i]) + 1, rounds)
+        #                else:
+        #                    text = '<span size="36000">{0}.</span>'.format(
+        #                        self.rank_counter)
+        #                    self.rank_counter += 1
+        #                box.children()[1].set_markup(text)
+        #                graph.add(i, self.mode.player_times[i][-1])
+        #                need_draw = True
+        #                last_times[i] = self.mode.player_times[i][-1]
+        #        except IndexError:
+        #            pass
+        #    if need_draw:
+        #        graph.draw()
+        #        need_draw = False
         self.finish_race()
 
     def start_time_attack(self):
@@ -330,8 +338,8 @@ class Carrera(object):
 
         seconds = int(self.button_seconds.get_value())
 
-        self.match = TimeAttack(self.device, len(self.players), seconds=seconds)
-        self.match.start()
+        self.mode = TimeAttack(self.device, len(self.players), seconds=seconds)
+        self.mode.start()
 
         if not 1 < len(self.players) < 5:
             return
@@ -369,24 +377,24 @@ class Carrera(object):
         self.builder.get_object('round_graph').add(graph.canvas)
         graph.show()
         need_draw = True
-        while not self.match.finished:
+        while not self.mode.finished:
             while gtk.events_pending():
                 gtk.main_iteration()
-            self.match.poll()
+            self.mode.poll()
             for i, box in enumerate(boxes):
                 try:
-                    if last_rounds[i] != self.match.player_rounds[i]:
+                    if last_rounds[i] != self.mode.player_rounds[i]:
                         text = '<span size="36000">{0}</span>'.format(
-                            self.match.player_rounds[i] + 1)
+                            self.mode.player_rounds[i] + 1)
                         box.children()[1].set_markup(text)
-                        last_rounds[i] = self.match.player_rounds[i]
+                        last_rounds[i] = self.mode.player_rounds[i]
                         graph.add(i)
                         need_draw = True
                 except IndexError:
                     pass
             if last_time_left == timedelta() or \
-               last_time_left - self.match.time_left > timedelta(seconds=1):
-                delta = max(self.match.time_left, timedelta())
+               last_time_left - self.mode.time_left > timedelta(seconds=1):
+                delta = max(self.mode.time_left, timedelta())
                 text = '<span size="42000">{0:02}:{1:02}</span>'.format(
                     *divmod(delta.seconds, 60))
                 time_label.set_markup(text)
@@ -404,8 +412,8 @@ class Carrera(object):
         """
         race_box = self.builder.get_object('race_box')
 
-        self.match = KnockOut(self.device, len(self.players))
-        self.match.start()
+        self.mode = KnockOut(self.device, len(self.players))
+        self.mode.start()
 
         if not 1 < len(self.players) < 5:
             return
@@ -426,12 +434,12 @@ class Carrera(object):
 
         box = self.builder.get_object('race_box').children()[0].children()
         player_already_lost = [False] * len(self.players)
-        while not self.match.finished:
+        while not self.mode.finished:
             while gtk.events_pending():
                 gtk.main_iteration()
-            self.match.poll()
+            self.mode.poll()
             for i, label in enumerate(box):
-                if self.match.player_lost[i] and not player_already_lost[i]:
+                if self.mode.player_lost[i] and not player_already_lost[i]:
                     text = '<span size="55000" color="grey">{0}</span>'.format(
                         self.players[i])
                     label.set_markup(text)
@@ -446,12 +454,12 @@ class Carrera(object):
 
         """
         rounds = int(self.button_rounds_num.get_value())
-        self.match = Training(self.device, 4, rounds)
-        self.match.start()
-        while not self.match.finished:
+        self.mode = Training(self.device, 4, rounds)
+        self.mode.start()
+        while not self.mode.finished:
             while gtk.events_pending():
                 gtk.main_iteration()
-            self.match.poll()
+            self.mode.poll()
         self.lock_settings(False)
 
 if __name__ == '__main__':

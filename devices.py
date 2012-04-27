@@ -78,7 +78,7 @@ class UE9(ue9.UE9):
             raise ValueError('Value must be between 0 and 4095')
         self.feedback(DAC0Update=True, DAC0=int(value), DAC0Enabled=True)
 
-    def sensor_state(self, num):
+    def sensor_state(self):
         """Returns the state of the sensors at the finish line.
 
         The state is returned as a list with four booleans, one for each
@@ -97,11 +97,11 @@ class Virtual(object):
 
     def power_on(self, *tracks):
         """Enables the power for the given tracks. Pass -1 to enable all."""
-        print 'power on:', tracks
+        print 'power on: {0}'.format(tracks)
 
     def power_off(self, *tracks):
         """Disables the power for the given tracks. Pass -1 to disable all."""
-        print 'power off:', tracks
+        print 'power off: {0}'.format(tracks)
 
     @property
     def traffic_lights(self):
@@ -121,8 +121,9 @@ class Virtual(object):
         if value not in range(5):
             raise ValueError('Value must be in range 0-4')
         self._traffic_lights = value
+        print 'Traffic lights: {0:d}'.format(value)
 
-    def sensor_state(self, num):
+    def sensor_state(self):
         """Returns the state of the sensors at the finish line.
 
         The state is returned as a list with four booleans, one for each
@@ -133,6 +134,6 @@ class Virtual(object):
         return [
             0 <= v < 0.000015,
             0.000015 <= v < 0.00007,
-            0.00007 <= v < 0.00008,
-            0.00008 <= v < 0.0001,
+            0.00007 <= v < 0.00009,
+            0.00009 <= v < 0.00011,
         ]

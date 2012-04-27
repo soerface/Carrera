@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 """Contains different game modes."""
 from datetime import datetime, timedelta
 
@@ -6,21 +9,24 @@ from utils import trim_time
 class Mode(object):
     """Baseclass for all modes."""
 
-    def __init__(self, device, player_num=2):
-        if player_num not in [2,3,4]:
-            raise ValueError('player_num needs to be 2, 3 or 4')
+    def __init__(self, device, ui, players, *args, **kwargs):
+        if len(players) not in [2, 3, 4]:
+            raise ValueError('You need to pass 2, 3 or 4 players in a list')
         self.device = device
-        self.finished = self.started = False
+        self.ui = ui
+        self.finished = False
         self.canceled = False
-        self.player_num = player_num
-        self.player_finished = [False] * player_num
+        self.players = players
+        self.configure(*args, **kwargs)
 
-    def start(self):
-        """Start a new match."""
-        self.started = True
-        self.running = False
-        self.device.power_off(-1)
-        self.start_time = datetime.now()
+    def configure(self, *args, **kwargs):
+        """Make further configurations.
+
+        Overwrite this method if you want to use more arguments.
+        Additional arguments to __init__ will be passed to this method after
+        the other arguments (device, ui, players) have been processed.
+
+        """
 
     def cancel(self):
         """Cancel a match."""
@@ -28,70 +34,57 @@ class Mode(object):
         self.canceled = True
 
     def run(self):
-        """Countdown is over, start the race!"""
-        self.running = True
+        """Give control to the gamemode until the race is finished."""
+        self.finished = False
+        self.device.power_off(-1)
         self.start_time = datetime.now()
-        self.device.power_on(*range(self.player_num))
-        self.device.traffic_lights = 4
-        self.last_times = [self.start_time] * self.player_num
-
-    def poll(self):
-        """Do some "game logic". Needs to be called as often as possible."""
-
-        # test led to debug performance
-        #self.device.device.feedback(FIOMask=0b10000000, FIOState=255, FIODir=255)
-
-        if self.running:
-            self.read_sensors()
-            self.score()
+        countdown = True
+        while not self.finished:
+            now = self.now = datetime.now()
+            self.ui.update()
+            delta = datetime.now() - self.start_time
+            if countdown:
+                self.device.traffic_lights = delta.seconds
+                if delta > timedelta(seconds=4):
+                    countdown = False
+                    self.start_time = datetime.now()
+                    self.device.traffic_lights = 4
+                    for player in self.players:
+                        player.last_time = player.last_pass = now
+                        player.finished = False
+                    self.device.power_on(*map(lambda x: x.track, self.players))
+                continue
+            sensor_state = self.device.sensor_state()
+            for sensor, player in zip(sensor_state, self.players):
+                if sensor:
+                    if not player.finished and now - player.last_pass < timedelta(seconds=1):
+                        self._on_player_passed_line(player)
+                        player.last_time = now
+                    player.last_pass = now
             self.check_conditions()
-        else:
-            self.countdown()
-            if datetime.now() - self.start_time > timedelta(seconds=4):
-                self.run()
-
-        # test led to debug performance
-        #self.device.device.feedback(FIOMask=0b10000000, FIOState=0, FIODir=255)
-
-    def countdown(self):
-        """Handle the countdown for the start."""
-        delta = datetime.now() - self.start_time
-        self.device.traffic_lights = delta.seconds
 
     def save(self):
         """Write the acquired data to the database."""
-        pass
 
-    def read_sensors(self):
-        self.sensors = self.device.sensor_state(self.player_num)
+    def _on_player_passed_line(self, player):
+        player.times.append(self.now - player.last_time)
+        self.on_player_passed_line(player)
 
-    def score(self):
-        pass
+    def on_player_passed_line(self, player):
+        """Called when a car passes the sensor at the line and is not yet finished"""
 
     def check_conditions(self):
-        pass
+        """Check for winning conditions.
+
+        Overwrite this method in your gamemode to check for certain conditions,
+        e.g. timelimits. Called after every sensor polling.
+
+        """
 
 class Match(Mode):
 
-    def __init__(self, device, player_num=2, rounds=5):
-        super(Match, self).__init__(device, player_num)
+    def configure(self, rounds):
         self.rounds = rounds
-        self.player_times = []
-        for i in range(player_num):
-            self.player_times.append([])
-
-    def score(self):
-        now = datetime.now()
-        for i, sensor in enumerate(self.sensors):
-            if i >= self.player_num:
-                continue
-            if sensor and not self.player_finished[i]:
-                # tolerance to not count a round twice or more
-                if now - self.last_times[i] < timedelta(seconds=2):
-                    continue
-
-                self.player_times[i].append(now - self.last_times[i])
-                self.last_times[i] = now
 
     @property
     def total_times(self):
@@ -131,15 +124,12 @@ class Match(Mode):
 
         Turns off the track if a player made all his rounds.
         """
-        now = datetime.now()
-        for i, times in enumerate(self.player_times):
-            if len(times) == self.rounds and not self.player_finished[i]:
-                self.device.power_off(i)
-                self.player_finished[i] = True
-                self.device.traffic_lights = 3
-            if all(self.player_finished):
-                self.device.traffic_lights = 0
-                self.finished = True
+        for player in self.players:
+            if len(player.times) >= self.rounds and not player.finished:
+                self.device.power_off(player.track)
+                player.finished = True
+        if all(map(lambda x: x.finished, self.players)):
+            self.finished = True
 
 class TimeAttack(Mode):
 
