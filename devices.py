@@ -1,6 +1,10 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 """This module contains the devices to communicate with the track."""
 
-from random import random
+from datetime import datetime, timedelta
+from random import random, shuffle
 
 import ue9
 
@@ -94,6 +98,7 @@ class Virtual(object):
 
     def __init__(self):
         self.traffic_lights = 3
+        self.last_sensor_return = datetime.now()
 
     def power_on(self, *tracks):
         """Enables the power for the given tracks. Pass -1 to enable all."""
@@ -130,10 +135,10 @@ class Virtual(object):
         sensor. It "activates" the sensors randomly.
 
         """
-        v = random()
-        return [
-            0 <= v < 0.000015,
-            0.000015 <= v < 0.00007,
-            0.00007 <= v < 0.00009,
-            0.00009 <= v < 0.00011,
-        ]
+        now = datetime.now()
+        if now - self.last_sensor_return > timedelta(seconds=2+10*random()):
+            self.last_sensor_return = now
+            l = [True, False, False, False]
+            shuffle(l)
+            return l
+        return [False, False, False, False]

@@ -57,7 +57,7 @@ class Mode(object):
             sensor_state = self.device.sensor_state()
             for sensor, player in zip(sensor_state, self.players):
                 if sensor:
-                    if not player.finished and now - player.last_pass < timedelta(seconds=1):
+                    if not player.finished and now - player.last_pass > timedelta(seconds=1):
                         self._on_player_passed_line(player)
                         player.last_time = now
                     player.last_pass = now
