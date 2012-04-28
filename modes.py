@@ -41,7 +41,6 @@ class Mode(object):
         countdown = True
         while not self.finished:
             now = self.now = datetime.now()
-            self.ui.update()
             delta = datetime.now() - self.start_time
             if countdown:
                 self.device.traffic_lights = delta.seconds
@@ -51,8 +50,8 @@ class Mode(object):
                     self.device.traffic_lights = 4
                     for player in self.players:
                         player.last_time = player.last_pass = now
-                        player.finished = False
                     self.device.power_on(*map(lambda x: x.track, self.players))
+                self.ui.update()
                 continue
             sensor_state = self.device.sensor_state()
             for sensor, player in zip(sensor_state, self.players):
@@ -61,7 +60,10 @@ class Mode(object):
                         self._on_player_passed_line(player)
                         player.last_time = now
                     player.last_pass = now
+                if not player.finished:
+                    player.total_time = now - self.start_time
             self.check_conditions()
+            self.ui.update()
 
     def save(self):
         """Write the acquired data to the database."""
@@ -128,6 +130,7 @@ class Match(Mode):
             if len(player.times) >= self.rounds and not player.finished:
                 self.device.power_off(player.track)
                 player.finished = True
+                player.rank = map(lambda x: x.finished, self.players).count(True)
         if all(map(lambda x: x.finished, self.players)):
             self.finished = True
 

@@ -232,7 +232,7 @@ class Carrera(object):
         """
         self.builder.get_object('print_item').set_sensitive(False)
         for i in range(4):
-            for label in ['player', 'best_round', 'total_time', 'rank']:
+            for label in ['player', 'total_time', 'best_round', 'rounds', 'rank']:
                 obj = '{0}_label_{1}'.format(label, i)
                 self.builder.get_object(obj).set_markup('<span size="30000">-</span>')
         return
@@ -273,6 +273,46 @@ class Carrera(object):
         """Called by gamemode to update interface"""
         while gtk.events_pending():
             gtk.main_iteration()
+        if self.mode.canceled:
+            return
+        labels = [self.builder.get_object('total_time_label_{0:d}'.format(i)) for i in range(4)]
+        for player, label, color in zip(self.players, labels, COLORS):
+            color = color if player.finished else 'black'
+            seconds = player.total_seconds
+            markup = '<span size="30000" color="{0}">{1:.3f}</span>'.format(
+                color, seconds,
+            )
+            label.set_markup(markup)
+
+        labels = [self.builder.get_object('best_round_label_{0:d}'.format(i)) for i in range(4)]
+        for player, label, color in zip(self.players, labels, COLORS):
+            color = color if player.finished else 'black'
+            try:
+                seconds = min(map(lambda x: x.total_seconds(), player.times))
+            except ValueError:
+                continue
+            markup = '<span size="30000" color="{0}">{1:.3f}</span>'.format(
+                color, seconds,
+            )
+            label.set_markup(markup)
+
+        labels = [self.builder.get_object('rank_label_{0:d}'.format(i)) for i in range(4)]
+        for player, label, color in zip(self.players, labels, COLORS):
+            color = color if player.finished else 'black'
+            if not player.rank > 0:
+                continue
+            markup = '<span size="30000" color="{0}">{1:d}</span>'.format(
+                color, player.rank,
+            )
+            label.set_markup(markup)
+
+        labels = [self.builder.get_object('rounds_label_{0:d}'.format(i)) for i in range(4)]
+        for player, label, color in zip(self.players, labels, COLORS):
+            color = color if player.finished else 'black'
+            markup = '<span size="30000" color="{0}">{1:d}</span>'.format(
+                color, player.rounds,
+            )
+            label.set_markup(markup)
 
     def start_match(self):
         """Start a new "match" race.
