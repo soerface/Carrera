@@ -136,7 +136,7 @@ class Virtual(object):
 
         """
         now = datetime.now()
-        if now - self.last_sensor_return > timedelta(seconds=2+10*random()):
+        if now - self.last_sensor_return > timedelta(seconds=1+10*random()):
             self.last_sensor_return = now
             l = [True, False, False, False]
             shuffle(l)

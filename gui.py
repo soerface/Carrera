@@ -2,19 +2,18 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime, timedelta
+from itertools import izip, count
 
 import gtk
 from jinja2 import Environment, FileSystemLoader
 import LabJackPython
 
-from constants import COLORS
+from constants import COLORS, GAMEMODES
 from devices import UE9, Virtual
 import graphs
 from modes import Match, TimeAttack, KnockOut, Training
 from misc import Player
 from utils import trim_time
-
-GAMEMODES = ['Match', 'TimeAttack', 'KnockOut', 'Training']
 
 class Carrera(object):
     """Class which handles the GTK interface."""
@@ -147,8 +146,13 @@ class Carrera(object):
 
     def on_start_race_clicked(self, obj):
         self.clear_racewindow()
-        self.builder.get_object('print_item').set_sensitive(False)
         self.lock_settings(True)
+        for i, color, player_name in izip(count(), COLORS, self.player_names):
+            label = self.builder.get_object('player_label_{0:d}'.format(i))
+            text = '<span size="30000" color="{0}">{1}</span>'.format(
+                color, player_name
+            )
+            label.set_markup(text)
         if self.gamemode == 'Match':
             self.start_match()
         elif self.gamemode == 'TimeAttack':
@@ -226,6 +230,12 @@ class Carrera(object):
         interface
 
         """
+        self.builder.get_object('print_item').set_sensitive(False)
+        for i in range(4):
+            for label in ['player', 'best_round', 'total_time', 'rank']:
+                obj = '{0}_label_{1}'.format(label, i)
+                self.builder.get_object(obj).set_markup('<span size="30000">-</span>')
+        return
         if hasattr(self, 'match'):
             self.mode.cancel()
         for box in self.builder.get_object('race_box').children():
@@ -272,29 +282,9 @@ class Carrera(object):
         finished the loop will be interrupted.
 
         """
-        race_box = self.builder.get_object('race_box')
         if not 1 < len(self.player_names) < 5:
             return
         rounds = int(self.button_rounds_num.get_value())
-        for color, player in zip(COLORS, self.player_names):
-            vbox = gtk.VBox()
-
-            playername = gtk.Label()
-            playername.set_use_markup(True)
-            playername.set_markup('<span size="18000" color="{0}">{1}</span>'.format(
-                color, player
-            ))
-            vbox.add(playername)
-            playername.show()
-
-            round_ = gtk.Label()
-            round_.set_use_markup(True)
-            round_.set_markup('<span size="36000">1/{0}</span>'.format(rounds))
-            vbox.add(round_)
-            round_.show()
-
-            race_box.add(vbox)
-            vbox.show()
         self.players = [Player(i, name) for i, name in enumerate(self.player_names)]
         self.mode = Match(self.device, self, self.players, rounds=rounds)
         self.mode.run()
