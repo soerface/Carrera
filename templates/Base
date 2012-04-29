@@ -2,9 +2,13 @@
     <span size="xx-large"><b>BG 13 Racingteam</b></span>{% for i in range(55) %} {% endfor %}{{ current_date_time }}
     <small>ein Projekt des Abiturjahrgangs 2012 des Beruflichen Gymnasiums Eschwege</small>
 
-    <u>Auswertung des Rennens</u>
+    <span size="large"><u>Auswertung des Rennens</u></span>
+
+    {% for player in players -%}
+        <span{% if player.rank == 1 %} weight="bold"{% endif %}>Strecke {{ player.track }}, Platz {{ player.rank }}: {{ player.name }}</span>
+    {% endfor -%}
 {%- endblock %}
-{% block content %}{% endblock %}
+{%- block content %}{% endblock %}
 {% block footer %}
     {% for i in range(132) %}-{% endfor %}
     Vielen Dank für Ihre Teilnahme, wir hoffen, dass es Ihnen Spaß gemacht hat! Fotos,

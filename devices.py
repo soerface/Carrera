@@ -136,9 +136,18 @@ class Virtual(object):
 
         """
         now = datetime.now()
+        #if now - self.last_sensor_return > timedelta(seconds=2):
         if now - self.last_sensor_return > timedelta(seconds=1+10*random()):
             self.last_sensor_return = now
             l = [True, False, False, False]
             shuffle(l)
+            #l = [False, False, False, False]
+            #index = -1
+            #while index not in range(4):
+            #    try:
+            #        index = int(raw_input('Track id: ')) - 1
+            #    except ValueError:
+            #        continue
+            #l[index] = True
             return l
         return [False, False, False, False]

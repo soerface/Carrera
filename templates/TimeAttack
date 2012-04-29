@@ -1,12 +1,8 @@
-{% extends "base" %}
+{% extends 'Base' %}
 
 {% block content %}
-    Spielmodus: Match
-    Rundenanzahl: {{ round_num }}
-
-    {% for player in players -%}
-        <span{% if player.rank == 1 %} weight="bold"{% endif %}>Strecke {{ loop.index }}, Platz {{ player.rank }}: {{ player.name }}</span>
-    {% endfor %}
+    Spielmodus: TimeAttack (TODO: vll lieber "Zeitrennen"?)
+    Zeit: {{ time_limit }} Sekunden
     <span font_family="monospace">
           <b>Strecke</b>   |{% for player in players %}     <b>{{ loop.index }}</b>     {% if not loop.last %}|{% endif %}{% endfor %}
         ------------+{% for player in players %}-----------{% if not loop.last %}+{% endif %}{% endfor %}
@@ -17,6 +13,5 @@
         #}{% for i in range(8 - time|length) %} {% endfor %}{{ time }}   </span>{% if not loop.last %}|{% endif %}{#
         #}{% endfor %}</span>
         {% endfor -%}
-        <span background="#000000" foreground="#FFFFFF">   <b>Gesamt</b>   |{% for time in total_times %}{% for i in range(8 - time|length) %} {% endfor %}{{ time }}   {% if not loop.last %}|{% endif %}{% endfor %}</span>
     </span>
 {%- endblock %}

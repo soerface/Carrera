@@ -138,7 +138,7 @@ class Carrera(object):
 
         elif self.gamemode == 'TimeAttack':
             seconds = int(self.button_seconds.get_value())
-            condition = 'Fahre soviele Runden wie möglich in {0:d} Sekunden'.format(seconds)
+            condition = 'Fahre in {0:d} Sekunden soviele Runden wie möglich!'.format(seconds)
             self.mode = TimeAttack(self.device, self, self.players, seconds=seconds)
 
         elif self.gamemode == 'KnockOut':
@@ -251,18 +251,32 @@ class Carrera(object):
         kwargs = {
             'current_date_time': datetime.now().strftime('%d.%m.%Y %H:%M'),
             'players': self.players,
+            'total_times': [trim_time(player.total_seconds) for player in self.players],
         }
         if self.gamemode == 'Match':
-            template = self.jinja_env.get_template('match')
             round_times = []
             for i in range(self.mode.rounds):
                 round_times.append([trim_time(p.times[i].total_seconds()) for p in self.players])
-            kwargs['round_times'] = round_times
-            kwargs['total_times'] = [trim_time(player.total_seconds) for player in self.players]
             kwargs['round_num'] = self.mode.rounds
+            kwargs['round_times'] = round_times
+        if self.gamemode == 'TimeAttack':
+            kwargs['time_limit'] = self.mode.seconds
+            round_times = []
+            max_rounds = max(self.players, key=lambda x: x.rounds).rounds
+            for i in range(max_rounds):
+                round_ = []
+                for player in self.players:
+                    try:
+                        seconds = trim_time(player.times[i].total_seconds())
+                    except IndexError:
+                        seconds = '-  '
+                    round_.append(seconds)
+                round_times.append(round_)
+            kwargs['round_times'] = round_times
 
+        template = self.jinja_env.get_template(self.gamemode)
         self.template = template.render(**kwargs)
-        if self.gamemode in ['Match']:
+        if self.gamemode in ['Match', 'TimeAttack']:
             self.builder.get_object('print_item').set_sensitive(True)
         self.lock_settings(False)
 

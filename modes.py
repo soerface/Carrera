@@ -73,7 +73,12 @@ class Mode(object):
         self.on_player_passed_line(player)
 
     def on_player_passed_line(self, player):
-        """Called when a car passes the sensor at the line and is not yet finished"""
+        """Called when a car passes the sensor at the line and is not yet finished.
+
+        Round time will be saved before calling and is accessable via the
+        player object.
+
+        """
 
     def check_conditions(self):
         """Check for winning conditions.
@@ -83,30 +88,22 @@ class Mode(object):
 
         """
 
+    @property
+    def finished(self):
+        return self._finished
+
+    @finished.setter
+    def finished(self, value):
+        self._finished = value
+        if value == True:
+            self.device.power_off(-1)
+            for player in self.players:
+                player.finished = True
+
 class Match(Mode):
 
     def configure(self, rounds):
         self.rounds = rounds
-
-    @property
-    def total_times(self):
-        """Returns the total time in seconds as string."""
-        times = []
-        for player in self.player_times:
-            seconds = str(sum([d.total_seconds() for d in player]))
-            times.append(trim_time(seconds))
-        return times
-
-    @property
-    def best_round(self):
-        """Returns a dictionary with the id of the player who made the best round
-        and the time"""
-        times = []
-        for time in self.player_times:
-            times.append(min([d.total_seconds() for d in time]))
-        best_time = min(times)
-        player_id = times.index(best_time)
-        return {'time': best_time, 'player_id': player_id}
 
     def check_conditions(self):
         """Check if a player made all rounds.
@@ -122,41 +119,31 @@ class Match(Mode):
 
 class TimeAttack(Mode):
 
-    def __init__(self, device, player_num=2, seconds=0):
-        super(TimeAttack, self).__init__(device, player_num)
+    def configure(self, seconds):
         self.seconds = seconds
-        self.player_rounds = [0] * player_num
-        self.finish_time = datetime.now()
-
-    def run(self):
-        super(TimeAttack, self).run()
-        self.finish_time = self.start_time + timedelta(seconds=self.seconds)
-
-    def score(self):
-        now = datetime.now()
-        for i, sensor in enumerate(self.sensors):
-            if i >= self.player_num:
-                continue
-            if sensor:
-                # tolerance to not count a round twice or more
-                if now - self.last_times[i] < timedelta(seconds=2):
-                    continue
-                self.player_rounds[i] += 1
-                self.last_times[i] = now
 
     def check_conditions(self):
         """Check if the time is over
 
         Used to power off the tracks.
-        """
-        if self.finish_time <= datetime.now():
-            self.device.power_off(-1)
-            self.finished = True
-            self.device.traffic_lights = 3
 
-    @property
-    def time_left(self):
-        return self.finish_time - datetime.now()
+        """
+        if self.now - self.start_time >= timedelta(seconds=self.seconds):
+            self.finished = True
+
+    def on_player_passed_line(self, player):
+        prev_rank = player.rank
+        prev_rounds = player.rounds - 1
+        rank = len(self.players)
+        for p in self.players:
+            if p.rounds < player.rounds:
+                rank -= 1
+        player.rank = rank
+        for p in self.players:
+            if p.rank == 0:
+                continue
+            if p.rounds == prev_rounds and p.rank < prev_rank:
+                p.rank += 1
 
 class KnockOut(Mode):
 
