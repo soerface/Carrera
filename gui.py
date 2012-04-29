@@ -154,11 +154,11 @@ class Carrera(object):
             )
             label.set_markup(markup)
 
-        self.players = [Player(i, name) for i, name in enumerate(self.player_names)]
+        self.players = [Player(i, self.device, name) for i, name in enumerate(self.player_names)]
 
         if self.gamemode == 'Match':
             rounds = int(self.button_rounds_num.get_value())
-            condition = 'Absolviere als ersters {0:d} Runden'.format(rounds)
+            condition = 'Absolviere als erster {0:d} Runden'.format(rounds)
             self.mode = Match(self.device, self, self.players, rounds=rounds)
 
         elif self.gamemode == 'TimeAttack':

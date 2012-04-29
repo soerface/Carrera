@@ -5,8 +5,9 @@ from datetime import timedelta
 
 class Player(object):
 
-    def __init__(self, track, name):
+    def __init__(self, track, device, name):
         self.track = track
+        self.device = device
         self.name = name
         self.times = []
         self.finished = False
@@ -20,3 +21,13 @@ class Player(object):
     @property
     def total_seconds(self):
         return self.total_time.total_seconds()
+
+    @property
+    def finished(self):
+        return self._finished
+
+    @finished.setter
+    def finished(self, value):
+        self._finished = value
+        if value:
+            self.device.power_off(self.track)

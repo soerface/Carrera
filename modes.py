@@ -128,7 +128,6 @@ class Match(Mode):
         """
         for player in self.players:
             if len(player.times) >= self.rounds and not player.finished:
-                self.device.power_off(player.track)
                 player.finished = True
                 player.rank = map(lambda x: x.finished, self.players).count(True)
         if all(map(lambda x: x.finished, self.players)):
