@@ -73,35 +73,10 @@ class Carrera(object):
         entry.show()
         box.show()
 
-    def draw_page(self, operation, context, page_nr):
+    def draw_page(self, operation, context, page_no):
         """Formats the page for printing."""
-
-        current_time = datetime.now().strftime('%d.%m.%Y %H:%M'),
         layout = context.create_pango_layout()
-        if self.last_gamemode == 'Match':
-            template = self.jinja_env.get_template('match')
-            best_round = {
-                'time': trim_time(self.mode.best_round['time']),
-                'player': self.last_players[self.mode.best_round['player_id']],
-            }
-            layout.set_markup(template.render(
-                current_time = current_time,
-                players = self.last_players,
-                total_times = self.mode.total_times,
-                worst_time = max(self.mode.total_times),
-                best_round = best_round,
-                round_num = self.mode.rounds,
-                round_times = self.mode.round_times,
-                )
-            )
-        elif self.last_gamemode == 'TimeAttack':
-            template = self.jinja_env.get_template('timeattack')
-            layout.set_markup(template.render(
-                current_time = current_time,
-                players = self.last_players,
-                total_time = self.mode.seconds,
-                )
-            )
+        layout.set_markup(self.template)
         cairo_context = context.get_cairo_context()
         cairo_context.show_layout(layout)
 
@@ -177,7 +152,9 @@ class Carrera(object):
 
         self.builder.get_object('condition_label').set_text(condition)
         self.mode.run()
-        self.finish_race()
+        if not self.mode.canceled:
+            self.prepare_template()
+        self.lock_settings(False)
 
     def on_main_delete_event(self, obj, event):
         self.quit()
@@ -228,6 +205,14 @@ class Carrera(object):
             for subchild in child.children():
                 subchild.set_sensitive(self.gamemode != 'Training')
 
+    def power_on(self, track):
+        """Power the given track on. Pass -1 to power all on"""
+        self.device.power_on(track)
+
+    def power_off(self, track):
+        """Power the given track off. Pass -1 to power all off"""
+        self.device.power_off(track)
+
     on_power_on_0_clicked = lambda self, obj: self.power_on(0)
     on_power_off_0_clicked = lambda self, obj: self.power_off(0)
     on_power_on_1_clicked = lambda self, obj: self.power_on(1)
@@ -261,19 +246,24 @@ class Carrera(object):
         children = self.builder.get_object('player_box').children()
         return [child.children()[0].get_text() for child in children]
 
-    def power_on(self, track):
-        """Power the given track on. Pass -1 to power all on"""
-        self.device.power_on(track)
+    def prepare_template(self):
+        """Renders the print template and unlocks interface."""
+        kwargs = {
+            'current_date_time': datetime.now().strftime('%d.%m.%Y %H:%M'),
+            'players': self.players,
+        }
+        if self.gamemode == 'Match':
+            template = self.jinja_env.get_template('match')
+            round_times = []
+            for i in range(self.mode.rounds):
+                round_times.append([trim_time(p.times[i].total_seconds()) for p in self.players])
+            kwargs['round_times'] = round_times
+            kwargs['total_times'] = [trim_time(player.total_seconds) for player in self.players]
+            kwargs['round_num'] = self.mode.rounds
 
-    def power_off(self, track):
-        """Power the given track off. Pass -1 to power all off"""
-        self.device.power_off(track)
-
-    def finish_race(self):
-        """Sets some final settings after a race and unlocks interface."""
-        self.last_gamemode = self.gamemode
-        self.last_players = self.player_names
-        self.builder.get_object('print_item').set_sensitive(True)
+        self.template = template.render(**kwargs)
+        if self.gamemode in ['Match']:
+            self.builder.get_object('print_item').set_sensitive(True)
         self.lock_settings(False)
 
     def update(self):
@@ -294,9 +284,8 @@ class Carrera(object):
         labels = [self.builder.get_object('best_round_label_{0:d}'.format(i)) for i in range(4)]
         for player, label, color in zip(self.players, labels, COLORS):
             color = color if player.finished else 'black'
-            try:
-                seconds = min(map(lambda x: x.total_seconds(), player.times))
-            except ValueError:
+            seconds = player.best_round
+            if seconds is None:
                 continue
             markup = '<span size="30000" color="{0}">{1:.3f}</span>'.format(
                 color, seconds,

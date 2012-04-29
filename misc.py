@@ -19,6 +19,13 @@ class Player(object):
         return len(self.times)
 
     @property
+    def best_round(self):
+        try:
+            return min(map(lambda x: x.total_seconds(), self.times))
+        except ValueError:
+            return None
+
+    @property
     def total_seconds(self):
         return self.total_time.total_seconds()
 

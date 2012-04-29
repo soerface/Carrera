@@ -98,19 +98,6 @@ class Match(Mode):
         return times
 
     @property
-    def round_times(self):
-        """Returns round times as strings ordered by players"""
-        times = []
-        for i in range(self.rounds):
-            round_ = []
-            for player in self.player_times:
-                seconds = str(player[i].total_seconds())
-                delimiter = seconds.rfind('.')
-                round_.append(seconds[:delimiter + 4])
-            times.append(round_)
-        return times
-
-    @property
     def best_round(self):
         """Returns a dictionary with the id of the player who made the best round
         and the time"""
