@@ -149,18 +149,35 @@ class Carrera(object):
         self.lock_settings(True)
         for i, color, player_name in izip(count(), COLORS, self.player_names):
             label = self.builder.get_object('player_label_{0:d}'.format(i))
-            text = '<span size="30000" color="{0}">{1}</span>'.format(
+            markup = '<span size="30000" color="{0}">{1}</span>'.format(
                 color, player_name
             )
-            label.set_markup(text)
+            label.set_markup(markup)
+
+        self.players = [Player(i, name) for i, name in enumerate(self.player_names)]
+
         if self.gamemode == 'Match':
-            self.start_match()
+            rounds = int(self.button_rounds_num.get_value())
+            condition = 'Absolviere als ersters {0:d} Runden'.format(rounds)
+            self.mode = Match(self.device, self, self.players, rounds=rounds)
+
         elif self.gamemode == 'TimeAttack':
-            self.start_time_attack()
+            seconds = int(self.button_seconds.get_value())
+            condition = 'Fahre soviele Runden wie möglich in {0:d} Sekunden'.format(seconds)
+            self.mode = TimeAttack(self.device, self, self.players, seconds=seconds)
+
         elif self.gamemode == 'KnockOut':
-            self.start_knockout()
+            condition = 'Überlebe als letzer'
+            self.mode = TimeAttack(self.device, self, self.players)
+
         elif self.gamemode == 'Training':
-            self.start_training()
+            rounds = int(self.button_rounds_num.get_value())
+            condition = 'Training: {0:d} Runden pro Spur'.format(rounds)
+            self.mode = Training(self.device, self, self.players, rounds)
+
+        self.builder.get_object('condition_label').set_text(condition)
+        self.mode.run()
+        self.finish_race()
 
     def on_main_delete_event(self, obj, event):
         self.quit()
@@ -235,18 +252,8 @@ class Carrera(object):
             for label in ['player', 'total_time', 'best_round', 'rounds', 'rank']:
                 obj = '{0}_label_{1}'.format(label, i)
                 self.builder.get_object(obj).set_markup('<span size="30000">-</span>')
+            self.builder.get_object('condition_label').set_text('-')
         return
-        if hasattr(self, 'match'):
-            self.mode.cancel()
-        for box in self.builder.get_object('race_box').children():
-            self.builder.get_object('race_box').remove(box)
-        if hasattr(self, 'time_label'):
-            self.builder.get_object('race_mainbox').remove(self.time_label)
-        try:
-            canvas = self.builder.get_object('round_graph').children()[0]
-            self.builder.get_object('round_graph').remove(canvas)
-        except IndexError:
-            pass
 
     @property
     def player_names(self):
@@ -301,7 +308,7 @@ class Carrera(object):
             color = color if player.finished else 'black'
             if not player.rank > 0:
                 continue
-            markup = '<span size="30000" color="{0}">{1:d}</span>'.format(
+            markup = '<span size="30000" color="{0}">{1:d}.</span>'.format(
                 color, player.rank,
             )
             label.set_markup(markup)
@@ -314,50 +321,6 @@ class Carrera(object):
             )
             label.set_markup(markup)
 
-    def start_match(self):
-        """Start a new "match" race.
-
-        Fetches information from the main window to prepare the racewindow.
-        It then goes in an infinite loop to poll the sensors. After all players
-        finished the loop will be interrupted.
-
-        """
-        if not 1 < len(self.player_names) < 5:
-            return
-        rounds = int(self.button_rounds_num.get_value())
-        self.players = [Player(i, name) for i, name in enumerate(self.player_names)]
-        self.mode = Match(self.device, self, self.players, rounds=rounds)
-        self.mode.run()
-        #boxes = self.builder.get_object('race_box').children()
-        #last_times = [None] * len(self.players)
-
-        #graph = graphs.Match(len(self.players), rounds=rounds)
-        #self.builder.get_object('round_graph').add(graph.canvas)
-        #graph.show()
-        #need_draw = True
-        #self.rank_counter = 1
-        #while not self.mode.finished:
-        #    for i, box in enumerate(boxes):
-        #        try:
-        #            if last_times[i] != self.mode.player_times[i][-1]:
-        #                if len(self.mode.player_times[i]) < rounds:
-        #                    text = '<span size="36000">{0}/{1}</span>'.format(
-        #                        len(self.mode.player_times[i]) + 1, rounds)
-        #                else:
-        #                    text = '<span size="36000">{0}.</span>'.format(
-        #                        self.rank_counter)
-        #                    self.rank_counter += 1
-        #                box.children()[1].set_markup(text)
-        #                graph.add(i, self.mode.player_times[i][-1])
-        #                need_draw = True
-        #                last_times[i] = self.mode.player_times[i][-1]
-        #        except IndexError:
-        #            pass
-        #    if need_draw:
-        #        graph.draw()
-        #        need_draw = False
-        self.finish_race()
-
     def start_time_attack(self):
         """Start a new "time attack" race.
 
@@ -366,7 +329,6 @@ class Carrera(object):
         """
         race_box = self.builder.get_object('race_box')
 
-        seconds = int(self.button_seconds.get_value())
 
         self.mode = TimeAttack(self.device, len(self.players), seconds=seconds)
         self.mode.start()
