@@ -1153,7 +1153,6 @@
         </child>
         <child>
           <object class="GtkAlignment" id="round_graph">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
               <placeholder/>
