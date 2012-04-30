@@ -303,7 +303,7 @@ class Carrera(object):
                 round_times.append(round_)
             kwargs['round_times'] = round_times
 
-        template = self.jinja_env.get_template(self.gamemode)
+        template = self.jinja_env.get_template('{0}.xml'.format(self.gamemode))
         self.template = template.render(**kwargs)
         if self.gamemode in ['Match', 'TimeAttack']:
             self.builder.get_object('print_item').set_sensitive(True)

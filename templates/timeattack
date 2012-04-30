@@ -1,6 +1,0 @@
-{% extends "base" %}
-
-{% block content %}
-    Spielmodus: TimeAttack
-    Zeit: {{ total_time }} Sekunden
-{%- endblock %}
