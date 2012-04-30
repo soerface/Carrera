@@ -95,10 +95,10 @@ class Carrera(object):
     def lock_settings(self, state):
         """(De)activates interface elements like player names"""
         state = False if state else True
-        elements = ['add_player'] + ['start_race'] if self.gamemode != 'Training' else []
+        elements = ['add_player', 'start_race', 'preferences_item']
         for element in elements:
             self.builder.get_object(element).set_sensitive(state)
-        elements = ['settings_box'] + ['player_box'] if self.gamemode != 'Training' else []
+        elements = ['settings_box', 'player_box']
         for element in elements:
             for child in self.builder.get_object(element).children():
                 for subchild in child.children():
@@ -352,139 +352,6 @@ class Carrera(object):
                 color, player.rounds,
             )
             label.set_markup(markup)
-
-    def start_time_attack(self):
-        """Start a new "time attack" race.
-
-        Works the same like `start_match`, it just uses the gamemode "TimeAttack"
-
-        """
-        race_box = self.builder.get_object('race_box')
-
-
-        self.mode = TimeAttack(self.device, len(self.players), seconds=seconds)
-        self.mode.start()
-
-        if not 1 < len(self.players) < 5:
-            return
-        race_mainbox = self.builder.get_object('race_mainbox')
-        self.time_label = time_label = gtk.Label()
-        time_label.set_use_markup(True)
-        time_label.set_markup('<span size="42000">00:00</span>')
-        time_label.show()
-        race_mainbox.pack_start(time_label, expand=False)
-        race_mainbox.reorder_child(time_label, 0)
-        for color, player in zip(COLORS, self.players):
-            vbox = gtk.VBox()
-
-            playername = gtk.Label()
-            playername.set_use_markup(True)
-            playername.set_markup('<span size="18000" color="{0}">{1}</span>'.format(
-                color, player
-            ))
-            vbox.add(playername)
-            playername.show()
-
-            round_ = gtk.Label()
-            round_.set_use_markup(True)
-            round_.set_markup('<span size="36000">1</span>')
-            vbox.add(round_)
-            round_.show()
-
-            race_box.add(vbox)
-            vbox.show()
-        boxes = self.builder.get_object('race_box').children()
-        last_rounds = [0] * len(self.players)
-
-        last_time_left = timedelta()
-        graph = graphs.TimeAttack(len(self.players))
-        self.builder.get_object('round_graph').add(graph.canvas)
-        graph.show()
-        need_draw = True
-        while not self.mode.finished:
-            while gtk.events_pending():
-                gtk.main_iteration()
-            self.mode.poll()
-            for i, box in enumerate(boxes):
-                try:
-                    if last_rounds[i] != self.mode.player_rounds[i]:
-                        text = '<span size="36000">{0}</span>'.format(
-                            self.mode.player_rounds[i] + 1)
-                        box.children()[1].set_markup(text)
-                        last_rounds[i] = self.mode.player_rounds[i]
-                        graph.add(i)
-                        need_draw = True
-                except IndexError:
-                    pass
-            if last_time_left == timedelta() or \
-               last_time_left - self.mode.time_left > timedelta(seconds=1):
-                delta = max(self.mode.time_left, timedelta())
-                text = '<span size="42000">{0:02}:{1:02}</span>'.format(
-                    *divmod(delta.seconds, 60))
-                time_label.set_markup(text)
-                last_time_left = delta
-            if need_draw:
-                graph.draw()
-                need_draw = False
-        self.finish_race()
-
-    def start_knockout(self):
-        """Start a new "knock out" race.
-
-        Works the same like `start_match`, it just uses the gamemode "KnockOut"
-
-        """
-        race_box = self.builder.get_object('race_box')
-
-        self.mode = KnockOut(self.device, len(self.players))
-        self.mode.start()
-
-        if not 1 < len(self.players) < 5:
-            return
-        race_mainbox = self.builder.get_object('race_mainbox')
-        hbox = gtk.VBox()
-        for color, player in zip(COLORS, self.players):
-
-            playername = gtk.Label()
-            playername.set_use_markup(True)
-            playername.set_markup('<span size="55000" color="{0}">{1}</span>'.format(
-                color, player
-            ))
-            hbox.add(playername)
-            playername.show()
-
-        race_box.add(hbox)
-        hbox.show()
-
-        box = self.builder.get_object('race_box').children()[0].children()
-        player_already_lost = [False] * len(self.players)
-        while not self.mode.finished:
-            while gtk.events_pending():
-                gtk.main_iteration()
-            self.mode.poll()
-            for i, label in enumerate(box):
-                if self.mode.player_lost[i] and not player_already_lost[i]:
-                    text = '<span size="55000" color="grey">{0}</span>'.format(
-                        self.players[i])
-                    label.set_markup(text)
-                    player_already_lost[i] = True
-        self.finish_race()
-
-    def start_training(self):
-        """Start a "training".
-
-        Makes it possible to use every track independently, driving
-        n rounds and then shuts down the track.
-
-        """
-        rounds = int(self.button_rounds_num.get_value())
-        self.mode = Training(self.device, 4, rounds)
-        self.mode.start()
-        while not self.mode.finished:
-            while gtk.events_pending():
-                gtk.main_iteration()
-            self.mode.poll()
-        self.lock_settings(False)
 
 if __name__ == '__main__':
     carrera = Carrera()
