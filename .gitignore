@@ -3,3 +3,4 @@
 *.db-journal
 *.py[co]
 *_build
+preferences.ini

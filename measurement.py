@@ -3,6 +3,7 @@
 
 from datetime import datetime, timedelta
 from itertools import izip, count
+import pickle
 
 import gtk
 from jinja2 import Environment, FileSystemLoader
@@ -21,7 +22,7 @@ class Carrera(object):
     def __init__(self):
         self.jinja_env = Environment(loader=FileSystemLoader('templates'))
         self.builder = gtk.Builder()
-        self.builder.add_from_file('gui.glade')
+        self.builder.add_from_file('measurement.glade')
         self.builder.connect_signals(self)
         for i in range(2):
             self.add_player()
@@ -45,14 +46,25 @@ class Carrera(object):
     def run(self):
         """Display the GUI and start the mainloop."""
         try:
+            with open('preferences.ini', 'rb') as f:
+                self.preferences = pickle.load(f)
+        except (IOError, EOFError):
+            self.preferences = {
+                'auto_print': False,
+            }
+        checkbutton = self.builder.get_object('auto_print_checkbutton')
+        checkbutton.set_active(self.preferences['auto_print'])
+        try:
             gtk.main()
         except KeyboardInterrupt:
             pass
 
     def quit(self, *args, **kwargs):
-        """Quit the GUI and cancel any running race."""
+        """Quit the GUI, cancel any running race and save preferences."""
         if hasattr(self, 'mode'):
             self.mode.cancel()
+        with open('preferences.ini', 'wb') as f:
+            pickle.dump(self.preferences, f)
         gtk.main_quit()
 
     def add_player(self):
@@ -95,6 +107,12 @@ class Carrera(object):
             child.set_sensitive(state)
         self.builder.get_object('cancel_race').set_sensitive(not state)
 
+    def generate_print_operation(self):
+        print_op = gtk.PrintOperation()
+        print_op.set_n_pages(1)
+        print_op.connect('draw_page', self.draw_page)
+        return print_op
+
     def on_cancel_race_clicked(self, obj):
         self.mode.cancel()
         self.clear_racewindow()
@@ -104,10 +122,14 @@ class Carrera(object):
         self.builder.get_object('race').show()
         self.builder.get_object('main').present()
 
-    def on_print_item_clicked(self, obj):
-        print_op = gtk.PrintOperation()
-        print_op.set_n_pages(1)
-        print_op.connect('draw_page', self.draw_page)
+    def on_auto_print_checkbutton_toggled(self, obj):
+        self.preferences['auto_print'] = obj.get_active()
+
+    def on_preferences_item_activate(self, obj):
+        self.builder.get_object('preferences').show()
+
+    def on_print_item_activate(self, obj):
+        print_op = self.generate_print_operation()
         print_op.run(gtk.PRINT_OPERATION_ACTION_PRINT_DIALOG, None)
 
     def on_add_player_clicked(self, obj):
@@ -154,10 +176,17 @@ class Carrera(object):
         self.mode.run()
         if not self.mode.canceled:
             self.prepare_template()
+            if self.preferences['auto_print']:
+                print_op = self.generate_print_operation()
+                print_op.run(gtk.PRINT_OPERATION_ACTION_PRINT, None)
         self.lock_settings(False)
 
     def on_main_delete_event(self, obj, event):
         self.quit()
+
+    def on_preferences_delete_event(self, obj, event):
+        obj.hide()
+        return True
 
     def on_race_delete_event(self, obj, event):
         return True
