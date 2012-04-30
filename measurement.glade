@@ -719,7 +719,7 @@
             <property name="can_focus">False</property>
             <child>
               <object class="GtkCheckButton" id="auto_print_checkbutton">
-                <property name="label" translatable="yes">Nach jedem Rennen automatisch durcken</property>
+                <property name="label" translatable="yes">Nach jedem Rennen automatisch drucken</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
