@@ -105,16 +105,11 @@ class Match(Mode):
     def configure(self, rounds):
         self.rounds = rounds
 
-    def check_conditions(self):
-        """Check if a player made all rounds.
-
-        Turns off the track if a player made all his rounds.
-        """
-        for player in self.players:
-            if len(player.times) >= self.rounds and not player.finished:
-                player.finished = True
-                player.rank = map(lambda x: x.finished, self.players).count(True)
-        if all(map(lambda x: x.finished, self.players)):
+    def on_player_passed_line(self, player):
+        if len(player.times) >= self.rounds:
+            player.finished = True
+            player.rank = len([x for x in self.players if x.finished])
+        if player.rank == len(self.players):
             self.finished = True
 
 class TimeAttack(Mode):
@@ -147,35 +142,27 @@ class TimeAttack(Mode):
 
 class KnockOut(Mode):
 
-    def __init__(self, device, player_num=2):
-        super(KnockOut, self).__init__(device, player_num)
-        self.player_lost = [False] * player_num
-        self.player_rounds = [0] * player_num
+    def configure(self):
+        pass
 
-    def score(self):
-        now = datetime.now()
-        for i, sensor in enumerate(self.sensors):
-            if i >= self.player_num:
-                continue
-            if sensor:
-                # tolerance to not count a round twice or more
-                if now - self.last_times[i] < timedelta(seconds=2):
-                    continue
-                # do not count rounds of dead players
-                if self.player_lost[i]:
-                    continue
-                self.player_rounds[i] += 1
+    def on_player_passed_line(self, player):
+        n = 0
+        for p in self.players:
+            if p.rounds >= player.rounds:
+                n += 1
+        if player.rounds + n == len(self.players):
+            rank = 4
+            if n == 1:
+                player.rank = 1
+                player.finished = True
+            for p in sorted(self.players, key=lambda x: x.rounds):
+                if p.rounds < player.rounds:
+                    p.rank = rank
+                    p.finished = True
+                rank -= 1
 
-                # kill the n00b
-                minimum = min(self.player_rounds)
-                if self.player_rounds.count(minimum) == 1:
-                    player_id = self.player_rounds.index(minimum)
-                    self.device.power_off(player_id)
-                    self.player_lost[player_id] = True
-                    self.player_rounds[player_id] = 4
-                if self.player_lost.count(False) == 1:
-                    self.finished = True
-                self.last_times[i] = now
+        if len([x for x in self.players if not x.finished]) == 0:
+            self.finished = True
 
 class Training(Mode):
 

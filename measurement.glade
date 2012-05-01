@@ -699,12 +699,12 @@
     </child>
   </object>
   <object class="GtkWindow" id="preferences">
+    <property name="width_request">550</property>
+    <property name="height_request">200</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Einstellungen</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
-    <property name="default_width">200</property>
-    <property name="default_height">100</property>
     <property name="type_hint">dialog</property>
     <property name="has_resize_grip">False</property>
     <signal name="delete-event" handler="on_preferences_delete_event" swapped="no"/>
@@ -712,11 +712,13 @@
       <object class="GtkNotebook" id="notebook2">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
-        <property name="border_width">10</property>
+        <property name="border_width">5</property>
         <child>
           <object class="GtkVBox" id="vbox9">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="border_width">5</property>
+            <property name="spacing">5</property>
             <child>
               <object class="GtkCheckButton" id="auto_print_checkbutton">
                 <property name="label" translatable="yes">Nach jedem Rennen automatisch drucken</property>

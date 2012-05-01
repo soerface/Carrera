@@ -1,4 +1,3 @@
-*.swp
 *.db
 *.db-journal
 *.py[co]

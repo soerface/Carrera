@@ -5,7 +5,7 @@
     <span size="large"><u>Auswertung des Rennens</u></span>
 
     {% for player in players -%}
-        <span{% if player.rank == 1 %} weight="bold"{% endif %}>Strecke {{ player.track }}, Platz {{ player.rank }}: {{ player.name }}</span>
+        <span{% if player.rank == 1 %} weight="bold"{% endif %}>Strecke {{ player.track + 1 }}, Platz {{ player.rank }}: {{ player.name }}</span>
     {% endfor -%}
 {%- endblock %}
 {%- block content %}{% endblock %}

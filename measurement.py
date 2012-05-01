@@ -165,7 +165,7 @@ class Carrera(object):
 
         elif self.gamemode == 'KnockOut':
             condition = 'Überlebe als letzer'
-            self.mode = TimeAttack(self.device, self, self.players)
+            self.mode = KnockOut(self.device, self, self.players)
 
         elif self.gamemode == 'Training':
             rounds = int(self.button_rounds_num.get_value())
@@ -174,7 +174,7 @@ class Carrera(object):
 
         self.builder.get_object('condition_label').set_text(condition)
         self.mode.run()
-        if not self.mode.canceled:
+        if not self.mode.canceled and self.gamemode in ['Match', 'TimeAttack', 'KnockOut']:
             self.prepare_template()
             if self.preferences['auto_print']:
                 print_op = self.generate_print_operation()
@@ -302,11 +302,22 @@ class Carrera(object):
                     round_.append(seconds)
                 round_times.append(round_)
             kwargs['round_times'] = round_times
+        if self.gamemode == 'KnockOut':
+            round_times = []
+            for i in range(len(self.players) - 1):
+                round_ = []
+                for player in self.players:
+                    try:
+                        seconds = trim_time(player.times[i].total_seconds())
+                    except IndexError:
+                        seconds = '-  '
+                    round_.append(seconds)
+                round_times.append(round_)
+            kwargs['round_times'] = round_times
 
         template = self.jinja_env.get_template('{0}.xml'.format(self.gamemode))
         self.template = template.render(**kwargs)
-        if self.gamemode in ['Match', 'TimeAttack']:
-            self.builder.get_object('print_item').set_sensitive(True)
+        self.builder.get_object('print_item').set_sensitive(True)
         self.lock_settings(False)
 
     def update(self):
