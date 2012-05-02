@@ -50,17 +50,17 @@ class Mode(object):
                     self.device.traffic_lights = 4
                     for player in self.players:
                         player.last_time = player.last_pass = now
-                    self.device.power_on(*map(lambda x: x.track, self.players))
+                    self.device.power_on(*[x.track for x in self.players if not x.disabled])
                 self.ui.update()
                 continue
             sensor_state = self.device.sensor_state()
             for sensor, player in zip(sensor_state, self.players):
                 if sensor:
-                    if not player.finished and now - player.last_pass > timedelta(seconds=1):
+                    if not player.disabled and now - player.last_pass > timedelta(seconds=1):
                         self._on_player_passed_line(player)
                         player.last_time = now
                     player.last_pass = now
-                if not player.finished:
+                if not player.disabled:
                     player.total_time = now - self.start_time
             self.check_conditions()
             self.ui.update()
@@ -113,7 +113,7 @@ class Match(Mode):
             self.finished = True
 
     def check_conditions(self):
-        if len([x for x in self.players if x.finished]) == len(self.players):
+        if len([x for x in self.players if x.disabled]) == len(self.players):
             self.finished = True
 
 class TimeAttack(Mode):
@@ -129,7 +129,7 @@ class TimeAttack(Mode):
         """
         if self.now - self.start_time >= timedelta(seconds=self.seconds):
             self.finished = True
-        if len([x for x in self.players if x.finished]) == len(self.players):
+        if len([x for x in self.players if x.disabled]) == len(self.players):
             self.finished = True
 
     def on_player_passed_line(self, player):
@@ -154,7 +154,7 @@ class KnockOut(Mode):
             if p.rounds >= player.rounds:
                 n += 1
         if player.rounds + n == len(self.players):
-            rank = 4
+            rank = len(self.players)
             if n == 1:
                 player.rank = 1
                 player.finished = True
@@ -164,11 +164,11 @@ class KnockOut(Mode):
                     p.finished = True
                 rank -= 1
 
-        if len([x for x in self.players if not x.finished]) == 0:
+        if len([x for x in self.players if not x.disabled]) == 0:
             self.finished = True
 
     def check_conditions(self):
-        if len([x for x in self.players if x.finished]) == len(self.players):
+        if len([x for x in self.players if x.disabled]) == len(self.players):
             self.finished = True
 
 class Training(Mode):
@@ -180,3 +180,7 @@ class Training(Mode):
         now = datetime.now()
         if player.rounds >= self.rounds:
             player.finished = True
+
+    def reset_player(self, player):
+        player.times = []
+        player.finished = False

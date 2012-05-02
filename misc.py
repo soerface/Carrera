@@ -11,6 +11,7 @@ class Player(object):
         self.name = name
         self.times = []
         self.finished = False
+        self.banned = False
         self.total_time = timedelta(seconds=0)
         self.rank = 0
 
@@ -38,3 +39,17 @@ class Player(object):
         self._finished = value
         if value:
             self.device.power_off(self.track)
+
+    @property
+    def banned(self):
+        return self._banned
+
+    @banned.setter
+    def banned(self, value):
+        self._banned = value
+        if value:
+            self.device.power_off(self.track)
+
+    @property
+    def disabled(self):
+        return self.finished or self.banned

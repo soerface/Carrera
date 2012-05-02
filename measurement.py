@@ -266,14 +266,17 @@ class Carrera(object):
             self.device.power_off(track)
         if track == -1:
             for player in self.players:
-                player.finished = not state
+                player.banned = not state
                 if self.gamemode == 'Training':
-                    player.times = []
+                    if player.disabled:
+                        self.mode.reset_player(player)
         else:
             try:
-                self.players[track].finished = not state
+                player = self.players[track]
+                player.banned = not state
                 if self.gamemode == 'Training':
-                    self.players[track].times = []
+                    if player.disabled:
+                        self.mode.reset_player(player)
             except IndexError:
                 pass
 
@@ -334,8 +337,16 @@ class Carrera(object):
         if self.mode.canceled:
             return
         labels = [self.builder.get_object('total_time_label_{0:d}'.format(i)) for i in range(4)]
-        for player, label, color in zip(self.players, labels, COLORS):
-            color = color if player.finished else 'black'
+        colors = []
+        for player, color in zip(self.players, COLORS):
+            if player.banned:
+                colors.append('grey')
+            elif player.finished:
+                colors.append(color)
+            else:
+                colors.append('black')
+
+        for player, label, color in zip(self.players, labels, colors):
             seconds = player.total_seconds
             markup = '<span size="30000" color="{0}">{1:.3f}</span>'.format(
                 color, seconds,
@@ -343,19 +354,20 @@ class Carrera(object):
             label.set_markup(markup)
 
         labels = [self.builder.get_object('best_round_label_{0:d}'.format(i)) for i in range(4)]
-        for player, label, color in zip(self.players, labels, COLORS):
-            color = color if player.finished else 'black'
+        for player, label, color in zip(self.players, labels, colors):
             seconds = player.best_round
             if seconds is None:
-                continue
-            markup = '<span size="30000" color="{0}">{1:.3f}</span>'.format(
-                color, seconds,
-            )
+                markup = '<span size="30000" color="{0}">-</span>'.format(
+                    color
+                )
+            else:
+                markup = '<span size="30000" color="{0}">{1:.3f}</span>'.format(
+                    color, seconds,
+                )
             label.set_markup(markup)
 
         labels = [self.builder.get_object('rank_label_{0:d}'.format(i)) for i in range(4)]
-        for player, label, color in zip(self.players, labels, COLORS):
-            color = color if player.finished else 'black'
+        for player, label, color in zip(self.players, labels, colors):
             if not player.rank > 0:
                 continue
             markup = '<span size="30000" color="{0}">{1:d}.</span>'.format(
@@ -364,8 +376,7 @@ class Carrera(object):
             label.set_markup(markup)
 
         labels = [self.builder.get_object('rounds_label_{0:d}'.format(i)) for i in range(4)]
-        for player, label, color in zip(self.players, labels, COLORS):
-            color = color if player.finished else 'black'
+        for player, label, color in zip(self.players, labels, colors):
             markup = '<span size="30000" color="{0}">{1:d}</span>'.format(
                 color, player.rounds,
             )
