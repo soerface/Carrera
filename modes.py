@@ -112,6 +112,10 @@ class Match(Mode):
         if player.rank == len(self.players):
             self.finished = True
 
+    def check_conditions(self):
+        if len([x for x in self.players if x.finished]) == len(self.players):
+            self.finished = True
+
 class TimeAttack(Mode):
 
     def configure(self, seconds):
@@ -124,6 +128,8 @@ class TimeAttack(Mode):
 
         """
         if self.now - self.start_time >= timedelta(seconds=self.seconds):
+            self.finished = True
+        if len([x for x in self.players if x.finished]) == len(self.players):
             self.finished = True
 
     def on_player_passed_line(self, player):
@@ -141,9 +147,6 @@ class TimeAttack(Mode):
                 p.rank += 1
 
 class KnockOut(Mode):
-
-    def configure(self):
-        pass
 
     def on_player_passed_line(self, player):
         n = 0
@@ -164,29 +167,16 @@ class KnockOut(Mode):
         if len([x for x in self.players if not x.finished]) == 0:
             self.finished = True
 
+    def check_conditions(self):
+        if len([x for x in self.players if x.finished]) == len(self.players):
+            self.finished = True
+
 class Training(Mode):
 
-    def __init__(self, device, player_num, rounds=10):
-        super(Training, self).__init__(device, player_num)
+    def configure(self, rounds):
         self.rounds = rounds
-        self.player_rounds = [0] * player_num
-        self.player_finished = [False] * player_num
 
-    def score(self):
+    def on_player_passed_line(self, player):
         now = datetime.now()
-        for i, sensor in enumerate(self.sensors):
-            if i >= self.player_num or self.player_finished[i]:
-                continue
-            if sensor:
-                if now - self.last_times[i] < timedelta(seconds=2):
-                    continue
-                self.player_rounds[i] += 1
-                self.last_times[i] = now
-                print i, self.player_rounds[i]
-
-    def check_conditions(self):
-        for i, rounds in enumerate(self.player_rounds):
-            if rounds >= self.rounds and not self.player_finished[i]:
-                self.device.power_off(i)
-                self.player_finished[i] = True
-                #self.player_rounds[i] = 0
+        if player.rounds >= self.rounds:
+            player.finished = True

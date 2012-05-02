@@ -34,6 +34,7 @@ class Carrera(object):
         self.builder.get_object('modes_box').add(gamemodes)
         gamemodes.show()
         self.builder.get_object('banner').set_from_file('images/banner.png')
+        self.players = []
         try:
             self.device = UE9()
             self.builder.get_object('race').show()
@@ -144,13 +145,6 @@ class Carrera(object):
     def on_start_race_clicked(self, obj):
         self.clear_racewindow()
         self.lock_settings(True)
-        for i, color, player_name in izip(count(), COLORS, self.player_names):
-            label = self.builder.get_object('player_label_{0:d}'.format(i))
-            markup = '<span size="30000" color="{0}">{1}</span>'.format(
-                color, player_name
-            )
-            label.set_markup(markup)
-
         self.players = [Player(i, self.device, name) for i, name in enumerate(self.player_names)]
 
         if self.gamemode == 'Match':
@@ -170,11 +164,23 @@ class Carrera(object):
         elif self.gamemode == 'Training':
             rounds = int(self.button_rounds_num.get_value())
             condition = 'Training: {0:d} Runden pro Spur'.format(rounds)
+            # use all tracks and no playernames in training mode
+            self.players = [Player(i, self.device, '-') for i in range(4)]
             self.mode = Training(self.device, self, self.players, rounds)
 
+        # insert playerdata into racewindow
+        names = [x.name for x in self.players]
+        for i, color, player_name in izip(count(), COLORS, names):
+            label = self.builder.get_object('player_label_{0:d}'.format(i))
+            markup = '<span size="30000" color="{0}">{1}</span>'.format(
+                color, player_name
+            )
+            label.set_markup(markup)
+
         self.builder.get_object('condition_label').set_text(condition)
+
         self.mode.run()
-        if not self.mode.canceled and self.gamemode in ['Match', 'TimeAttack', 'KnockOut']:
+        if not self.mode.canceled:
             self.prepare_template()
             if self.preferences['auto_print']:
                 print_op = self.generate_print_operation()
@@ -242,17 +248,34 @@ class Carrera(object):
         """Power the given track off. Pass -1 to power all off"""
         self.device.power_off(track)
 
-    on_power_on_0_clicked = lambda self, obj: self.power_on(0)
-    on_power_off_0_clicked = lambda self, obj: self.power_off(0)
-    on_power_on_1_clicked = lambda self, obj: self.power_on(1)
-    on_power_off_1_clicked = lambda self, obj: self.power_off(1)
-    on_power_on_2_clicked = lambda self, obj: self.power_on(2)
-    on_power_off_2_clicked = lambda self, obj: self.power_off(2)
-    on_power_on_3_clicked = lambda self, obj: self.power_on(3)
-    on_power_off_3_clicked = lambda self, obj: self.power_off(3)
-    on_power_on_all_clicked = lambda self, obj: self.power_on(-1)
-    on_power_off_all_clicked = lambda self, obj: self.power_off(-1)
+    on_power_on_0_clicked = lambda self, obj: self.set_power(0, True)
+    on_power_off_0_clicked = lambda self, obj: self.set_power(0, False)
+    on_power_on_1_clicked = lambda self, obj: self.set_power(1, True)
+    on_power_off_1_clicked = lambda self, obj: self.set_power(1, False)
+    on_power_on_2_clicked = lambda self, obj: self.set_power(2, True)
+    on_power_off_2_clicked = lambda self, obj: self.set_power(2, False)
+    on_power_on_3_clicked = lambda self, obj: self.set_power(3, True)
+    on_power_off_3_clicked = lambda self, obj: self.set_power(3, False)
+    on_power_on_all_clicked = lambda self, obj: self.set_power(-1, True)
+    on_power_off_all_clicked = lambda self, obj: self.set_power(-1, False)
 
+    def set_power(self, track, state):
+        if state:
+            self.device.power_on(track)
+        else:
+            self.device.power_off(track)
+        if track == -1:
+            for player in self.players:
+                player.finished = not state
+                if self.gamemode == 'Training':
+                    player.times = []
+        else:
+            try:
+                self.players[track].finished = not state
+                if self.gamemode == 'Training':
+                    self.players[track].times = []
+            except IndexError:
+                pass
 
     def clear_racewindow(self):
         """Clear the racewindow
@@ -277,43 +300,27 @@ class Carrera(object):
 
     def prepare_template(self):
         """Renders the print template and unlocks interface."""
+        round_times = []
+        max_rounds = max(self.players, key=lambda x: x.rounds).rounds
+        for i in range(max_rounds):
+            round_ = []
+            for player in self.players:
+                try:
+                    seconds = trim_time(player.times[i].total_seconds())
+                except IndexError:
+                    seconds = '-  '
+                round_.append(seconds)
+            round_times.append(round_)
         kwargs = {
             'current_date_time': datetime.now().strftime('%d.%m.%Y %H:%M'),
             'players': self.players,
             'total_times': [trim_time(player.total_seconds) for player in self.players],
+            'round_times': round_times,
         }
         if self.gamemode == 'Match':
-            round_times = []
-            for i in range(self.mode.rounds):
-                round_times.append([trim_time(p.times[i].total_seconds()) for p in self.players])
             kwargs['round_num'] = self.mode.rounds
-            kwargs['round_times'] = round_times
         if self.gamemode == 'TimeAttack':
             kwargs['time_limit'] = self.mode.seconds
-            round_times = []
-            max_rounds = max(self.players, key=lambda x: x.rounds).rounds
-            for i in range(max_rounds):
-                round_ = []
-                for player in self.players:
-                    try:
-                        seconds = trim_time(player.times[i].total_seconds())
-                    except IndexError:
-                        seconds = '-  '
-                    round_.append(seconds)
-                round_times.append(round_)
-            kwargs['round_times'] = round_times
-        if self.gamemode == 'KnockOut':
-            round_times = []
-            for i in range(len(self.players) - 1):
-                round_ = []
-                for player in self.players:
-                    try:
-                        seconds = trim_time(player.times[i].total_seconds())
-                    except IndexError:
-                        seconds = '-  '
-                    round_.append(seconds)
-                round_times.append(round_)
-            kwargs['round_times'] = round_times
 
         template = self.jinja_env.get_template('{0}.xml'.format(self.gamemode))
         self.template = template.render(**kwargs)
