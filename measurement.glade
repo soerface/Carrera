@@ -7,21 +7,6 @@
     <property name="step_increment">0.20000000000000001</property>
     <property name="page_increment">1</property>
   </object>
-  <object class="GtkTextBuffer" id="buf_player_0">
-    <property name="text" translatable="yes">0</property>
-  </object>
-  <object class="GtkTextBuffer" id="buf_player_1">
-    <property name="text" translatable="yes">1</property>
-  </object>
-  <object class="GtkTextBuffer" id="buf_player_2">
-    <property name="text" translatable="yes">2</property>
-  </object>
-  <object class="GtkTextBuffer" id="buf_player_3">
-    <property name="text" translatable="yes">3</property>
-  </object>
-  <object class="GtkTextBuffer" id="buf_player_all">
-    <property name="text" translatable="yes">-1</property>
-  </object>
   <object class="GtkWindow" id="main">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Carrera</property>
@@ -1243,6 +1228,7 @@
     <property name="message_type">warning</property>
     <property name="text" translatable="yes">Kein UE9 erkannt</property>
     <property name="secondary_text" translatable="yes">Bitte UE9 anschließen und Programm neustarten, andernfalls ist nur eine Simulation verfügbar.</property>
+    <signal name="delete-event" handler="quit" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkVBox" id="messagedialog-vbox1">
         <property name="can_focus">False</property>

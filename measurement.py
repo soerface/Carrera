@@ -66,6 +66,7 @@ class Carrera(object):
             self.mode.cancel()
         with open('preferences.ini', 'wb') as f:
             pickle.dump(self.preferences, f)
+        self.device.power_off(-1)
         gtk.main_quit()
 
     def add_player(self):
