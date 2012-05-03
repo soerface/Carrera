@@ -71,6 +71,7 @@ class Carrera(object):
 
     def add_player(self):
         """Add a new player box to the player list."""
+        self.builder.get_object('start_race').set_sensitive(True)
         if len(self.player_names) == 3:
             self.builder.get_object('add_player').set_sensitive(False)
         elif len(self.player_names) == 4:
@@ -142,6 +143,8 @@ class Carrera(object):
         box = row.parent
         box.remove(row)
         self.builder.get_object('add_player').set_sensitive(True)
+        if len(self.player_names) == 0:
+            self.builder.get_object('start_race').set_sensitive(False)
 
     def on_start_race_clicked(self, obj):
         self.clear_racewindow()

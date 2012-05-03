@@ -10,7 +10,7 @@ class Mode(object):
     """Baseclass for all modes."""
 
     def __init__(self, device, ui, players, *args, **kwargs):
-        if len(players) not in [2, 3, 4]:
+        if len(players) not in [1, 2, 3, 4]:
             raise ValueError('You need to pass 2, 3 or 4 players in a list')
         self.device = device
         self.ui = ui
