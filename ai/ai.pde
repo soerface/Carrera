@@ -7,12 +7,12 @@ int car_pin = 11;
 unsigned long time = 0;
 
 // the speed of the car when it enters the light barrier
-// Sensor number:     0    1    2    3    4    5    6   7
-int VALUES1[8] = {220, 254, 154, 205, 165, 205, 154, 175};
+// Sensor number:   0    1    2    3    4    5    6    7    8    9   10
+int VALUES1[11] = {180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180};
 // time in ms to keep that speed
-int DELAY[8] =   { 400, 400,  50, 50,   4, 200, 150,  50};
+int DELAY[11] =   {180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180};
 // new speed for the car when the time from above is over
-int VALUES2[8] = {55, 95, 130, 135, 135, 105, 115, 25};
+int VALUES2[11] = {180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180};
 
 int START_VALUE = 180;
 
@@ -57,17 +57,11 @@ void loop() {
             }
             last_value = value;
         }
-        for(int i=0; i<8; i++) {
+        for(int i=0; i<11; i++) {
             if (i == car_pin) {
                 continue;
             }
-            // Workaround for a defective light barrier / port
-            if (i == 5) {
-                j = 8;
-            }
-            else {
-                j = i;
-            }
+            j = i + 22;
             sensor = digitalRead(j);
             if (sensor == LOW) {
                 value = VALUES1[i];
