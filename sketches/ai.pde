@@ -8,27 +8,26 @@ unsigned long time = 0;
 
 // the speed of the car when it enters the light barrier
 // Sensor number:   0    1    2    3    4    5    6    7    8    9   10
-int VALUES1[11] = {180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180};
+int VALUES1[11] = {  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0};
 // time in ms to keep that speed
-int DELAY[11] =   {180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180};
+int DELAY[11] =   {999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999};
 // new speed for the car when the time from above is over
-int VALUES2[11] = {180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180};
+int VALUES2[11] = {150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150};
 
-int START_VALUE = 180;
+int START_VALUE = 130;
 
 
 void setup() {
-    for (int i=0; i<14; i++) {
+    int j;
+    for (int i=0; i<11; i++) {
+        j = i + 22;
         if (i == car_pin) {
             pinMode(i, OUTPUT);
         }
-        else if (i == 13) {
-            continue;
-        }
         else {
-            pinMode(i, INPUT);
+            pinMode(j, INPUT);
             // connect pull up resistor
-            digitalWrite(i, HIGH);
+            digitalWrite(j, HIGH);
         }
     }
 }
@@ -39,9 +38,9 @@ void loop() {
     int last_value = -1;
     bool sensor;
     int j;
-    analogWrite(car_pin, 255);
     // check the start signal of the UE9
-    while (digitalRead(12)) {
+    //while (digitalRead(12)) {
+    while (true) {
         // only update the pwm signal if the value actually changed, should take
         // some load off the arduino
         if (last_value != value) {
