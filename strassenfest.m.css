@@ -3,14 +3,8 @@
   src: url('_static/Blazed.ttf');
 }
 
-html {
-  height: 100%;
-}
-
 body {
-  background-color: #000000;
-  margin: 0;
-  padding: 0;
+  background-color: #EEEEEE;
 }
 
 a {
@@ -19,7 +13,6 @@ a {
 
 h1 {
   font-family: Blazed;
-  font-size: 28pt;
   color: #FFFFFF;
   text-shadow: #333333 2px 2px 5px;
   margin: 0;
@@ -43,38 +36,14 @@ h3 {
   margin: 15px 0 5px;
 }
 
-#wrapper {
-  position: relative;
-  background-color: #EEEEEE;
-  margin: 0 auto;
-  min-height: 100%;
-  width: 800px;
-}
-
 #header {
-  background: url('_static/flag.png') #AA0000 no-repeat 730px;
+  background: #AA0000;
   border-bottom: 1px solid #000000;
-  padding: 10px;
-  height: 75px;
-  width: 780px;
-}
-
-#content {
-  padding: 10px 0 40px;
-  width: 780px;
+  padding: 10px 2px;
+  height: 60px;
 }
 
 #footer {
-  position: absolute;
-  padding: 5px;
-  border-top: 1px solid #AAAAAA;
-  font-size: 10pt;
   color: #888888;
-  bottom: 0;
-  height: 40px;
-  width: 790;
-}
-
-.text {
-  padding: 5px 10px;
+  border-top: 1px solid #AAAAAA;
 }
