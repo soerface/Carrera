@@ -5,6 +5,7 @@
 
 body {
   background-color: #EEEEEE;
+  margin: 0;
 }
 
 a {
@@ -45,4 +46,8 @@ h3 {
 #footer {
   color: #888888;
   border-top: 1px solid #AAAAAA;
+}
+
+.text {
+  padding: 0 5px;
 }
