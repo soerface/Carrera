@@ -52,3 +52,13 @@ h3 {
 .text {
   padding: 0 5px;
 }
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul li {
+  margin: 20px 0;
+}
