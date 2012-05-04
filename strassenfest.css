@@ -1,24 +1,53 @@
+@font-face {
+  font-family: Blazed;
+  src: url('_static/Blazed.ttf');
+}
+
 body {
   background-color: #000000;
+}
+
+a {
+  color: #880000;
 }
 
 #wrapper {
   background-color: #EEEEEE;
   width: 800px;
   margin: 20px auto 0;
-  border-radius: 10px;
+}
+
+#header {
+  background: url('_static/flag.png') #AA0000 no-repeat 730px;
+  border-bottom: 1px solid #000000;
+  padding: 10px;
+  height: 75px;
 }
 
 h1 {
-  background-color: #008800;
+  font-family: Blazed;
+  font-size: 28pt;
   color: #FFFFFF;
-  border-bottom: 1px solid #888888;
-  text-shadow: #333333 2px 2px;
-  padding: 5px 10px;
+  text-shadow: #333333 2px 2px 5px;
+  margin: 0;
+  padding: 0;
 }
 
 h2 {
+  color: #000000;
+  text-shadow: #FFFFFF 0 0 10px;
+  font-size: 12pt;
+  margin: 0;
+  padding: 0 0 0 5px;
+}
+
+h3 {
+  color: #000000;
+  text-shadow: #AAAAAA 1px 1px 2px;
+  background: #DDDDDD;
+  border-bottom: 2px solid #AA5555;
   padding: 5px 10px;
+  margin: 15px 0 5px;
 }
 
 .text {
@@ -29,4 +58,6 @@ h2 {
   border-top: 1px solid #DDDDDD;
   margin: 10px 0 0 0;
   padding: 5px;
+  font-size: 10pt;
+  color: #888888;
 }
