@@ -11,7 +11,6 @@ import LabJackPython
 
 from constants import COLORS, GAMEMODES
 from devices import UE9, Virtual
-import graphs
 from modes import Match, TimeAttack, KnockOut, Training
 from misc import Player
 from utils import trim_time
