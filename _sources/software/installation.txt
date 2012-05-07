@@ -2,6 +2,12 @@
 Installation
 ************
 
+Gesamte Paketliste zum kopieren:
+
+.. code-block:: bash
+
+   apt-get install git python-matplotlib python-pip build_essential libusb-1.0-0-dev
+
 Neben einer funktionierenden Pythoninstallation (empfohlen: 2.7) sollte
 zunächst das Versionskontrollsystem git installiert werden, um den
 Quellcode dieser Software und den Code der UE9 Treiber komfortabel
@@ -34,7 +40,7 @@ requirements.txt aufgelistet. Nachdem pip installiert wurde:
 
 .. code-block:: bash
 
-  apt-get install pip
+  apt-get install python-pip
 
 Können sie leicht per
 

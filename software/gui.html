@@ -29,7 +29,21 @@
     <link rel="top" title="Carrera 0.0.1 Dokumentation" href="../index.html" />
     <link rel="up" title="Zeitmessung" href="measuring.html" />
     <link rel="next" title="Devices / UE9 Interface" href="devices.html" />
-    <link rel="prev" title="Spielmodi" href="modes.html" /> 
+    <link rel="prev" title="Spielmodi" href="modes.html" />
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-31502962-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+
   </head>
   <body>
     <div class="related">
@@ -58,77 +72,78 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="module-gui">
-<span id="grafische-oberflache"></span><h1>Grafische Oberfläche<a class="headerlink" href="#module-gui" title="Permalink zu dieser Überschrift">¶</a></h1>
+  <div class="section" id="module-measurement">
+<span id="grafische-oberflache"></span><h1>Grafische Oberfläche<a class="headerlink" href="#module-measurement" title="Permalink zu dieser Überschrift">¶</a></h1>
 <dl class="class">
-<dt id="gui.Carrera">
-<em class="property">class </em><tt class="descclassname">gui.</tt><tt class="descname">Carrera</tt><a class="headerlink" href="#gui.Carrera" title="Permalink zu dieser Definition">¶</a></dt>
+<dt id="measurement.Carrera">
+<em class="property">class </em><tt class="descclassname">measurement.</tt><tt class="descname">Carrera</tt><a class="headerlink" href="#measurement.Carrera" title="Permalink zu dieser Definition">¶</a></dt>
 <dd><p>Class which handles the GTK interface.</p>
 <dl class="method">
-<dt id="gui.Carrera.add_player">
-<tt class="descname">add_player</tt><big>(</big><big>)</big><a class="headerlink" href="#gui.Carrera.add_player" title="Permalink zu dieser Definition">¶</a></dt>
+<dt id="measurement.Carrera.add_player">
+<tt class="descname">add_player</tt><big>(</big><big>)</big><a class="headerlink" href="#measurement.Carrera.add_player" title="Permalink zu dieser Definition">¶</a></dt>
 <dd><p>Add a new player box to the player list.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="gui.Carrera.clear_racewindow">
-<tt class="descname">clear_racewindow</tt><big>(</big><big>)</big><a class="headerlink" href="#gui.Carrera.clear_racewindow" title="Permalink zu dieser Definition">¶</a></dt>
+<dt id="measurement.Carrera.clear_racewindow">
+<tt class="descname">clear_racewindow</tt><big>(</big><big>)</big><a class="headerlink" href="#measurement.Carrera.clear_racewindow" title="Permalink zu dieser Definition">¶</a></dt>
 <dd><p>Clear the racewindow</p>
 <p>Removes any infromation from the racewindow to provide a clean
 interface</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="gui.Carrera.num_players">
-<tt class="descname">num_players</tt><a class="headerlink" href="#gui.Carrera.num_players" title="Permalink zu dieser Definition">¶</a></dt>
-<dd><p>Contains the total playernumber.</p>
+<dl class="method">
+<dt id="measurement.Carrera.draw_page">
+<tt class="descname">draw_page</tt><big>(</big><em>operation</em>, <em>context</em>, <em>page_no</em><big>)</big><a class="headerlink" href="#measurement.Carrera.draw_page" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Formats the page for printing.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="gui.Carrera.power_off">
-<tt class="descname">power_off</tt><big>(</big><em>track</em><big>)</big><a class="headerlink" href="#gui.Carrera.power_off" title="Permalink zu dieser Definition">¶</a></dt>
+<dt id="measurement.Carrera.lock_settings">
+<tt class="descname">lock_settings</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#measurement.Carrera.lock_settings" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>(De)activates interface elements like player names</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="measurement.Carrera.player_names">
+<tt class="descname">player_names</tt><a class="headerlink" href="#measurement.Carrera.player_names" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Returns a list of playernames.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="measurement.Carrera.power_off">
+<tt class="descname">power_off</tt><big>(</big><em>track</em><big>)</big><a class="headerlink" href="#measurement.Carrera.power_off" title="Permalink zu dieser Definition">¶</a></dt>
 <dd><p>Power the given track off. Pass -1 to power all off</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="gui.Carrera.power_on">
-<tt class="descname">power_on</tt><big>(</big><em>track</em><big>)</big><a class="headerlink" href="#gui.Carrera.power_on" title="Permalink zu dieser Definition">¶</a></dt>
+<dt id="measurement.Carrera.power_on">
+<tt class="descname">power_on</tt><big>(</big><em>track</em><big>)</big><a class="headerlink" href="#measurement.Carrera.power_on" title="Permalink zu dieser Definition">¶</a></dt>
 <dd><p>Power the given track on. Pass -1 to power all on</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="gui.Carrera.quit">
-<tt class="descname">quit</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#gui.Carrera.quit" title="Permalink zu dieser Definition">¶</a></dt>
-<dd><p>Quit the GUI and cancel any running race.</p>
+<dt id="measurement.Carrera.prepare_template">
+<tt class="descname">prepare_template</tt><big>(</big><big>)</big><a class="headerlink" href="#measurement.Carrera.prepare_template" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Renders the print template and unlocks interface.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="gui.Carrera.run">
-<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#gui.Carrera.run" title="Permalink zu dieser Definition">¶</a></dt>
+<dt id="measurement.Carrera.quit">
+<tt class="descname">quit</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#measurement.Carrera.quit" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Quit the GUI, cancel any running race and save preferences.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="measurement.Carrera.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#measurement.Carrera.run" title="Permalink zu dieser Definition">¶</a></dt>
 <dd><p>Display the GUI and start the mainloop.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="gui.Carrera.start_knockout">
-<tt class="descname">start_knockout</tt><big>(</big><big>)</big><a class="headerlink" href="#gui.Carrera.start_knockout" title="Permalink zu dieser Definition">¶</a></dt>
-<dd><p>Start a new &#8220;knock out&#8221; race.</p>
-<p>Works the same like <cite>start_match</cite>, it just uses the gamemode &#8220;KnockOut&#8221;</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="gui.Carrera.start_match">
-<tt class="descname">start_match</tt><big>(</big><big>)</big><a class="headerlink" href="#gui.Carrera.start_match" title="Permalink zu dieser Definition">¶</a></dt>
-<dd><p>Start a new &#8220;match&#8221; race.</p>
-<p>Fetches information from the main window to prepare the racewindow.
-It then goes in an infinite loop to poll the sensors. After all players
-finished the loop will be interrupted.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="gui.Carrera.start_time_attack">
-<tt class="descname">start_time_attack</tt><big>(</big><big>)</big><a class="headerlink" href="#gui.Carrera.start_time_attack" title="Permalink zu dieser Definition">¶</a></dt>
-<dd><p>Start a new &#8220;time attack&#8221; race.</p>
-<p>Works the same like <cite>start_match</cite>, it just uses the gamemode &#8220;TimeAttack&#8221;</p>
+<dt id="measurement.Carrera.update">
+<tt class="descname">update</tt><big>(</big><big>)</big><a class="headerlink" href="#measurement.Carrera.update" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Called by gamemode to update interface</p>
 </dd></dl>
 
 </dd></dl>

@@ -29,7 +29,21 @@
     <link rel="top" title="Carrera 0.0.1 Dokumentation" href="../index.html" />
     <link rel="up" title="Zeitmessung" href="measuring.html" />
     <link rel="next" title="Graphen" href="graphs.html" />
-    <link rel="prev" title="Grafische Oberfläche" href="gui.html" /> 
+    <link rel="prev" title="Grafische Oberfläche" href="gui.html" />
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-31502962-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+
   </head>
   <body>
     <div class="related">
@@ -38,9 +52,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="Allgemeiner Index"
              accesskey="I">Index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python-Modulindex"
-             >Module</a> |</li>
         <li class="right" >
           <a href="graphs.html" title="Graphen"
              accesskey="N">weiter</a> |</li>
@@ -110,7 +121,7 @@ soll, während des Betriebes zwischen verschiedenen Geräten zu wechseln.</p>
 
 <dl class="method">
 <dt id="devices.UE9.sensor_state">
-<tt class="descname">sensor_state</tt><big>(</big><em>num</em><big>)</big><a class="headerlink" href="#devices.UE9.sensor_state" title="Permalink zu dieser Definition">¶</a></dt>
+<tt class="descname">sensor_state</tt><big>(</big><big>)</big><a class="headerlink" href="#devices.UE9.sensor_state" title="Permalink zu dieser Definition">¶</a></dt>
 <dd><p>Returns the state of the sensors at the finish line.</p>
 <p>The state is returned as a list with four booleans, one for each
 sensor. It uses the ports EIO0 - EIO3.</p>
@@ -150,7 +161,7 @@ sensor. It uses the ports EIO0 - EIO3.</p>
 
 <dl class="method">
 <dt id="devices.Virtual.sensor_state">
-<tt class="descname">sensor_state</tt><big>(</big><em>num</em><big>)</big><a class="headerlink" href="#devices.Virtual.sensor_state" title="Permalink zu dieser Definition">¶</a></dt>
+<tt class="descname">sensor_state</tt><big>(</big><big>)</big><a class="headerlink" href="#devices.Virtual.sensor_state" title="Permalink zu dieser Definition">¶</a></dt>
 <dd><p>Returns the state of the sensors at the finish line.</p>
 <p>The state is returned as a list with four booleans, one for each
 sensor. It &#8220;activates&#8221; the sensors randomly.</p>
@@ -215,9 +226,6 @@ sensor. It &#8220;activates&#8221; the sensors randomly.</p>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="Allgemeiner Index"
              >Index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python-Modulindex"
-             >Module</a> |</li>
         <li class="right" >
           <a href="graphs.html" title="Graphen"
              >weiter</a> |</li>

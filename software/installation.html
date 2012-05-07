@@ -29,7 +29,21 @@
     <link rel="top" title="Carrera 0.0.1 Dokumentation" href="../index.html" />
     <link rel="up" title="Software" href="index.html" />
     <link rel="next" title="Datenbank" href="database.html" />
-    <link rel="prev" title="Software" href="index.html" /> 
+    <link rel="prev" title="Software" href="index.html" />
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-31502962-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+
   </head>
   <body>
     <div class="related">
@@ -38,9 +52,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="Allgemeiner Index"
              accesskey="I">Index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python-Modulindex"
-             >Module</a> |</li>
         <li class="right" >
           <a href="database.html" title="Datenbank"
              accesskey="N">weiter</a> |</li>
@@ -59,6 +70,10 @@
             
   <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink zu dieser Überschrift">¶</a></h1>
+<p>Gesamte Paketliste zum kopieren:</p>
+<div class="highlight-bash"><div class="highlight"><pre>apt-get install git python-matplotlib python-pip build_essential libusb-1.0-0-dev
+</pre></div>
+</div>
 <p>Neben einer funktionierenden Pythoninstallation (empfohlen: 2.7) sollte
 zunächst das Versionskontrollsystem git installiert werden, um den
 Quellcode dieser Software und den Code der UE9 Treiber komfortabel
@@ -81,7 +96,7 @@ benötigt:</p>
 </div>
 <p>Die restlichen benötigten Pythonmodule sind in der mitgelieferten
 requirements.txt aufgelistet. Nachdem pip installiert wurde:</p>
-<div class="highlight-bash"><div class="highlight"><pre>apt-get install pip
+<div class="highlight-bash"><div class="highlight"><pre>apt-get install python-pip
 </pre></div>
 </div>
 <p>Können sie leicht per</p>
@@ -140,9 +155,6 @@ der <a class="reference external" href="http://arduino.cc/hu/Main/Software">Ardu
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="Allgemeiner Index"
              >Index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python-Modulindex"
-             >Module</a> |</li>
         <li class="right" >
           <a href="database.html" title="Datenbank"
              >weiter</a> |</li>
