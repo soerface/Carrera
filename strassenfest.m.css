@@ -18,12 +18,14 @@ h1 {
   text-shadow: #333333 2px 2px 5px;
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 
 h2 {
-  color: #000000;
-  text-shadow: #FFFFFF 0 0 10px;
-  font-size: 12pt;
+  color: #FFFFFF;
+  text-shadow: #333333 0 0 10px;
+  font-size: 16pt;
+  font-style: italic;
   margin: 0;
   padding: 0 0 0 5px;
 }
@@ -38,7 +40,7 @@ h3 {
 }
 
 #header {
-  background: #AA0000;
+  background: #800000;
   border-bottom: 1px solid #000000;
   padding: 10px 2px;
 }

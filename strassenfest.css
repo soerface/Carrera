@@ -29,7 +29,8 @@ h1 {
 h2 {
   color: #000000;
   text-shadow: #FFFFFF 0 0 10px;
-  font-size: 12pt;
+  font-size: 14pt;
+  font-style: italic;
   margin: 0;
   padding: 0 0 0 5px;
 }
@@ -52,7 +53,7 @@ h3 {
 }
 
 #header {
-  background: url('_static/flag.png') #AA0000 no-repeat 730px;
+  background: url('_static/flag.png') #800000 no-repeat 730px;
   border-bottom: 1px solid #000000;
   padding: 10px;
   height: 75px;
@@ -61,7 +62,7 @@ h3 {
 
 #content {
   padding: 10px 0 40px;
-  width: 780px;
+  width: 800px;
 }
 
 #footer {
