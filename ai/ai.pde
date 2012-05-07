@@ -7,19 +7,19 @@ int car_pin = 11;
 unsigned long time = 0;
 
 // the speed of the car when it enters the light barrier
-// Sensor number:   0    1    2    3    4    5    6    7    8    9   10
-int VALUES1[11] = {  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0};
+// Sensor number:   0    1    2    3    4    5    6    7    8    9   10   11
+int VALUES1[12] = {160, 100,  80, 170,  80,   0, 100, 120, 120, 120, 120, 255};
 // time in ms to keep that speed
-int DELAY[11] =   {999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999};
+int DELAY[12] =   {100, 100, 500, 100, 100, 100, 999, 999, 999, 999, 300, 500};
 // new speed for the car when the time from above is over
-int VALUES2[11] = {150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150};
+int VALUES2[12] = {160, 100, 140, 100, 100,   0, 160, 160, 160, 160, 160, 150};
 
-int START_VALUE = 130;
+int START_VALUE = 120;
 
 
 void setup() {
     int j;
-    for (int i=0; i<11; i++) {
+    for (int i=0; i<12; i++) {
         j = i + 22;
         if (i == car_pin) {
             pinMode(i, OUTPUT);
@@ -56,8 +56,11 @@ void loop() {
             }
             last_value = value;
         }
-        for(int i=0; i<11; i++) {
+        for(int i=0; i<12; i++) {
             if (i == car_pin) {
+                continue;
+            }
+            if (i == 3) {
                 continue;
             }
             j = i + 22;

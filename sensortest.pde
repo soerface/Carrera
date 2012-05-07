@@ -1,6 +1,5 @@
-void setup() {
-    int j;
-    for (int i=0; i<11; i++) {
+void setup() { int j;
+    for (int i=0; i<12; i++) {
         j = i + 22;
         pinMode(j, INPUT);
         digitalWrite(j, HIGH);
@@ -12,21 +11,15 @@ void loop() {
     bool v;
     int j;
     char incoming;
-    Serial.println("");
-    Serial.println("");
-    Serial.println("");
-    Serial.println("");
-    Serial.println("");
-    Serial.println("");
-    Serial.println("");
-    for (int i=0; i<11; i++) {
+    for (int i=0; i<12; i++) {
         j = i + 22;
         v = digitalRead(j);
-        Serial.println("-");
-        Serial.println(j, DEC);
-        Serial.println(v, DEC);
+        if (!v) {
+            Serial.println(j, DEC);
+        }
     }
-    Serial.println("-------");
+    delay(20);
+    /*
     while (true) {
         while (Serial.available()) {
             incoming = Serial.read();
@@ -35,4 +28,5 @@ void loop() {
             break;
         }
     }
+    */
 }
