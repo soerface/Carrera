@@ -2,7 +2,7 @@
 Grafische Oberfläche
 ********************
 
-.. automodule:: gui
+.. automodule:: measurement
    :members:
 
 

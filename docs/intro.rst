@@ -2,6 +2,7 @@
 Einleitung
 **********
 
+====
 Idee
 ====
 
@@ -23,32 +24,40 @@ Rundenmessung umsetzen lässt. Im Verlauf dieser Arbeit kam die Idee, eine
 :doc:`„KI” </software/ai>` zu entwickeln, welche die Strecke möglichst
 optimal fahren kann und so einen starken Gegner darstellt.
 
+========
 Über uns
 ========
 
-Das BG 13 Carrera-Racingteam besteht aus 11 Schülern des 13. Jahrgangs des
-Beruflichen Gymnasiums Eschwege.
+An der Carrerabahn wird bereits seit einigen Schülergenerationen im
+Rahmen des Technikunterrichts mit dem Thema Regelungstechnik entwickelt.
 
-Im Rahmen des Technikunterrichts mit dem Thema Regelungstechnik stellten wir
-uns der Aufgabe, eine Carrera-Strecke zu entwickeln, welche Fahrtzeiten und
-Rundenanzahlen der Fahrer mit Hilfe eines Computers ermittelt und ausgibt.
+2012
+====
+
+Das BG 13 Carrera-Racingteam des Abiturjahrgangs 2012 bestand aus 11 Schülern.
+Wir haben es uns zum Ziel gesetzt, eine Software zu schreiben, die eine
+komfortable Nutzung der vierspurigen Carrerastrecke ermöglicht, sie mit
+Lichtschranken zu versehen und einen Computergegner zu entwickeln, gegen
+den man antreten kann.
 
 Die Mitglieder der Gruppe sind:
 
- * Beck, Örkel
- * Fidora, Mario
- * Gisa, Maximilian
- * Hartmann, Jakob
- * Lambach, Manuel
- * Ludwig, Martin
- * Rohmund, Paul
- * Stüber, Jonas
- * Wegener, Sören
- * Wendorf, Sebastian
- * Zindel, Steffen
+ * :ref:`stephen_beck`
+ * :ref:`mario_fidora`
+ * :ref:`maximilian_gisa`
+ * :ref:`jakob_hartmann`
+ * :ref:`manuel_lambach`
+ * :ref:`martin_ludwig`
+ * :ref:`paul_rohmund`
+ * :ref:`jonas_stueber`
+ * :ref:`soeren_wegener`
+ * :ref:`sebastian_wendorf`
+ * :ref:`steffen_zindel`
 
 Jeder von uns hat dabei viel gelernt und in infolgedessen ein persönliches
 Fazit erstellt.
+
+.. _stephen_beck:
 
 Stephen Beck
 ------------
@@ -78,6 +87,8 @@ Ich habe in der Dokumentation an den Kapiteln „Inhaltsverzeichnis”, „Idee�
 und „Über uns” gearbeitet und darüber hinaus einige Texte sprachlich und
 grammatisch überarbeitet.
 
+.. _mario_fidora:
+
 Mario Fidora
 ------------
 
@@ -104,6 +115,8 @@ herauszusuchen und ihre Vor- und Nachteile gegeneinander abzuwägen.
 
 Ich habe in der Dokumentation an den Kapiteln Einleitung, Hardware und
 Carrera-Strecke gearbeitet.
+
+.. _maximilian_gisa:
 
 Maximilian Gisa
 ---------------
@@ -148,6 +161,8 @@ freiwilligen Zusatzstunden wirklich gelohnt haben. Da ich von allen Bereichen
 einen mehr oder weniger intensiven Eindruck erhalten habe, kann ich zweifellos
 sagen, dass wir eine sehr eindrucksvolle Arbeit geleistet haben.
 
+.. _jakob_hartmann:
+
 Jakob Hartmann
 --------------
 
@@ -178,6 +193,8 @@ passenden Streckenteile zu finden und einzusetzen. Immer wenn sich Probleme
 ergaben, auch bei anderen Mitarbeitern, versuchte ich Zeit zu finden um diese
 Probleme zu lösen.
 
+.. _manuel_lambach:
+
 Manuel Lambach
 --------------
 
@@ -200,6 +217,8 @@ Heißkleber auf. Besonders ordentlich und gewissenhaft musste diese Aufgabe
 erledigt werden, da am Ende keine Lücken entstehen durften. Ansonsten
 unterbricht die Streckenspannung an unterschiedlichen Stellen. Bahnreinigung,
 Tuning Autos
+
+.. _martin_ludwig:
 
 Martin Ludwig
 -------------
@@ -234,6 +253,8 @@ durchführen sollten und so ein praktischer Lernbereich in den Vordergrund
 rückt, welcher gewisse Vorteile mit sich bringt, welche der
 „normale Unterricht“ einfach nicht bieten kann.
 
+.. _paul_rohmund:
+
 Paul Rohmund
 ------------
 
@@ -263,6 +284,8 @@ man hier die theoretischen Kenntnisse aus Datenverarbeitungstechnik und
 Elektrotechnik in der Praxis umsetzen konnte und man sich unvorhergesehenen
 Problemen stellen musste. Somit war es auch eine willkommene Beschäftigung
 während der Freistunden.
+
+.. _jonas_stueber:
 
 Jonas Stüber
 ------------
@@ -310,6 +333,8 @@ die LEDs in die Ampelanlage ein und verkabelte diese auch entsprechend. Falls
 ich kurzzeitig keine Hardwarearbeiten zu verrichten hatte, habe ich mit dem
 Staubsauger die Streckenteile von Abisolierresten oder Sägespäne befreit oder
 auch mal den Klassenraum gefegt.
+
+.. _soeren_wegener:
 
 Sören Wegener
 -------------
@@ -387,6 +412,8 @@ weitergebracht und jede Stunde, egal ob Unterricht, Freistunde oder
 der :doc:`Tag der offenen Tür </miscellaneous>`, hat sich auf jeden
 Fall gelohnt.
 
+.. _sebastian_wendorf:
+
 Sebastian Wendorf
 -----------------
 
@@ -417,6 +444,8 @@ Da ich in der anderen Technikgruppe bin, war es problematisch an dem Projekt
 zu arbeiten, ich nutze daher die Freistunde am Donnerstag, um dies
 Auszugleichen.
 Auch war ich bei „Unterricht Live“ da gewesen.
+
+.. _steffen_zindel:
 
 Steffen Zindel
 --------------

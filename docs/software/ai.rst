@@ -18,7 +18,7 @@ ist, ein gutes Fahrverhalten zu realisieren.
 Der Arduino bietet zwar keinen analogen Ausgang, die Geschwindigkeit kann
 jedoch mittels :ref:`PWM-Signal <pwm>` gesteuert werden.
 
-Das Programm ist in Form eines :download:`Arduino Sketches </../ai.pde>`
+Das Programm ist in Form eines :download:`Arduino Sketches </../ai/ai.pde>`
 erhältlich.
 
 Probleme
