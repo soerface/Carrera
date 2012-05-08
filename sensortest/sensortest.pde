@@ -11,6 +11,7 @@ void loop() {
     bool v;
     int j;
     char incoming;
+    Serial.println('-');
     for (int i=0; i<12; i++) {
         j = i + 22;
         v = digitalRead(j);
