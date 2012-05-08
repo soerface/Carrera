@@ -35,13 +35,17 @@ void loop() {
     int last_sensor = -1;
     int value = START_VALUE;
     bool sensor;
+    bool power;
     int j;
     int i = 0;
     while (true) {
         // check the start signal of the UE9
-        while (!digitalRead(power_release)) {
-            // power the track off
-            analogWrite(car_pin, 255);
+        if (!digitalRead(power_release)) {
+            // drive to the start and stop
+            power = false;
+        }
+        else {
+            power = true;
         }
         // only update the pwm signal if the value actually changed, should take
         // some load off the arduino
@@ -60,11 +64,21 @@ void loop() {
             sensor = digitalRead(j);
             if (sensor == LOW) {
                 value = VALUES1[i];
+                if (!power) {
+                    if (i == 10) {
+                        value = 95;
+                    }
+                    else if (i == 11) {
+                        value = 0;
+                    }
+                }
                 time = millis();
                 last_sensor = i;
             }
             if (last_sensor != -1 && millis() - time > DELAY[last_sensor]) {
-                value = VALUES2[last_sensor];
+                if (power or (!power and i != 10 and i != 11)) {
+                    value = VALUES2[last_sensor];
+                }
             }
         }
     }
