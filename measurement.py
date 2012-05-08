@@ -161,7 +161,7 @@ class Carrera(object):
             self.mode = TimeAttack(self.device, self, self.players, seconds=seconds)
 
         elif self.gamemode == 'KnockOut':
-            condition = 'Überlebe als letzer'
+            condition = 'Überlebe als Letzter'
             self.mode = KnockOut(self.device, self, self.players)
 
         elif self.gamemode == 'Training':
