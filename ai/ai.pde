@@ -13,7 +13,7 @@ int VALUES1[12] = {   1,  175,    1,  200,    1,  120,   70,  120,  120,  120,  
 // time in ms to keep that speed
 int DELAY[12] =   {  45,   45,   75,   50,   80,  200,  100,  999,  999,  999,  999,  200};
 // new speed for the car when the time from above is over
-int VALUES2[12] = { 160,  140,  140,  150,  120,  110,  120,  120,  120,  120,  120,  180};
+int VALUES2[12] = { 160,  140,  140,  150,  140,  110,  120,  120,  120,  120,  120,  180};
 
 int START_VALUE = 120;
 

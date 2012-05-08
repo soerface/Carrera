@@ -13,6 +13,7 @@ class Player(object):
         self.finished = False
         self.banned = False
         self.total_time = timedelta(seconds=0)
+        self.passed_start = False
         self.rank = 0
 
     @property

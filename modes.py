@@ -69,6 +69,9 @@ class Mode(object):
         """Write the acquired data to the database."""
 
     def _on_player_passed_line(self, player):
+        if not player.passed_start:
+            player.passed_start = True
+            return
         player.times.append(self.now - player.last_time)
         self.on_player_passed_line(player)
 
