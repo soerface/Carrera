@@ -56,10 +56,7 @@ class Mode(object):
             sensor_state = self.device.sensor_state()
             for sensor, player in zip(sensor_state, self.players):
                 if sensor:
-                    if not player.disabled and now - player.last_pass > timedelta(seconds=1):
-                        self._on_player_passed_line(player)
-                        player.last_time = now
-                    player.last_pass = now
+                    self._on_player_passed_line(player)
                 if not player.disabled:
                     player.total_time = now - self.start_time
             self.check_conditions()
@@ -71,8 +68,12 @@ class Mode(object):
     def _on_player_passed_line(self, player):
         if not player.passed_start:
             player.passed_start = True
+            player.last_pass = self.now
             return
-        player.times.append(self.now - player.last_time)
+        if not player.disabled and self.now - player.last_pass > timedelta(seconds=1):
+            player.times.append(self.now - player.last_time)
+            player.last_time = self.now
+        player.last_pass = self.now
         self.on_player_passed_line(player)
 
     def on_player_passed_line(self, player):
