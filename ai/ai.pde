@@ -9,19 +9,22 @@ unsigned long time = 0;
 
 // the speed of the car when it enters the light barrier
 // Sensor number:    0     1     2     3     4     5     6     7     8     9    10    11
-int VALUES1[12] = {   1,  175,    1,  200,    1,  120,   70,  120,  120,  120,  120,  255};
+int VALUES1[12] = { 230,  100,   50,  255,   75,  230,  180,  255,  100,  220,  200,  255};
 // time in ms to keep that speed
-int DELAY[12] =   {  45,   45,   75,   50,   80,  200,  100,  999,  999,  999,  999,  200};
+int DELAY[12] =   {  50,   75,  180,  300,  500,  200,   40,   50,   10,  999,  999,  500};
 // new speed for the car when the time from above is over
-int VALUES2[12] = { 160,  140,  140,  150,  140,  110,  120,  120,  120,  120,  120,  180};
+int VALUES2[12] = { 190,  220,   50,  200,  130,  160,  220,  200,  230,  220,  200,  255};
 
-int START_VALUE = 120;
+int START_VALUE = 180;
 
 
 void setup() {
     int j;
     for (int i=0; i<12; i++) {
         j = i + 22;
+        if (j == 24) {
+            j = 53;
+        }
         pinMode(j, INPUT);
         // connect pull up resistor
         digitalWrite(j, HIGH);
@@ -50,23 +53,27 @@ void loop() {
         // only update the pwm signal if the value actually changed, should take
         // some load off the arduino
         // break
-        if (value == 0) {
-            analogWrite(car_pin, 255 - value);
-            //delay(1);
-            //analogWrite(10, 255);
+        if (value == -1) {
+            analogWrite(car_pin, 255);
+            analogWrite(10, 255);
         } else {
-            //analogWrite(10, 0);
-            //delay(1);
+            analogWrite(10, 0);
             analogWrite(car_pin, 255 - value);
         }
         for(int i=0; i<12; i++) {
             j = i + 22;
+            if (j == 24) {
+                j = 53;
+            }
             sensor = digitalRead(j);
             if (sensor == LOW) {
                 value = VALUES1[i];
                 if (!power) {
-                    if (i == 10) {
-                        value = 95;
+                    if (i == 9) {
+                        value =  20;
+                    }
+                    else if (i == 10) {
+                        value =  60;
                     }
                     else if (i == 11) {
                         value = 0;
@@ -76,7 +83,7 @@ void loop() {
                 last_sensor = i;
             }
             if (last_sensor != -1 && millis() - time > DELAY[last_sensor]) {
-                if (power or (!power and i != 10 and i != 11)) {
+                if (power or (!power and last_sensor != 9 and last_sensor != 10 and last_sensor != 11)) {
                     value = VALUES2[last_sensor];
                 }
             }

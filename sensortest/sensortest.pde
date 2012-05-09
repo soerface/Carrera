@@ -1,6 +1,9 @@
 void setup() { int j;
     for (int i=0; i<12; i++) {
         j = i + 22;
+        if (j == 24) {
+            j = 53;
+        }
         pinMode(j, INPUT);
         digitalWrite(j, HIGH);
     }
@@ -14,6 +17,9 @@ void loop() {
     Serial.println('-');
     for (int i=0; i<12; i++) {
         j = i + 22;
+        if (j == 24) {
+            j = 53;
+        }
         v = digitalRead(j);
         if (!v) {
             Serial.println(j, DEC);
