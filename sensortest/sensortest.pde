@@ -1,9 +1,14 @@
 void setup() { int j;
     for (int i=0; i<12; i++) {
         j = i + 22;
+        // Workarounds for broken arduino
         if (j == 24) {
             j = 53;
         }
+        if (j == 33) {
+            j = 43;
+        }
+
         pinMode(j, INPUT);
         digitalWrite(j, HIGH);
     }
@@ -17,9 +22,14 @@ void loop() {
     Serial.println('-');
     for (int i=0; i<12; i++) {
         j = i + 22;
+        // Workarounds for broken arduino
         if (j == 24) {
             j = 53;
         }
+        if (j == 33) {
+            j = 43;
+        }
+
         v = digitalRead(j);
         if (!v) {
             Serial.println(j, DEC);
