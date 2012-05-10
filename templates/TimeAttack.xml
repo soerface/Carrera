@@ -1,7 +1,7 @@
 {% extends 'Base.xml' %}
 
 {% block content %}
-    Spielmodus: TimeAttack (TODO: vll lieber "Zeitrennen"?)
+    Spielmodus: TimeAttack
     Zeit: {{ time_limit }} Sekunden
     <span font_family="monospace">
           <b>Strecke</b>   |{% for player in players %}     <b>{{ loop.index }}</b>     {% if not loop.last %}|{% endif %}{% endfor %}
