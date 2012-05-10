@@ -48,9 +48,6 @@ void loop() {
     bool power;
     int j;
     int i = 0;
-    while(true) {
-        analogWrite(car_pin, 255 - 150);
-    }
     while (true) {
         // check the start signal of the UE9
         if (!digitalRead(power_release_pin)) {
