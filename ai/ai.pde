@@ -11,13 +11,13 @@ unsigned long time = 0;
 
 // the speed of the car when it enters the light barrier
 // Sensor number:     0     1     2     3     4     5     6     7     8     9    10    11
-int VALUES1[12] = {  255,  140,  100,   80,  140,  140,  120,  120,  120,  120,  120,  120};
+int VALUES1[12] = {  255,   40,   80,   10,  120,   80,  120,   60,  100,  170,   80,   90};
 // time in ms to keep that speed
-int DELAY[12] =   {  250,  150,  150,  550,  150,  150,  150,  150,  150,  150,  150,  150};
+int DELAY[12] =   {   50,  350,   20,   50,  200,  150,  150,  150,  150,  150,  150,  150};
 // new speed for the car when the time from above is over
-int VALUES2[12] = {  200,  140,  100,  100,  140,  140,  140,  140,  140,  140,  140,  140};
+int VALUES2[12] = {  200,   80,   50,  150,    0,   80,   80,   80,   80,   80,   80,   80};
 
-int START_VALUE = 140;
+int START_VALUE = 80;
 
 
 void setup() {
@@ -59,11 +59,11 @@ void loop() {
         }
         // break
         if (value == -1) {
-            analogWrite(car_pin, 255);
+            analogWrite(car_pin, 0);
             digitalWrite(break_pin, HIGH);
         } else {
             digitalWrite(break_pin, LOW);
-            analogWrite(car_pin, 255 - value);
+            analogWrite(car_pin, value);
         }
         for(int i=0; i<num_sensors; i++) {
             j = i + 22;
@@ -82,10 +82,10 @@ void loop() {
                         value = 120;
                     }
                     else if (i == 10) {
-                        value = 100;
+                        value = 80;
                     }
                     else if (i == 11) {
-                        value = 97;
+                        value = 72;
                     }
                     else if (i == 0) {
                         value = -1;
@@ -96,7 +96,8 @@ void loop() {
             }
             if (last_sensor != -1 && millis() - time > DELAY[last_sensor]) {
                 if (power or (!power and last_sensor != 9 and last_sensor != 10 and last_sensor != 11)) {
-                    value = VALUES2[last_sensor];
+                    // original VALUES2, VALUES1 to not use "time delta"
+                    value = VALUES1[last_sensor];
                 }
             }
         }
