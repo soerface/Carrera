@@ -10,9 +10,11 @@ int num_sensors = 12;
 unsigned long time = 0;
 
 // the speed of the car when it enters the light barrier
+// -1 equals break
 // Sensor number:     0     1     2     3     4     5     6     7     8     9    10    11
-int VALUES1[12] = {  255,   40,  110,   10,  120,   80,  120,   60,  100,  170,   80,   90};
+int VALUES1[12] = {  255,   40,  110,   20,  120,   80,  120,   60,  100,  170,   80,   90};
 // Values for last round
+// -2 equals VALUES1[i]
 int LAST_VAL[12] ={   -1,   -2,   -2,   -2,   -2,   -2,   -2,   -2,   -2,  120,   80,   70};
 
 
