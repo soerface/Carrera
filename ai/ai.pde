@@ -11,7 +11,11 @@ unsigned long time = 0;
 
 // the speed of the car when it enters the light barrier
 // Sensor number:     0     1     2     3     4     5     6     7     8     9    10    11
-int VALUES1[12] = {  255,   40,   80,   10,  120,   80,  120,   60,  100,  170,   80,   90};
+int VALUES1[12] = {  255,   40,  110,   10,  120,   80,  120,   60,  100,  170,   80,   90};
+// Values for last round
+int LAST_VAL[12] ={   -1,   -2,   -2,   -2,   -2,   -2,   -2,   -2,   -2,  120,   80,   70};
+
+
 // time in ms to keep that speed
 int DELAY[12] =   {   50,  350,   20,   50,  200,  150,  150,  150,  150,  150,  150,  150};
 // new speed for the car when the time from above is over
@@ -78,17 +82,9 @@ void loop() {
             if (sensor == LOW) {
                 value = VALUES1[i];
                 if (!power) {
-                    if (i == 9) {
-                        value = 120;
-                    }
-                    else if (i == 10) {
-                        value = 80;
-                    }
-                    else if (i == 11) {
-                        value = 72;
-                    }
-                    else if (i == 0) {
-                        value = -1;
+                    value = LAST_VAL[i];
+                    if (value == -2) {
+                        value = VALUES1[i];
                     }
                 }
                 time = millis();
