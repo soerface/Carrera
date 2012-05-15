@@ -53,6 +53,9 @@
           <a href="../genindex.html" title="Allgemeiner Index"
              accesskey="I">Index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python-Modulindex"
+             >Module</a> |</li>
+        <li class="right" >
           <a href="database.html" title="Datenbank"
              accesskey="N">weiter</a> |</li>
         <li class="right" >
@@ -71,48 +74,39 @@
   <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink zu dieser Überschrift">¶</a></h1>
 <p>Gesamte Paketliste zum kopieren:</p>
-<div class="highlight-bash"><div class="highlight"><pre>apt-get install git python-matplotlib python-pip build_essential libusb-1.0-0-dev
+<div class="highlight-bash"><div class="highlight"><pre>apt-get install git python-pip build_essential libusb-1.0-0-dev
 </pre></div>
 </div>
 <p>Neben einer funktionierenden Pythoninstallation (empfohlen: 2.7) sollte
 zunächst das Versionskontrollsystem git installiert werden, um den
 Quellcode dieser Software und den Code der UE9 Treiber komfortabel
 beziehen zu können.</p>
-<div class="highlight-bash"><div class="highlight"><pre>apt-get install git
-</pre></div>
-</div>
 <p>Um die Kommunikation mit dem UE9 zu ermöglichen, sind die Treiber und
-Pythonmodule von LabJack erforderlich, diese können mithilfe der von LabJack
-angebotenen
-<a class="reference external" href="http://labjack.com/support/linux-and-mac-os-x-drivers">Anleitung</a>.</p>
-<p>Zur grafischen Darstellung wird matplotlib und das zugehörige Pythonmodul
-benötigt:</p>
-<div class="highlight-bash"><div class="highlight"><pre>apt-get install python-matplotlib
-</pre></div>
-</div>
+Pythonmodule von LabJack erforderlich, eine ausführliche Anleitung gibt es
+auf der
+<a class="reference external" href="http://labjack.com/support/linux-and-mac-os-x-drivers">Website von LabJack</a>,
+die wichtigsten Schritte zur Installation sind allerdings ebenfalls hier
+beschrieben.</p>
 <p>Der Quellcode Software kann direkt von unserem Repository bezogen werden:</p>
 <div class="highlight-bash"><div class="highlight"><pre>git clone https://github.com/swege/Carrera
 </pre></div>
 </div>
 <p>Die restlichen benötigten Pythonmodule sind in der mitgelieferten
-requirements.txt aufgelistet. Nachdem pip installiert wurde:</p>
-<div class="highlight-bash"><div class="highlight"><pre>apt-get install python-pip
-</pre></div>
-</div>
-<p>Können sie leicht per</p>
+requirements.txt aufgelistet. Mithilfe von pip können sie leicht installiert
+werden:</p>
 <div class="highlight-bash"><div class="highlight"><pre>pip install -r requirements.txt
 </pre></div>
 </div>
-<p>heruntergeladen und installiert werden. Es ist empfehlenswert, dies in einem
-virtualenv zu tun, um sie nicht systemweit zu installieren - dies ist aber
-nicht erforderlich. Gestartet wird die Messsoftware mit</p>
-<div class="highlight-bash"><div class="highlight"><pre>python gui.py
+<p>Es ist empfehlenswert, dies in einem virtualenv zu tun, um sie nicht
+systemweit zu installieren - dies ist aber nicht erforderlich.
+Gestartet wird die Messsoftware mit</p>
+<div class="highlight-bash"><div class="highlight"><pre>python measurement.py
 </pre></div>
 </div>
 <p>Die für das eigenständige Fahren konzipierte Software besteht aus einem
 einzigen Arduinosketch, zu finden in der Datei <tt class="docutils literal"><span class="pre">ai/ai.pde</span></tt>, und kann mithilfe
-der <a class="reference external" href="http://arduino.cc/hu/Main/Software">Arduino IDE</a> auf den Arduino
-übertragen werden.</p>
+der <a class="reference external" href="http://arduino.cc/hu/Main/Software">Arduino IDE</a> kompiliert und auf den
+Arduino geladen werden.</p>
 </div>
 
 
@@ -155,6 +149,9 @@ der <a class="reference external" href="http://arduino.cc/hu/Main/Software">Ardu
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="Allgemeiner Index"
              >Index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python-Modulindex"
+             >Module</a> |</li>
         <li class="right" >
           <a href="database.html" title="Datenbank"
              >weiter</a> |</li>
