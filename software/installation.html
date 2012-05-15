@@ -74,7 +74,7 @@
   <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink zu dieser Überschrift">¶</a></h1>
 <p>Gesamte Paketliste zum kopieren:</p>
-<div class="highlight-bash"><div class="highlight"><pre>apt-get install git python-pip build_essential libusb-1.0-0-dev
+<div class="highlight-bash"><div class="highlight"><pre>apt-get install git python-pip build_essential libusb-1.0-0-dev python-virtualenv
 </pre></div>
 </div>
 <p>Neben einer funktionierenden Pythoninstallation (empfohlen: 2.7) sollte
@@ -87,19 +87,29 @@ auf der
 <a class="reference external" href="http://labjack.com/support/linux-and-mac-os-x-drivers">Website von LabJack</a>,
 die wichtigsten Schritte zur Installation sind allerdings ebenfalls hier
 beschrieben.</p>
-<p>Der Quellcode Software kann direkt von unserem Repository bezogen werden:</p>
-<div class="highlight-bash"><div class="highlight"><pre>git clone https://github.com/swege/Carrera
+<p>Der Quellcode Software kann direkt von unserem Repository bezogen werden,
+die Erstellung eines eigenen Verzeichnisses könnte für den nächsten Schritt
+von Nutzen sein:</p>
+<div class="highlight-bash"><div class="highlight"><pre>mkdir carrera
+<span class="nb">cd </span>carrera
+git clone https://github.com/swege/Carrera
 </pre></div>
 </div>
+<p>Es ist empfehlenswert, die restlichen benötigten Pythonmodule in einem
+virtualenv zu installieren, um sie nicht systemweit zu haben und eventuell
+Konflikte mit anderen Programmen hervorzurufen.</p>
 <p>Die restlichen benötigten Pythonmodule sind in der mitgelieferten
 requirements.txt aufgelistet. Mithilfe von pip können sie leicht installiert
 werden:</p>
-<div class="highlight-bash"><div class="highlight"><pre>pip install -r requirements.txt
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># virtualenv erstellen</span>
+virtualenv ../venv
+<span class="c"># virtualenv aktivieren (jedes mal nötig)</span>
+. ../venv/bin/activate
+<span class="c"># Module installieren</span>
+pip install -r requirements.txt
 </pre></div>
 </div>
-<p>Es ist empfehlenswert, dies in einem virtualenv zu tun, um sie nicht
-systemweit zu installieren - dies ist aber nicht erforderlich.
-Gestartet wird die Messsoftware mit</p>
+<p>Gestartet wird die Messsoftware mit</p>
 <div class="highlight-bash"><div class="highlight"><pre>python measurement.py
 </pre></div>
 </div>
