@@ -87,12 +87,23 @@ auf der
 <a class="reference external" href="http://labjack.com/support/linux-and-mac-os-x-drivers">Website von LabJack</a>,
 die wichtigsten Schritte zur Installation sind allerdings ebenfalls hier
 beschrieben.</p>
+<div class="highlight-bash"><div class="highlight"><pre>git clone https://github.com/labjack/exodriver
+<span class="nb">cd </span>exodriver/liblabjackusb/
+make
+sudo make install
+<span class="nb">cd</span> ..
+sudo cp 10-labjack.rules /etc/udev/rules.d/
+sudo udevadm control --reload-rules
+<span class="nb">cd</span>
+</pre></div>
+</div>
 <p>Der Quellcode Software kann direkt von unserem Repository bezogen werden,
 die Erstellung eines eigenen Verzeichnisses könnte für den nächsten Schritt
 von Nutzen sein:</p>
 <div class="highlight-bash"><div class="highlight"><pre>mkdir carrera
-<span class="nb">cd </span>carrera
+<span class="nb">cd </span>carrera/
 git clone https://github.com/swege/Carrera
+<span class="nb">cd </span>Carrera/
 </pre></div>
 </div>
 <p>Es ist empfehlenswert, die restlichen benötigten Pythonmodule in einem
@@ -102,11 +113,11 @@ Konflikte mit anderen Programmen hervorzurufen.</p>
 requirements.txt aufgelistet. Mithilfe von pip können sie leicht installiert
 werden:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="c"># virtualenv erstellen</span>
-virtualenv ../venv
+virtualenv --system-site-packages ../venv
 <span class="c"># virtualenv aktivieren (jedes mal nötig)</span>
 . ../venv/bin/activate
 <span class="c"># Module installieren</span>
-pip install -r Carrera/requirements.txt
+pip install -r requirements.txt
 </pre></div>
 </div>
 <p>Gestartet wird die Messsoftware mit</p>
