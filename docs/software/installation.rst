@@ -45,7 +45,7 @@ werden:
    # virtualenv aktivieren (jedes mal nötig)
    . ../venv/bin/activate
    # Module installieren
-   pip install -r requirements.txt
+   pip install -r Carrera/requirements.txt
 
 Gestartet wird die Messsoftware mit
 
