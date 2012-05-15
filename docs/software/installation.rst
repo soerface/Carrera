@@ -20,6 +20,17 @@ auf der
 die wichtigsten Schritte zur Installation sind allerdings ebenfalls hier
 beschrieben.
 
+.. code-block:: bash
+
+   git clone https://github.com/labjack/exodriver
+   cd exodriver/liblabjackusb/
+   make
+   sudo make install
+   cd ..
+   sudo cp 10-labjack.rules /etc/udev/rules.d/
+   sudo udevadm control --reload-rules
+   cd
+
 Der Quellcode Software kann direkt von unserem Repository bezogen werden,
 die Erstellung eines eigenen Verzeichnisses könnte für den nächsten Schritt
 von Nutzen sein:
@@ -27,8 +38,9 @@ von Nutzen sein:
 .. code-block:: bash
 
    mkdir carrera
-   cd carrera
+   cd carrera/
    git clone https://github.com/swege/Carrera
+   cd Carrera/
 
 Es ist empfehlenswert, die restlichen benötigten Pythonmodule in einem
 virtualenv zu installieren, um sie nicht systemweit zu haben und eventuell
@@ -41,11 +53,11 @@ werden:
 .. code-block:: bash
 
    # virtualenv erstellen
-   virtualenv ../venv
+   virtualenv --system-site-packages ../venv
    # virtualenv aktivieren (jedes mal nötig)
    . ../venv/bin/activate
    # Module installieren
-   pip install -r Carrera/requirements.txt
+   pip install -r requirements.txt
 
 Gestartet wird die Messsoftware mit
 
