@@ -6,7 +6,7 @@ Gesamte Paketliste zum kopieren:
 
 .. code-block:: bash
 
-   apt-get install git python-pip build_essential libusb-1.0-0-dev
+   apt-get install git python-pip build_essential libusb-1.0-0-dev python-virtualenv
 
 Neben einer funktionierenden Pythoninstallation (empfohlen: 2.7) sollte
 zunächst das Versionskontrollsystem git installiert werden, um den
@@ -20,11 +20,19 @@ auf der
 die wichtigsten Schritte zur Installation sind allerdings ebenfalls hier
 beschrieben.
 
-Der Quellcode Software kann direkt von unserem Repository bezogen werden:
+Der Quellcode Software kann direkt von unserem Repository bezogen werden,
+die Erstellung eines eigenen Verzeichnisses könnte für den nächsten Schritt
+von Nutzen sein:
 
 .. code-block:: bash
 
-  git clone https://github.com/swege/Carrera
+   mkdir carrera
+   cd carrera
+   git clone https://github.com/swege/Carrera
+
+Es ist empfehlenswert, die restlichen benötigten Pythonmodule in einem
+virtualenv zu installieren, um sie nicht systemweit zu haben und eventuell
+Konflikte mit anderen Programmen hervorzurufen.
 
 Die restlichen benötigten Pythonmodule sind in der mitgelieferten
 requirements.txt aufgelistet. Mithilfe von pip können sie leicht installiert
@@ -32,10 +40,13 @@ werden:
 
 .. code-block:: bash
 
-  pip install -r requirements.txt
+   # virtualenv erstellen
+   virtualenv ../venv
+   # virtualenv aktivieren (jedes mal nötig)
+   . ../venv/bin/activate
+   # Module installieren
+   pip install -r requirements.txt
 
-Es ist empfehlenswert, dies in einem virtualenv zu tun, um sie nicht
-systemweit zu installieren - dies ist aber nicht erforderlich.
 Gestartet wird die Messsoftware mit
 
 .. code-block:: bash
