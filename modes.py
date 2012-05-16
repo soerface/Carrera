@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 from utils import trim_time
 
-class Mode(object):
+class BaseMode(object):
     """Baseclass for all modes."""
 
     def __init__(self, device, ui, players, *args, **kwargs):
@@ -63,7 +63,7 @@ class Mode(object):
             self.ui.update()
 
     def save(self):
-        """Write the acquired data to the database."""
+        """Write the acquired data to the database. (not implemented)"""
 
     def _on_player_passed_line(self, player):
         if not player.passed_start:
@@ -104,12 +104,14 @@ class Mode(object):
             for player in self.players:
                 player.finished = True
 
-class Match(Mode):
+class Match(BaseMode):
 
     def configure(self, rounds):
+        """Set the number of rounds needed to pass the race."""
         self.rounds = rounds
 
     def on_player_passed_line(self, player):
+        """Set player.finished and his rank if the player made all rounds."""
         if len(player.times) >= self.rounds:
             player.finished = True
             player.rank = len([x for x in self.players if x.finished])
@@ -117,12 +119,14 @@ class Match(Mode):
             self.finished = True
 
     def check_conditions(self):
+        """Check if all players passed or are disabled."""
         if len([x for x in self.players if x.disabled]) == len(self.players):
             self.finished = True
 
-class TimeAttack(Mode):
+class TimeAttack(BaseMode):
 
     def configure(self, seconds):
+        """Set the timelimit (in seconds)"""
         self.seconds = seconds
 
     def check_conditions(self):
@@ -137,6 +141,7 @@ class TimeAttack(Mode):
             self.finished = True
 
     def on_player_passed_line(self, player):
+        """Update the player rank on line pass."""
         prev_rank = player.rank
         prev_rounds = player.rounds - 1
         rank = len(self.players)
@@ -150,9 +155,14 @@ class TimeAttack(Mode):
             if p.rounds == prev_rounds and p.rank < prev_rank:
                 p.rank += 1
 
-class KnockOut(Mode):
+class KnockOut(BaseMode):
 
     def on_player_passed_line(self, player):
+        """Check if the player is next to last.
+
+        If so, set the last player to finish and give him his rank.
+
+        """
         n = 0
         for p in self.players:
             if p.rounds >= player.rounds:
@@ -172,19 +182,23 @@ class KnockOut(Mode):
             self.finished = True
 
     def check_conditions(self):
+        """Check if all players are finished"""
         if len([x for x in self.players if x.disabled]) == len(self.players):
             self.finished = True
 
-class Training(Mode):
+class Training(BaseMode):
 
     def configure(self, rounds):
+        """Set the number of rounds a player may practise."""
         self.rounds = rounds
 
     def on_player_passed_line(self, player):
+        """Check if the player made all his rounds."""
         now = datetime.now()
         if player.rounds >= self.rounds:
             player.finished = True
 
     def reset_player(self, player):
+        """Reset the times of a player for the next training."""
         player.times = []
         player.finished = False
