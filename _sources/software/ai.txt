@@ -37,6 +37,11 @@ werden. Die Software des Arduinos müsste nun lediglich durch eine einfache
 Abfrage erweitert werden, welche abhängig von diesem Signal fährt oder stehen
 bleibt.
 
+Mittlerweile wurder der zweite Ansatz umgesetzt und um ein weiteres Feature
+erweitert: Fehlt dem Arduino die „Fahrerlaubnis”, fährt er bis zur Startlinie
+weiter, und wartet dort auf das nächste Rennen. Das ersparte uns oftmals das
+auflesen des Autos per Hand.
+
 Ein größeres und für uns derzeit unlösbares Problem stellt die „Lernfähigkeit“
 des Arduinos da. Aktuell müssen die Werte für die einzelnen Lichtschranken
 per Hand ausprobiert und eingegeben werden. Eine zunächst scheinbar

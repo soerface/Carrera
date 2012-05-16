@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <link rel="top" title="Carrera 0.0.1 Dokumentation" href="../index.html" />
     <link rel="up" title="Zeitmessung" href="measuring.html" />
-    <link rel="next" title="Grafische Oberfläche" href="gui.html" />
+    <link rel="next" title="Spieler" href="player.html" />
     <link rel="prev" title="Zeitmessung" href="measuring.html" />
   <script type="text/javascript">
 
@@ -56,7 +56,7 @@
           <a href="../py-modindex.html" title="Python-Modulindex"
              >Module</a> |</li>
         <li class="right" >
-          <a href="gui.html" title="Grafische Oberfläche"
+          <a href="player.html" title="Spieler"
              accesskey="N">weiter</a> |</li>
         <li class="right" >
           <a href="measuring.html" title="Zeitmessung"
@@ -74,28 +74,42 @@
             
   <div class="section" id="spielmodi">
 <span id="index-0"></span><h1>Spielmodi<a class="headerlink" href="#spielmodi" title="Permalink zu dieser Überschrift">¶</a></h1>
-<p>Basisklasse aller Spielmodi:</p>
+<p>Die Basisklasse aller Spielmodi ist „BaseMode”, jeder Spielmodus erbt von dieser
+Klasse. Diese Klasse kümmert sich um alle grundlegenden Funktionalitäten,
+die für jede Spielmodus von Bedeutung sind: Messung der Zeit, Zählung der
+Runden, Aktualisierungen der Oberfläche ermöglichen, die Ampelsequenz
+einleiten.</p>
+<p>Was diese Klasse nicht übernimmt, ist die Entscheidung, wann ein Rennen
+beendet ist, da dies von jedem Spielmodus abhängig ist. Dazu stehen drei
+Methoden zur Verfügung, die von den Unterklassen überschrieben werden können:
+<tt class="docutils literal"><span class="pre">configure</span></tt> ermöglicht es, weitere Argumente zu verarbeiten, etwa die maximale
+Anzahl von Runden oder ein Zeitlimit. <tt class="docutils literal"><span class="pre">on_player_passed_line</span></tt> wird aufgerufen,
+wenn ein Spieler die Ziellinie durchquert; das entsprechende Spielerobjekt
+wird als erstes Argument übergeben. Mithilfe von <tt class="docutils literal"><span class="pre">check_conditions</span></tt> können
+weitere Überprüfungen durchgeführt werden, z.B. auf das erreichen des
+Zeitlimits getestet werden, da diese Methode in jedem Schleifendurchgang
+aufgerufen wird.</p>
 <dl class="class">
-<dt id="modes.Mode">
-<em class="property">class </em><tt class="descclassname">modes.</tt><tt class="descname">Mode</tt><big>(</big><em>device</em>, <em>ui</em>, <em>players</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#modes.Mode" title="Permalink zu dieser Definition">¶</a></dt>
+<dt id="modes.BaseMode">
+<em class="property">class </em><tt class="descclassname">modes.</tt><tt class="descname">BaseMode</tt><big>(</big><em>device</em>, <em>ui</em>, <em>players</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#modes.BaseMode" title="Permalink zu dieser Definition">¶</a></dt>
 <dd><p>Baseclass for all modes.</p>
 <dl class="method">
-<dt id="modes.Mode.cancel">
-<tt class="descname">cancel</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.Mode.cancel" title="Permalink zu dieser Definition">¶</a></dt>
+<dt id="modes.BaseMode.cancel">
+<tt class="descname">cancel</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.BaseMode.cancel" title="Permalink zu dieser Definition">¶</a></dt>
 <dd><p>Cancel a match.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="modes.Mode.check_conditions">
-<tt class="descname">check_conditions</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.Mode.check_conditions" title="Permalink zu dieser Definition">¶</a></dt>
+<dt id="modes.BaseMode.check_conditions">
+<tt class="descname">check_conditions</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.BaseMode.check_conditions" title="Permalink zu dieser Definition">¶</a></dt>
 <dd><p>Check for winning conditions.</p>
 <p>Overwrite this method in your gamemode to check for certain conditions,
 e.g. timelimits. Called after every sensor polling.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="modes.Mode.configure">
-<tt class="descname">configure</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#modes.Mode.configure" title="Permalink zu dieser Definition">¶</a></dt>
+<dt id="modes.BaseMode.configure">
+<tt class="descname">configure</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#modes.BaseMode.configure" title="Permalink zu dieser Definition">¶</a></dt>
 <dd><p>Make further configurations.</p>
 <p>Overwrite this method if you want to use more arguments.
 Additional arguments to __init__ will be passed to this method after
@@ -103,27 +117,51 @@ the other arguments (device, ui, players) have been processed.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="modes.Mode.on_player_passed_line">
-<tt class="descname">on_player_passed_line</tt><big>(</big><em>player</em><big>)</big><a class="headerlink" href="#modes.Mode.on_player_passed_line" title="Permalink zu dieser Definition">¶</a></dt>
+<dt id="modes.BaseMode.on_player_passed_line">
+<tt class="descname">on_player_passed_line</tt><big>(</big><em>player</em><big>)</big><a class="headerlink" href="#modes.BaseMode.on_player_passed_line" title="Permalink zu dieser Definition">¶</a></dt>
 <dd><p>Called when a car passes the sensor at the line and is not yet finished.</p>
 <p>Round time will be saved before calling and is accessable via the
 player object.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="modes.Mode.run">
-<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.Mode.run" title="Permalink zu dieser Definition">¶</a></dt>
+<dt id="modes.BaseMode.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.BaseMode.run" title="Permalink zu dieser Definition">¶</a></dt>
 <dd><p>Give control to the gamemode until the race is finished.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="modes.Mode.save">
-<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.Mode.save" title="Permalink zu dieser Definition">¶</a></dt>
-<dd><p>Write the acquired data to the database.</p>
+<dt id="modes.BaseMode.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.BaseMode.save" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Write the acquired data to the database. (not implemented)</p>
 </dd></dl>
 
 </dd></dl>
 
+<div class="section" id="knock-out">
+<h2>Knock Out<a class="headerlink" href="#knock-out" title="Permalink zu dieser Überschrift">¶</a></h2>
+<p>In einem „Knock Out“ Rennen fliegt in jeder Runde der langsamste Spieler raus.
+Dadurch sind maximal drei Runden möglich, bei diesen stehen die Spieler aber
+unter hohem Druck und Nervenkitzel.</p>
+<dl class="class">
+<dt id="modes.KnockOut">
+<em class="property">class </em><tt class="descclassname">modes.</tt><tt class="descname">KnockOut</tt><big>(</big><em>device</em>, <em>ui</em>, <em>players</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#modes.KnockOut" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="modes.KnockOut.check_conditions">
+<tt class="descname">check_conditions</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.KnockOut.check_conditions" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Check if all players are finished</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="modes.KnockOut.on_player_passed_line">
+<tt class="descname">on_player_passed_line</tt><big>(</big><em>player</em><big>)</big><a class="headerlink" href="#modes.KnockOut.on_player_passed_line" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Check if the player is next to last.</p>
+<p>If so, set the last player to finish and give him his rank.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="match">
 <h2>Match<a class="headerlink" href="#match" title="Permalink zu dieser Überschrift">¶</a></h2>
 <p>Bei einem Match fahren 2-4 Spieler eine bestimmte Anzahl an Runden. Nach dem
@@ -132,12 +170,30 @@ abgeschaltet.</p>
 <dl class="class">
 <dt id="modes.Match">
 <em class="property">class </em><tt class="descclassname">modes.</tt><tt class="descname">Match</tt><big>(</big><em>device</em>, <em>ui</em>, <em>players</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#modes.Match" title="Permalink zu dieser Definition">¶</a></dt>
-<dd></dd></dl>
+<dd><dl class="method">
+<dt id="modes.Match.check_conditions">
+<tt class="descname">check_conditions</tt><big>(</big><big>)</big><a class="headerlink" href="#modes.Match.check_conditions" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Check if all players passed or are disabled.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="modes.Match.configure">
+<tt class="descname">configure</tt><big>(</big><em>rounds</em><big>)</big><a class="headerlink" href="#modes.Match.configure" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Set the number of rounds needed to pass the race.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="modes.Match.on_player_passed_line">
+<tt class="descname">on_player_passed_line</tt><big>(</big><em>player</em><big>)</big><a class="headerlink" href="#modes.Match.on_player_passed_line" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Set player.finished and his rank if the player made all rounds.</p>
+</dd></dl>
+
+</dd></dl>
 
 </div>
 <div class="section" id="time-attack">
 <h2>Time Attack<a class="headerlink" href="#time-attack" title="Permalink zu dieser Überschrift">¶</a></h2>
-<p>Im Modus &#8220;Time Attack&#8221; wird eine bestimmte Zeit vorgegeben. Nach Ablauf der
+<p>Im Modus „Time Attack“ wird eine bestimmte Zeit vorgegeben. Nach Ablauf der
 Zeit wird auf allen Spuren der Strom abgeschaltet. Sieger ist, wer die meisten
 Runden geschafft hat.</p>
 <dl class="class">
@@ -150,18 +206,51 @@ Runden geschafft hat.</p>
 <p>Used to power off the tracks.</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="modes.TimeAttack.configure">
+<tt class="descname">configure</tt><big>(</big><em>seconds</em><big>)</big><a class="headerlink" href="#modes.TimeAttack.configure" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Set the timelimit (in seconds)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="modes.TimeAttack.on_player_passed_line">
+<tt class="descname">on_player_passed_line</tt><big>(</big><em>player</em><big>)</big><a class="headerlink" href="#modes.TimeAttack.on_player_passed_line" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Update the player rank on line pass.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
-<div class="section" id="knock-out">
-<h2>Knock Out<a class="headerlink" href="#knock-out" title="Permalink zu dieser Überschrift">¶</a></h2>
-<p>In einem &#8220;Knock Out&#8221; Rennen fliegt in jeder Runde der langsamste Spieler raus.
-Dadurch sind maximal drei Runden möglich, bei diesen stehen die Spieler aber
-unter hohem Druck und Nervenkitzel.</p>
+<div class="section" id="training">
+<h2>Training<a class="headerlink" href="#training" title="Permalink zu dieser Überschrift">¶</a></h2>
+<p>Im „Training” Modus kann auf jeder Spur separat trainiert werden. Dafür
+wird eine maximale Anzahl von Runden angegeben, die auf jeder Strecke
+absolviert werden können. Bei Erreichen des Limits wird der Strom von der
+Strecke genommen, bis er wieder über den „Admin” Tab im Hauptfenster wieder
+freigeschaltet wird. Nach der Freischaltung können auf dieser Spur wieder
+soviele Runden gefahren werden, wie das Limit vorgibt.</p>
 <dl class="class">
-<dt id="modes.KnockOut">
-<em class="property">class </em><tt class="descclassname">modes.</tt><tt class="descname">KnockOut</tt><big>(</big><em>device</em>, <em>ui</em>, <em>players</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#modes.KnockOut" title="Permalink zu dieser Definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="modes.Training">
+<em class="property">class </em><tt class="descclassname">modes.</tt><tt class="descname">Training</tt><big>(</big><em>device</em>, <em>ui</em>, <em>players</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#modes.Training" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="modes.Training.configure">
+<tt class="descname">configure</tt><big>(</big><em>rounds</em><big>)</big><a class="headerlink" href="#modes.Training.configure" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Set the number of rounds a player may practise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="modes.Training.on_player_passed_line">
+<tt class="descname">on_player_passed_line</tt><big>(</big><em>player</em><big>)</big><a class="headerlink" href="#modes.Training.on_player_passed_line" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Check if the player made all his rounds.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="modes.Training.reset_player">
+<tt class="descname">reset_player</tt><big>(</big><em>player</em><big>)</big><a class="headerlink" href="#modes.Training.reset_player" title="Permalink zu dieser Definition">¶</a></dt>
+<dd><p>Reset the times of a player for the next training.</p>
+</dd></dl>
+
+</dd></dl>
 
 </div>
 </div>
@@ -175,9 +264,10 @@ unter hohem Druck und Nervenkitzel.</p>
   <h3><a href="../index.html">Inhalt</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Spielmodi</a><ul>
+<li><a class="reference internal" href="#knock-out">Knock Out</a></li>
 <li><a class="reference internal" href="#match">Match</a></li>
 <li><a class="reference internal" href="#time-attack">Time Attack</a></li>
-<li><a class="reference internal" href="#knock-out">Knock Out</a></li>
+<li><a class="reference internal" href="#training">Training</a></li>
 </ul>
 </li>
 </ul>
@@ -186,8 +276,8 @@ unter hohem Druck und Nervenkitzel.</p>
   <p class="topless"><a href="measuring.html"
                         title="vorheriges Kapitel">Zeitmessung</a></p>
   <h4>Nächstes Thema</h4>
-  <p class="topless"><a href="gui.html"
-                        title="nächstes Kapitel">Grafische Oberfläche</a></p>
+  <p class="topless"><a href="player.html"
+                        title="nächstes Kapitel">Spieler</a></p>
   <h3>Diese Seite</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/software/modes.txt"
@@ -220,7 +310,7 @@ unter hohem Druck und Nervenkitzel.</p>
           <a href="../py-modindex.html" title="Python-Modulindex"
              >Module</a> |</li>
         <li class="right" >
-          <a href="gui.html" title="Grafische Oberfläche"
+          <a href="player.html" title="Spieler"
              >weiter</a> |</li>
         <li class="right" >
           <a href="measuring.html" title="Zeitmessung"
@@ -232,7 +322,7 @@ unter hohem Druck und Nervenkitzel.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2011, BG 13 2011/2012.
-      Mit <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2 erstellt.
+      Mit <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3 erstellt.
     </div>
   </body>
 </html>

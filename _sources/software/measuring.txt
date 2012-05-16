@@ -10,5 +10,6 @@ Methoden, implementierten Schnittstellen und die Bedienung des Programmes.
 
 .. toctree::
    modes
-   gui
+   player
    devices
+   gui

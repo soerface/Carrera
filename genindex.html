@@ -68,6 +68,7 @@
 
 <div class="genindex-jumpbox">
  <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#K"><strong>K</strong></a>
@@ -103,11 +104,21 @@
   </dl></td>
 </tr></table>
 
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="software/modes.html#modes.BaseMode">BaseMode (Klasse in modes)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="software/modes.html#modes.Mode.cancel">cancel() (Methode von modes.Mode)</a>
+  <dt><a href="software/modes.html#modes.BaseMode.cancel">cancel() (Methode von modes.BaseMode)</a>
   </dt>
 
       
@@ -115,10 +126,18 @@
   </dt>
 
       
-  <dt><a href="software/modes.html#modes.Mode.check_conditions">check_conditions() (Methode von modes.Mode)</a>
+  <dt><a href="software/modes.html#modes.BaseMode.check_conditions">check_conditions() (Methode von modes.BaseMode)</a>
   </dt>
 
       <dd><dl>
+        
+  <dt><a href="software/modes.html#modes.KnockOut.check_conditions">(Methode von modes.KnockOut)</a>
+  </dt>
+
+        
+  <dt><a href="software/modes.html#modes.Match.check_conditions">(Methode von modes.Match)</a>
+  </dt>
+
         
   <dt><a href="software/modes.html#modes.TimeAttack.check_conditions">(Methode von modes.TimeAttack)</a>
   </dt>
@@ -135,9 +154,23 @@
   </dt>
 
       
-  <dt><a href="software/modes.html#modes.Mode.configure">configure() (Methode von modes.Mode)</a>
+  <dt><a href="software/modes.html#modes.BaseMode.configure">configure() (Methode von modes.BaseMode)</a>
   </dt>
 
+      <dd><dl>
+        
+  <dt><a href="software/modes.html#modes.Match.configure">(Methode von modes.Match)</a>
+  </dt>
+
+        
+  <dt><a href="software/modes.html#modes.TimeAttack.configure">(Methode von modes.TimeAttack)</a>
+  </dt>
+
+        
+  <dt><a href="software/modes.html#modes.Training.configure">(Methode von modes.Training)</a>
+  </dt>
+
+      </dl></dd>
   </dl></td>
 </tr></table>
 
@@ -194,14 +227,10 @@
   <dt><a href="software/modes.html#modes.Match">Match (Klasse in modes)</a>
   </dt>
 
-      
-  <dt><a href="software/gui.html#module-measurement">measurement (Modul)</a>
-  </dt>
-
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="software/modes.html#modes.Mode">Mode (Klasse in modes)</a>
+  <dt><a href="software/gui.html#module-measurement">measurement (Modul)</a>
   </dt>
 
   </dl></td>
@@ -211,15 +240,43 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="software/modes.html#modes.Mode.on_player_passed_line">on_player_passed_line() (Methode von modes.Mode)</a>
+  <dt><a href="software/modes.html#modes.BaseMode.on_player_passed_line">on_player_passed_line() (Methode von modes.BaseMode)</a>
   </dt>
 
+      <dd><dl>
+        
+  <dt><a href="software/modes.html#modes.KnockOut.on_player_passed_line">(Methode von modes.KnockOut)</a>
+  </dt>
+
+        
+  <dt><a href="software/modes.html#modes.Match.on_player_passed_line">(Methode von modes.Match)</a>
+  </dt>
+
+        
+  <dt><a href="software/modes.html#modes.TimeAttack.on_player_passed_line">(Methode von modes.TimeAttack)</a>
+  </dt>
+
+        
+  <dt><a href="software/modes.html#modes.Training.on_player_passed_line">(Methode von modes.Training)</a>
+  </dt>
+
+      </dl></dd>
   </dl></td>
 </tr></table>
 
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="software/player.html#index-0">Player</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="software/player.html#misc.Player">(Klasse in misc)</a>
+  </dt>
+
+      </dl></dd>
       
   <dt><a href="software/gui.html#measurement.Carrera.player_names">player_names (Attribut von measurement.Carrera)</a>
   </dt>
@@ -283,12 +340,18 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
+  <dt><a href="software/modes.html#modes.Training.reset_player">reset_player() (Methode von modes.Training)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
   <dt><a href="software/gui.html#measurement.Carrera.run">run() (Methode von measurement.Carrera)</a>
   </dt>
 
       <dd><dl>
         
-  <dt><a href="software/modes.html#modes.Mode.run">(Methode von modes.Mode)</a>
+  <dt><a href="software/modes.html#modes.BaseMode.run">(Methode von modes.BaseMode)</a>
   </dt>
 
       </dl></dd>
@@ -299,7 +362,7 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="software/modes.html#modes.Mode.save">save() (Methode von modes.Mode)</a>
+  <dt><a href="software/modes.html#modes.BaseMode.save">save() (Methode von modes.BaseMode)</a>
   </dt>
 
       
@@ -332,8 +395,6 @@
   <dt><a href="software/modes.html#modes.TimeAttack">TimeAttack (Klasse in modes)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="software/devices.html#devices.UE9.traffic_lights">traffic_lights (Attribut von devices.UE9)</a>
   </dt>
@@ -344,6 +405,12 @@
   </dt>
 
       </dl></dd>
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="software/modes.html#modes.Training">Training (Klasse in modes)</a>
+  </dt>
+
   </dl></td>
 </tr></table>
 
@@ -430,7 +497,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2011, BG 13 2011/2012.
-      Mit <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2 erstellt.
+      Mit <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3 erstellt.
     </div>
   </body>
 </html>
