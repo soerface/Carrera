@@ -73,6 +73,9 @@
             
   <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink zu dieser Überschrift">¶</a></h1>
+<div class="section" id="linux">
+<h2>Linux<a class="headerlink" href="#linux" title="Permalink zu dieser Überschrift">¶</a></h2>
+<p>(getestet unter Ubuntu 12.04)</p>
 <p>Gesamte Paketliste zum kopieren:</p>
 <div class="highlight-bash"><div class="highlight"><pre>apt-get install git python-pip build_essential libusb-1.0-0-dev python-virtualenv
 </pre></div>
@@ -102,7 +105,7 @@ die Erstellung eines eigenen Verzeichnisses könnte für den nächsten Schritt
 von Nutzen sein:</p>
 <div class="highlight-bash"><div class="highlight"><pre>mkdir carrera
 <span class="nb">cd </span>carrera/
-git clone https://github.com/swege/Carrera
+git clone https://github.com/swege/Carrera.git
 <span class="nb">cd </span>Carrera/
 </pre></div>
 </div>
@@ -124,10 +127,76 @@ pip install -r requirements.txt
 <div class="highlight-bash"><div class="highlight"><pre>python measurement.py
 </pre></div>
 </div>
+</div>
+<div class="section" id="windows">
+<h2>Windows<a class="headerlink" href="#windows" title="Permalink zu dieser Überschrift">¶</a></h2>
+<p>(getestet unter Windows XP)</p>
+<div class="section" id="python-2-7">
+<h3>Python 2.7<a class="headerlink" href="#python-2-7" title="Permalink zu dieser Überschrift">¶</a></h3>
+<p><a class="reference external" href="http://www.python.org/ftp/python/2.7/python-2.7.msi">Herunterladen</a> und Installer
+starten. Manuelle Einstellungen im Installationsassistenten sollten nicht
+nötig sein.</p>
+<p>Umgebungvariable anpassen: <em>Start › Systemsteuerung (klassische Ansicht) ›
+System › Reiter &#8220;Erweitert&#8221; › Umgebungsvariablen</em></p>
+<p>Variable <tt class="docutils literal"><span class="pre">Path</span></tt> bearbeiten und den Pfad für Python und dazugehörige Scripte
+anfügen:</p>
+<div class="highlight-python"><pre>;C:\Python27;C:\Python27\Scripts</pre>
+</div>
+<p><strong>Nichts entfernen</strong>, nur <em>anhängen</em>, sonst wird das System unbrauchbar!</p>
+</div>
+<div class="section" id="pip">
+<h3>pip<a class="headerlink" href="#pip" title="Permalink zu dieser Überschrift">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">pip</span></tt> wird benötigt, um später weitere Pythonmodule einfach zu installieren.
+Zunächst <a class="reference external" href="http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11.win32-py2.7.exe">setuptools</a>
+herunterladen und installieren.</p>
+<p>Eine neue Eingabeaufforderung starten (die oben genannten Änderungen an der
+<tt class="docutils literal"><span class="pre">Path</span></tt> Variable müssen bereits erfolgt und bestätigt worden sein) und pip
+installieren:</p>
+<div class="highlight-python"><pre>easy_install pip</pre>
+</div>
+</div>
+<div class="section" id="versionskontrollsystem-git">
+<h3>Versionskontrollsystem Git<a class="headerlink" href="#versionskontrollsystem-git" title="Permalink zu dieser Überschrift">¶</a></h3>
+<p><a class="reference external" href="http://git-scm.com/download/win">Herunterladen</a> und installieren. Während
+der Installation beim Schritt <em>Adjusting your PATH environment</em> die Option
+<em>Run Git from the Windows Command Prompt</em> wählen. Macht das gleiche wie wir
+vorhin manuell gemacht haben, nur für Git statt Python. Restliche Einstellungen
+können unberührt bleiben.</p>
+</div>
+<div class="section" id="gtk">
+<h3>GTK<a class="headerlink" href="#gtk" title="Permalink zu dieser Überschrift">¶</a></h3>
+<p>Für die grafische Oberfläche wird GTK2 verwendet. Dieses kann mitsamt der
+für uns erforderlichen Python bindings als <a class="reference external" href="http://ftp.gnome.org/pub/GNOME/binaries/win32/pygtk/2.24/pygtk-all-in-one-2.24.0.win32-py2.7.msi">all-in-one bundle</a>
+bezogen werden.</p>
+</div>
+<div class="section" id="labjack-ue9">
+<h3>LabJack UE9<a class="headerlink" href="#labjack-ue9" title="Permalink zu dieser Überschrift">¶</a></h3>
+<p>Für die Einrichtung des UE9 ist die <a class="reference external" href="http://labjack.com/ue9">Installationsanleitung von LabJack</a> zu befolgen.</p>
+</div>
+<div class="section" id="quellcode-herunterladen">
+<h3>Quellcode herunterladen<a class="headerlink" href="#quellcode-herunterladen" title="Permalink zu dieser Überschrift">¶</a></h3>
+<p>Zum herunterladen der Software kommt Git zum Einsatz. Öffne das Verzeichnis,
+in welches die Software kopiert werden soll. <em>Rechtsklick › Git Bash</em> öffnet
+eine Eingabeaufforderung, hier folgende Befehle ausführen, um den Quellcode
+herunterzuladen und die restlichen Pythonmodule zu installieren.</p>
+<div class="highlight-python"><pre>git clone https://github.com/swege/soapboxderby.git
+git clone https://github.com/swege/Carrera.git
+cd soapboxderby
+pip install -r requirements.txt</pre>
+</div>
+<p>Gestartet wird die Messsoftware mit</p>
+<div class="highlight-bash"><div class="highlight"><pre>python measurement.py
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="arduino">
+<h2>Arduino<a class="headerlink" href="#arduino" title="Permalink zu dieser Überschrift">¶</a></h2>
 <p>Die für das eigenständige Fahren konzipierte Software besteht aus einem
 einzigen Arduinosketch, zu finden in der Datei <tt class="docutils literal"><span class="pre">ai/ai.pde</span></tt>, und kann mithilfe
 der <a class="reference external" href="http://arduino.cc/hu/Main/Software">Arduino IDE</a> kompiliert und auf den
 Arduino geladen werden.</p>
+</div>
 </div>
 
 
@@ -136,6 +205,24 @@ Arduino geladen werden.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Inhalt</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installation</a><ul>
+<li><a class="reference internal" href="#linux">Linux</a></li>
+<li><a class="reference internal" href="#windows">Windows</a><ul>
+<li><a class="reference internal" href="#python-2-7">Python 2.7</a></li>
+<li><a class="reference internal" href="#pip">pip</a></li>
+<li><a class="reference internal" href="#versionskontrollsystem-git">Versionskontrollsystem Git</a></li>
+<li><a class="reference internal" href="#gtk">GTK</a></li>
+<li><a class="reference internal" href="#labjack-ue9">LabJack UE9</a></li>
+<li><a class="reference internal" href="#quellcode-herunterladen">Quellcode herunterladen</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#arduino">Arduino</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Vorheriges Thema</h4>
   <p class="topless"><a href="index.html"
                         title="vorheriges Kapitel">Software</a></p>
