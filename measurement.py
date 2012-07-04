@@ -38,7 +38,7 @@ class Carrera(object):
             self.device = UE9()
             self.builder.get_object('race').show()
             self.builder.get_object('main').present()
-        except LabJackPython.NullHandleException, e:
+        except (LabJackPython.NullHandleException, LabJackPython.LabJackException), e:
             # fallback if no UE9 is connected
             self.device = Virtual()
             self.builder.get_object('simulation_warning').show()
