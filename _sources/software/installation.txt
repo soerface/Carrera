@@ -143,9 +143,8 @@ herunterzuladen und die restlichen Pythonmodule zu installieren.
 
 ::
 
-   git clone https://github.com/swege/soapboxderby.git
    git clone https://github.com/swege/Carrera.git
-   cd soapboxderby
+   cd Carrera
    pip install -r requirements.txt
 
 Gestartet wird die Messsoftware mit
