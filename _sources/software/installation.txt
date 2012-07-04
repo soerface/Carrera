@@ -130,8 +130,10 @@ bezogen werden.
 LabJack UE9
 -----------
 
-Für die Einrichtung des UE9 ist die `Installationsanleitung von LabJack
-<http://labjack.com/ue9>`_ zu befolgen.
+Für die Einrichtung des UE9 muss der `UD Windows Driver
+<http://labjack.com/support/windows-ud>`_ installiert werden. ``LabJackPython``
+muss *nicht* installiert werden, dies wird im nächsten Schritt von pip
+übernommen.
 
 Quellcode herunterladen
 -----------------------
