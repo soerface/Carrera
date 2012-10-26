@@ -34,6 +34,7 @@
 
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-31502962-1']);
+    _gaq.push(['_gat._anonymizeIp']);
     _gaq.push(['_trackPageview']);
 
     (function() {
@@ -72,82 +73,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="module-measurement">
-<span id="grafische-oberflache"></span><h1>Grafische Oberfläche<a class="headerlink" href="#module-measurement" title="Permalink zu dieser Überschrift">¶</a></h1>
-<dl class="class">
-<dt id="measurement.Carrera">
-<em class="property">class </em><tt class="descclassname">measurement.</tt><tt class="descname">Carrera</tt><a class="headerlink" href="#measurement.Carrera" title="Permalink zu dieser Definition">¶</a></dt>
-<dd><p>Class which handles the GTK interface.</p>
-<dl class="method">
-<dt id="measurement.Carrera.add_player">
-<tt class="descname">add_player</tt><big>(</big><big>)</big><a class="headerlink" href="#measurement.Carrera.add_player" title="Permalink zu dieser Definition">¶</a></dt>
-<dd><p>Add a new player box to the player list.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="measurement.Carrera.clear_racewindow">
-<tt class="descname">clear_racewindow</tt><big>(</big><big>)</big><a class="headerlink" href="#measurement.Carrera.clear_racewindow" title="Permalink zu dieser Definition">¶</a></dt>
-<dd><p>Clear the racewindow</p>
-<p>Removes any infromation from the racewindow to provide a clean
-interface</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="measurement.Carrera.draw_page">
-<tt class="descname">draw_page</tt><big>(</big><em>operation</em>, <em>context</em>, <em>page_no</em><big>)</big><a class="headerlink" href="#measurement.Carrera.draw_page" title="Permalink zu dieser Definition">¶</a></dt>
-<dd><p>Formats the page for printing.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="measurement.Carrera.lock_settings">
-<tt class="descname">lock_settings</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#measurement.Carrera.lock_settings" title="Permalink zu dieser Definition">¶</a></dt>
-<dd><p>(De)activates interface elements like player names</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="measurement.Carrera.player_names">
-<tt class="descname">player_names</tt><a class="headerlink" href="#measurement.Carrera.player_names" title="Permalink zu dieser Definition">¶</a></dt>
-<dd><p>Returns a list of playernames.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="measurement.Carrera.power_off">
-<tt class="descname">power_off</tt><big>(</big><em>track</em><big>)</big><a class="headerlink" href="#measurement.Carrera.power_off" title="Permalink zu dieser Definition">¶</a></dt>
-<dd><p>Power the given track off. Pass -1 to power all off</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="measurement.Carrera.power_on">
-<tt class="descname">power_on</tt><big>(</big><em>track</em><big>)</big><a class="headerlink" href="#measurement.Carrera.power_on" title="Permalink zu dieser Definition">¶</a></dt>
-<dd><p>Power the given track on. Pass -1 to power all on</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="measurement.Carrera.prepare_template">
-<tt class="descname">prepare_template</tt><big>(</big><big>)</big><a class="headerlink" href="#measurement.Carrera.prepare_template" title="Permalink zu dieser Definition">¶</a></dt>
-<dd><p>Renders the print template and unlocks interface.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="measurement.Carrera.quit">
-<tt class="descname">quit</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#measurement.Carrera.quit" title="Permalink zu dieser Definition">¶</a></dt>
-<dd><p>Quit the GUI, cancel any running race and save preferences.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="measurement.Carrera.run">
-<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#measurement.Carrera.run" title="Permalink zu dieser Definition">¶</a></dt>
-<dd><p>Display the GUI and start the mainloop.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="measurement.Carrera.update">
-<tt class="descname">update</tt><big>(</big><big>)</big><a class="headerlink" href="#measurement.Carrera.update" title="Permalink zu dieser Definition">¶</a></dt>
-<dd><p>Called by gamemode to update interface</p>
-</dd></dl>
-
-</dd></dl>
-
+  <div class="section" id="grafische-oberflache">
+<h1>Grafische Oberfläche<a class="headerlink" href="#grafische-oberflache" title="Permalink zu dieser Überschrift">¶</a></h1>
 <p>Die verschiedenen Spielmodi können über das Hauptfenster angewählt werden.
 Der Einstellungsbereich ändert sich dabei passend zum Spielmodus.</p>
 <img alt="../_images/Modes.png" src="../_images/Modes.png" />
